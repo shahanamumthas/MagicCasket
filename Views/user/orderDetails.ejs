@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Product</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	
+
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/user.css">
+	<!--===============================================================================================-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+<body class="animsition">
+	<%- include('./partials/head') -%>
+
+		<div class="row ">
+			<%if(orders){%>
+			<% orders.forEach((data)=>{%>
+				<% data.orderDetail.forEach((orderData)=>{%>
+						<%orderData.productDetail.forEach((productData)=>{%>
+							<div class="card  d-flex card-alignment" style="width : 18rem ; ">
+								<div class="card-body col-lg-12">
+									<br>
+									<h5 class="card-title">
+										<img style="height: 10vh; width: 10vh;" src="/<%= productData.productId.images[0].path%>"
+											alt="">
+									</h5>
+									<h6 class="card-subtitle mb-2 text-muted">
+										<%= productData.productId.name%>
+										
+									</h6>
+									<p class="card-text">
+										Price :<%= productData.productId.price%>
+									</p>
+									<p class="card-text">
+										Quantity: <%= productData.quantity%>
+									</p>
+									<p class="card-text">
+										Total: <%= productData.total%>
+									</p>
+									<br>
+									<%if(productData.orderStatus == 'Cancel'){%>
+										Cencelled
+									<%}else{%>
+										<button type="button" class="btn btn-danger text-light" data-toggle="modal"
+										data-target="#exampleModalCenter<%= productData.productId._id%>">
+										Cancel
+									</button>
+										<%}%>
+								</div>
+							</div>
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalCenter<%= productData.productId._id%>" tabindex="1"
+								role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle">
+												Delete Warning
+											</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to cancel <b class="text-black">
+												<%= productData.productId.name%>
+											</b><span>
+
+											</span>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Close</button>
+											<a type="button" href="/cancelItem?id=<%= productData.productId._id%>"
+												class="btn btn-danger">Cancel</a>
+
+										</div>
+									</div>
+								</div>
+							</div>
+								<%})%>
+
+									<%})%>
+										<%})%>
+										<%} else{%>
+											<div class=" text-center">
+						
+												<h2>
+													No order</h2><br>
+												<p> Before proceed to checkout you must add some products to your shopping cart. You will
+													find a lot of interesting products on our "Shop" page.</p>
+								  </div>
+								  <%}%>
+
+		</div>
+		<script src="/admin/vendor/jquery/jquery.min.js"></script>
+		<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
