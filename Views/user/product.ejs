@@ -27,7 +27,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
-	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>					</a>
+	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> </a>
 
 </head>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -146,14 +146,14 @@
 									</div>
 									<div class="block2-txt-child2 flex-r p-t-3">
 										<%if(user){%>
-										<a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-											onclick="return addToWish('<%= data._id%>')">
-											<img class="icon-heart1 dis-block trans-04"
-												src="images/icons/icon-heart-01.png" alt="ICON">
-											<img class="icon-heart2 dis-block trans-04 ab-t-l"
-												src="images/icons/icon-heart-02.png" alt="ICON">
-										</a>
-										<%}%>
+											<a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+												onclick="return addToWish('<%= data._id%>')">
+												<img class="icon-heart1 dis-block trans-04"
+													src="images/icons/icon-heart-01.png" alt="ICON">
+												<img class="icon-heart2 dis-block trans-04 ab-t-l"
+													src="images/icons/icon-heart-02.png" alt="ICON">
+											</a>
+											<%}%>
 									</div>
 								</div>
 							</div>
@@ -163,12 +163,15 @@
 
 				<!-- Load more -->
 				<div class="flex-c-m flex-w w-full p-t-45">
-						<!-- <i class='fas fa-caret-right'></i> -->
-					<%for( let j = 1 ;j <=  totalPages; j++){%>	
-					<a href="?page=<%= j%>" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"><%= j%></a>
-						
+					<!-- <i class='fas fa-caret-right'></i> -->
+					<%for( let j=1 ;j <=totalPages; j++){%>
+						<a href="?page=<%= j%>"
+							class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+							<%= j%>
+						</a>
+
 						<%}%>
-					
+
 				</div>
 			</div>
 		</div>
@@ -337,19 +340,17 @@
 				});
 
 				function addToWish(productId) {
-					console.log('here', productId);
 
 					fetch('/addToWish', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
 						},
-						body: JSON.stringify({ productId: productId })
+						body: JSON.stringify({ productId })
 					})
 						.then(response => response.json())
 						.then(response => {
 							if (response.success) {
-								console.log('sdfghjkl;');
 								swal(response.name, "is added to wishlist !", "successful");
 							} else {
 								swal(response.name, "is failed to add wishlist ! ,Please Login", "warning");

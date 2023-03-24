@@ -203,7 +203,7 @@
                                     </div>
 
                                     <div class="size-209 p-t-1">
-                                        <span class="mtext-110 cl2" >
+                                        <span class="mtext-110 cl2">
 
                                         </span>
                                     </div>
@@ -281,29 +281,42 @@
                     const selectedAddress = addressId ? addressId.value : null;
                     console.log(selectedAddress);
 
-                    
+
                     if (selectedValue == 'COD') {
-                        cashOnDelivery(selectedAddress) 
+                        cashOnDelivery(selectedAddress)
                     } else {
                         onlinePayment(selectedAddress)
                     }
                 }
 
                 function cashOnDelivery(address) {
-                    console.log(address, 'codelivery');
                     fetch('/postCheckout/cod', {
                         method: 'POST',
                         headers: {
-							'Content-Type': 'application/json'
-						},
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({
                             address,
                         }),
                     })
-                    .then(response => response.json())
-                    .then(response => {
-
-                    })
+                        .then(response => response.json())
+                        .then(response => {
+                            if (response.success) {
+                                swal.fire({
+                                    title: "Order Placed Successfully!",
+                                    text: `Your order has been placed successfully! `,
+                                    icon: "success",
+                                    button: "Okay",
+                                })
+                            } else {
+                                swal.fire({
+                                    title: "Order Failed!",
+                                    text: `Your order has been placed failed! `,
+                                    icon: "warning",
+                                    button: "Okay",
+                                })
+                            }
+                        })
                 }
 
                 function onlinePayment(address) {
@@ -311,27 +324,89 @@
                     fetch('/postCheckout/online', {
                         method: 'POST',
                         headers: {
-							'Content-Type': 'application/json'
-						},
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({
                             address,
                         }),
                     })
-                    .then(response => response.json())
-                    .then(response => {
-                        
+                        .then(response => response.json())
+                        .then(order => {
+                            if (order.success) {
+                                var options = {
+                                    key: "rzp_test_NW0eojDcJawNCK",
+                                    name: "Magic Casket",
+                                    amount: order.amount * 1000,
+                                    order_id: order.order.id,
+                                    currency: "INR",
+                                    description: "Test Transaction",
+                                    image: "/images/logo2.png",
+                                    handler: function (response) {
+                                        verifyPayment(response, order);
+                                    },
+                                    prefill: {
+                                        name: "Magic Casket",
+                                        email: "magiccasket@gmail.com",
+                                        contact: "9876543210"
+                                    },
+                                    notes: {
+                                        address: "Razorpay Corporate Office"
+                                    },
+                                    theme: {
+                                        color: "#808080"
+                                    }
+                                };
+                                var rzp1 = new Razorpay(options);
+                                rzp1.on('payment.failed', function (response) {
+                                    console.log("paymentfialed");
+                                });
+                                rzp1.open();
+                            }
+                        })
+                }
+
+                function verifyPayment(response, order) {
+                    console.log(response + order);
+                    fetch("/verifyPayment", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            response,
+                            order,
+                        }),
                     })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data);
+                            if (data.success) {
+                                swal.fire({
+                                    title: "Order Placed Successfully!",
+                                    text: `Your order has been placed successfully! Your order id is ${data.orderId}`,
+                                    icon: "success",
+                                    button: "Okay",
+                                })
+                            } else {
+
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Failed to verify payment:" + error);
+                        });
                 }
 
 
-
             </script>
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
             <script src="./notify.min.js"></script>
             <!--===============================================================================================-->
-            <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+            <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
 
             <!--===============================================================================================-->
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -340,14 +415,14 @@
             <!--===============================================================================================-->
             <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
             <!--===============================================================================================-->
-            <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+            <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
             <!--===============================================================================================-->
-            <script src="vendor/animsition/js/animsition.min.js"></script>
+            <script src="/vendor/animsition/js/animsition.min.js"></script>
             <!--===============================================================================================-->
-            <script src="vendor/bootstrap/js/popper.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+            <script src="/vendor/bootstrap/js/popper.js"></script>
+            <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
             <!--===============================================================================================-->
-            <script src="vendor/select2/select2.min.js"></script>
+            <script src="/vendor/select2/select2.min.js"></script>
             <script>
                 $(".js-select2").each(function () {
                     $(this).select2({
@@ -357,9 +432,9 @@
                 })
             </script>
             <!--===============================================================================================-->
-            <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+            <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
             <!--===============================================================================================-->
-            <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
             <script>
                 $('.js-pscroll').each(function () {
                     $(this).css('position', 'relative');

@@ -11,8 +11,10 @@ const Contact = require('../Models/contact')
 const order = require("../Models/orders");
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
-const product = require("../models/product");
 const { countDocuments } = require("../Models/banner");
+const Razorpay = require("razorpay");
+const crypto = require('crypto');
+
 let msg = ""
 
 module.exports = {
@@ -201,8 +203,8 @@ module.exports = {
   // },
 
   getProduct: async (req, res) => {
-    const page = 1 ;
-    const limit = 2 ;
+    const page = 1;
+    const limit = 2;
     const products = await Product.find().limit(limit).skip((page - 1) * limit).exec();
     console.log(products);
     const count = await Product.countDocuments();
@@ -218,14 +220,14 @@ module.exports = {
       currentPage: page,
     });
   },
-  
+
 
   // getPagintion : (req,res)=>{
   //     const pageSize = 10; // Number of items to show per page
   // const currentPage = parseInt(req.query.page) || 1; // Current page number
   // const skip = (pageSize * currentPage) - pageSize; // Calculate the number of items to skip
   // const limit = pageSize; // Limit the number of items to be returned
-  
+
 
   // },
 
@@ -488,7 +490,7 @@ module.exports = {
     const method = req.params.method
     console.log(method);
     const addressId = req.body.address
-    if (addressId && method) {
+    if (addressId && method == "cod") {
 
       const mail = req.session.email
       const address = await User.findOne({ email: mail, "address._id": addressId }, { "address.$": 1 })
@@ -496,21 +498,15 @@ module.exports = {
       const userId = user._id
       const detail = await Cart.findOne({ user: userId })
 
-      let ids = [];
       let totals = [];
-      let product = [];
 
       // console.log(detail.product);
 
-      detail.product.forEach(data => {
-        product.push(data.productId)
+      detail.product.forEach(async(data) => {
         totals.push(data.total)
-        ids.push(data.quantity)
       })
 
       let total = totals.reduce((accumulator, currentValue) => accumulator + currentValue);
-
-      console.log(detail.product, ' detail.pro', total, 'total');
 
       const existingUser = await order.findOne({ userId: user._id })
 
@@ -520,7 +516,7 @@ module.exports = {
           datas = data
         })
 
-        await order.findOneAndUpdate({ userId: user._id },
+        order.findOneAndUpdate({ userId: user._id },
           {
             $push: {
               orderDetail: {
@@ -532,8 +528,15 @@ module.exports = {
             }
           })
           .then(async (data) => {
-            await Cart.findOneAndDelete({ user: user._id })
+            await Cart.findOneAndDelete({ user: user._id });
+
+            detail.product.forEach(async(data) => {
+              await Product.findOneAndUpdate({_id:data.productId},{$inc:{stock: -data.quantity}})
+            })
+
           })
+
+
 
       } else {
         let datas;
@@ -552,16 +555,150 @@ module.exports = {
         })
         newOrder.save()
           .then(async (data) => {
-            await Cart.findOneAndDelete({ user: user._id })
+            await Cart.findOneAndDelete({ user: user._id });
+
+            detail.product.forEach(async(data) => {
+              await Product.findOneAndUpdate({_id:data.productId},{$inc:{stock: -data.quantity}})
+            })
+            
           })
       }
 
-      // res.redirect('/orderSuccess');
+      res.json({ success: true })
 
-    } else {
-      // res.redirect('user/checkout');
-      res.redirect('/orderSuccess');
+    } else if (addressId && method == "online") {
 
+      const mail = req.session.email
+      const address = await User.findOne({ email: mail, "address._id": addressId }, { "address.$": 1 })
+      const user = await User.findOne({ email: mail })
+      const userId = user._id
+      const detail = await Cart.findOne({ user: userId })
+
+      let totals = [];
+
+      detail.product.forEach(data => {
+        totals.push(data.total)
+      })
+
+      let total = totals.reduce((accumulator, currentValue) => accumulator + currentValue);
+
+      console.log(total);
+
+      const razorpayInstance = new Razorpay({
+        key_id: "rzp_test_NW0eojDcJawNCK",
+        key_secret: 'IV998Vf1ljnwlVDMQ1Dirwfn'
+      });
+
+      razorpayInstance
+      let amt = total
+      Math.round(amt);
+      const amount = parseInt(amt);
+
+      razorpayInstance.orders.create({
+
+        amount: amount,
+        currency: "INR",
+        receipt: "" + detail._id,
+      }, (err, order) => {
+        if (err) {
+          msg = err;
+          console.log(err, 'error on notes');
+          res.redirect('/500')
+        } else {
+          console.log('successs', order);
+          res.json({ success: true, order, amount, addressId, method })
+        }
+      })
+
+    }
+  },
+
+  verifyPayment: async (req, res) => {
+    try {
+      const payment = req.body;
+      const orderDetails = req.body.order;
+      const addressId = orderDetails.addressId
+      const method = orderDetails.method
+      console.log(orderDetails);
+      let hmac = crypto.createHmac('SHA256', 'IV998Vf1ljnwlVDMQ1Dirwfn')
+      hmac.update(payment.response.razorpay_order_id + '|' + payment.response.razorpay_payment_id)
+      hmac = hmac.digest('hex');
+      if (hmac == payment.response.razorpay_signature) {
+
+        const mail = req.session.email
+        const address = await User.findOne({ email: mail, "address._id": addressId }, { "address.$": 1 })
+        const user = await User.findOne({ email: mail })
+        const userId = user._id
+        const detail = await Cart.findOne({ user: userId })
+
+        let totals = [];
+
+
+        detail.product.forEach(async(data) => {
+          totals.push(data.total)
+          await Product.findOneAndUpdate({_id:data.productId},{$inc:{stock: -data.quantity}})
+        })
+        
+        let total = totals.reduce((accumulator, currentValue) => accumulator + currentValue);
+
+        const existingUser = await order.findOne({ userId: user._id })
+
+        if (existingUser) {
+          let datas;
+          address.address.forEach(data => {
+            datas = data
+          })
+
+          await order.findOneAndUpdate({ userId: user._id },
+            {
+              $push: {
+                orderDetail: {
+                  productDetail: detail.product,
+                  address: datas,
+                  paymentMethod: method,
+                  total: total,
+                  paymentStatus:'Paid'
+                }
+              }
+            })
+            .then(async (data) => {
+              await Cart.findOneAndDelete({ user: user._id })
+            })
+
+        } else {
+          let datas;
+          address.address.forEach(data => {
+            datas = data
+          })
+
+          const newOrder = new order({
+            userId: user._id,
+            orderDetail: {
+              productDetail: detail.product
+            },
+            address: datas,
+            paymentMethod: method,
+            total: total,
+            paymentStatus:'Paid'
+          })
+          newOrder.save()
+            .then(async (data) => {
+              await Cart.findOneAndDelete({ user: user._id })
+            })
+        }
+
+
+
+        const orderId = orderDetails.order.receipt
+
+        res.status(200).send({ success: orderDetails.success, orderId });
+      }
+    } catch (err) {
+      console.error(`Error Verify Online Payment:`, err);
+      res.status(500).json({
+        success: false,
+        error: "Internal server error"
+      });
     }
   },
 
@@ -584,17 +721,17 @@ module.exports = {
         path: 'orderDetail.productDetail.productId',
         model: 'product'
       })
+
     ordersAlive.forEach(data => {
       data.orderDetail.forEach(proData => {
         proData.productDetail.forEach(dataPro => {
           total.push(dataPro.productId.price * dataPro.quantity)
           console.log(dataPro.quantity);
-          console.log(dataPro.productId.price);
         })
       })
     })
 
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",total);
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", total);
     console.log(orders);
     res.render('user/orderDetails', { orders })
   },
@@ -629,6 +766,7 @@ module.exports = {
   },
 
   addToWishlist: async (req, res) => {
+    const id = req.body.productId
     const data = await Product.findOne({ _id: id })
     const name = data.name
     try {

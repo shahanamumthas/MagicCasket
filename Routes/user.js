@@ -67,6 +67,8 @@ router.get('/deleteOrderAddress', userLoginVerify, userController.getdeleteOrder
 
 router.post('/postCheckout/:method',userLoginVerify,userController.postCheckOut)
 
+router.post('/verifyPayment', userLoginVerify,userController.verifyPayment)
+
 router.get('/orderSuccess',userLoginVerify,userController.getOrderSuccess)
 
 router.post('/addToWish',userLoginVerify,userController.addToWishlist)
