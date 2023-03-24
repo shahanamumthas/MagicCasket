@@ -7,6 +7,7 @@ const multer = require('../Middlewares/multer');
 const Banner = require("../Models/banner");
 const Contact = require('../Models/contact');
 const Users =require('../Models/user');
+const { findOne, findOneAndUpdate } = require('../models/product');
 
 
 
@@ -56,6 +57,12 @@ module.exports = {
         const users = await Users.find();
         res.render('admin/users',{ users })
       },
+
+    blockUser:async(req,res)=> {
+        const id = req.body.userId
+        await Users.findByIdAndUpdate({_id:id},{$set:{status:false}})
+        res.json({success:true})
+    },
 
     getProducts: async (req, res) => {
 

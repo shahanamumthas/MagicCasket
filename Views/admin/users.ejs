@@ -29,166 +29,170 @@
     <div id="wrapper">
 
         <%- include('./partials/sidebar') -%>
-        
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-                <%- include('./partials/head') -%>
+                <!-- Main Content -->
+                <div id="content">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                    <%- include('./partials/head') -%>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table
+                                below.
+                                For more information about DataTables, please visit the <a target="_blank"
+                                    href="https://datatables.net">official DataTables documentation</a>.</p>
 
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Email</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Contact</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Email</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Contact</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                            <% users.forEach ((user,index)=>{ %>
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
 
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        <%= index+1 %>
-                                                    </td>
-                                                    <td>
-                                                        <%= user.email %>
-                                                    </td>
-                                                    <td>
-                                                        <%= user.fname %>
-                                                    </td>
-                                                    <td>
-                                                        <%= user.lname %>
-                                                    </td>
-                                                    <td>
-                                                        <%= user.number %>
-                                                    </td>
-                                                    
-                                                    <td>
-                                                        <% user.address.forEach((data) => { %>
-
-                                                            <%= data.housename%>
-
-                                                            <%= data.city%>
-
-                                                            <%= data.state%>
-
-                                                            <%= data.pin%>
-
-                                                            <%= data.country%>
-                                                            <br>
-
-                                                        <%}) %>
-
-                                                    </td>
-                                                   
-                                                  
-                                                    <td class="d-flex justify-content-center">
-
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn " data-toggle="modal"
-                                                            data-target="#exampleModalCenter<%= user._id %>"
-                                                            style="color : rgb(255, 0, 0);">
-                                                            Block
-                                                        </button>
-
-                                                        <!-- Modal -->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter<%= user._id %>" tabindex="-1"
-                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered"
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="exampleModalLongTitle">Delete Warning
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        Are you sure <span
-                                                                            style="color : rgb(255, 0, 0);">
-                                                                            <%= user.name %>
-                                                                        </span> delete
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <a class="btn"
-                                                                            href="/admin/blockuser?id=<%= user._id %>"
-                                                                            style="color : rgb(255, 0, 0);">
-                                                                            Block</a>
-                                                                        <a href="/admin/users">Cancel</a>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
+                                                    <th>#</th>
+                                                    <th>Email</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Contact</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
                                                 </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Email</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Contact</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <% users.forEach ((user,index)=>{ %>
+
+                                                    <tr>
+                                                        <td>
+                                                            <%= index+1 %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.email %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.fname %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.lname %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.number %>
+                                                        </td>
+
+                                                        <td>
+                                                            <% user.address.forEach((data)=> { %>
+
+                                                                <%= data.housename%>
+
+                                                                    <%= data.city%>
+
+                                                                        <%= data.state%>
+
+                                                                            <%= data.pin%>
+
+                                                                                <%= data.country%>
+                                                                                    <br>
+
+                                                                                    <%}) %>
+
+                                                        </td>
+
+
+                                                        <td class="d-flex justify-content-center" id="userBlocked">
+                                                            <%if(!user.status){%>
+                                                                <!-- Button trigger modal -->
+                                                                <button type="button" class="btn " data-toggle="modal"
+                                                                    data-target="#exampleModalblock<%= user._id %>"
+                                                                    style="color : rgb(255, 0, 0);">
+                                                                    Block
+                                                                </button>
+                                                                <%}else{%>
+                                                                    <div class="text-danger">Blocked</div>
+                                                                    <%}%>
+                                                                        <div class="modal fade"
+                                                                            id="exampleModalblock<%= user._id%>"
+                                                                            tabindex="-1" role="dialog"
+                                                                            aria-labelledby="exampleModalLabel"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="exampleModalLabel">Modal
+                                                                                            title</h5>
+                                                                                        <button type="button"
+                                                                                            class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        Are you sure you want to block
+                                                                                        <%= user.fname %>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary"
+                                                                                            data-dismiss="modal">Close</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-danger"
+                                                                                            data-dismiss="modal"
+                                                                                            onclick="return blockUser('<%= user._id%>')">Block</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                        </td>
+                                                    </tr>
+
                                                     <%}) %>
-                                    </tbody>
-                                </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                    </div>
+                        <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
+            <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -217,6 +221,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        function blockUser(userId) {
+            fetch('/admin/blockUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId
+                })
+            })
+                .then(response => response.json())
+                .then(response => {
+                    if (response.success) {
+                        location.reload()
+                    }
+                })
+        }
+
+
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>

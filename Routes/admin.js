@@ -18,7 +18,9 @@ router.get('/', admindController.getLogin)
 
 router.post('/login', admindController.postLogin)
 
-router.get('/users',adminLoginVerify,admindController.getUsers)
+router.get('/users',adminLoginVerify,admindController.getUsers);
+
+router.post('/blockUser',adminLoginVerify,admindController.blockUser);
 
 router.get('/home', adminLoginVerify, admindController.getHome)
 
