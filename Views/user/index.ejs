@@ -27,6 +27,7 @@
 	<!--===============================================================================================-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -132,16 +133,23 @@
 
 							<!-- ************************** -->
 						</div>
-						<div class="icon-header-item cl3 hov-cl1 trans-04 p-l-22 p-r-11 ">
-							<!-- <i class="zmdi zmdi-shopping-cart"></i> -->
-							<%if (user){%>
+						<!-- <i class="zmdi zmdi-shopping-cart"></i> -->
+						<%if (user){%>
+							<div class="icon-header-item cl3 hov-cl1 trans-04 p-l-22 p-r-11 ">
+
 								<a href="/cart" class="cl3 hov-cl1">
 									<i class='fas fa-shopping-cart' style='font-size:16px'></i>
 								</a>
-								<a href="/whishlist" style="font-size: 10px;">whishList</a>
-								
-								<%}%>
-						</div>
+							</div>
+							<div class="icon-header-item cl3 hov-cl1 trans-04 p-l-22 p-r-11 ">
+
+								<a href="/whishlist" style="font-size: 10px;">
+									<i class="fa fa-heart" style="color: rgb(100, 100, 100); font-size:18px"></i>
+
+								</a>
+							</div>
+
+							<%}%>
 					</div>
 				</nav>
 			</div>

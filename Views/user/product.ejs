@@ -40,14 +40,14 @@
 
 		<div class="flex-w flex-sb-m p-t-45 p-b-52 p-lr-40">
 			<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+				<!-- <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 					All Products
 				</button>
 				<% category.forEach((data)=>{ %>
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".<%= data._id%>">
 						<%= data.category_name%>
 					</button>
-					<% }) %>
+					<% }) %> -->
 			</div>
 
 			<div class="flex-w flex-c-m m-tb-10">
@@ -70,39 +70,98 @@
 					<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-
-					<input onchange="searchProduct('hi')" id="productSearch" class="mtext-107 cl2 size-114 plh2 p-r-15"
-						type="text" name="search-product" placeholder="Search">
-
+					<form action="/product" method="get">
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search"
+							placeholder="Search">
+						<button type="submit">Search</button>
+					</form>
 				</div>
 			</div>
 
 			<!-- Filter -->
 			<div class="dis-none panel-filter w-full p-t-10">
-				<div class="">
+				<div class="d-flex ">
 					<div class="p-lr-100">
 						<div class="mtext-102 cl2 p-b-15">
-							Sort By
+							Sort By Price
 						</div>
 
 						<ul>
 							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Default
-								</a>
+								<%if(categ){%>
+									<a href="/product?category=<%= categ%>" class="filter-link stext-106 trans-04">
+										Default
+									</a>
+									<%}else{%>
+										<a href="/product" class="filter-link stext-106 trans-04">
+											Default
+										</a>
+										<%}%>
 							</li>
 
 							<li class="p-b-6">
-								<a class="filter-link stext-106 trans-04 pointer" id="lowToHigh">
-									Price: Low to High
-								</a>
+								<%if(categ){%>
+									<a class="filter-link stext-106 trans-04 pointer"
+										href="/product?sort=lowToHigh&category=<%= categ%>">
+										Price: Low to High
+									</a>
+									<%}else{%>
+										<a class="filter-link stext-106 trans-04 pointer"
+											href="/product?sort=lowToHigh">
+											Price: Low to High
+										</a>
+										<%}%>
 							</li>
 
 							<li class="p-b-6">
-								<a class="filter-link stext-106 trans-04 pointer" id="highToLow">
-									Price: High to Low
-								</a>
+								<%if(categ){%>
+									<a class="filter-link stext-106 trans-04 pointer"
+										href="/product?sort=HighToLow&category=<%= categ%>">
+										Price: High to Low
+									</a>
+									<%}else{%>
+										<a class="filter-link stext-106 trans-04 pointer"
+											href="/product?sort=HighToLow">
+											Price: High to Low
+										</a>
+										<%}%>
 							</li>
+						</ul>
+					</div>
+					<div class="p-lr-100">
+						<div class="mtext-102 cl2 p-b-15">
+							Sort By category
+						</div>
+
+						<ul>
+							<li class="p-b-6">
+								<%if(sort){%>
+									<a href="/product?sort=<%= sort%>" class="filter-link stext-106 trans-04">
+										All
+									</a>
+									<%}else{%>
+										<a href="/product" class="filter-link stext-106 trans-04">
+											All
+										</a>
+										<%}%>
+							</li>
+
+							<% category.forEach((data)=>{ %>
+								<li class="p-b-6">
+									<%if(sort){%>
+										<a href="/product?category=<%= data._id%>&sort=<%= sort%>"
+											class="filter-link stext-106 trans-04">
+											<%= data.category_name%>
+										</a>
+										<%}else{%>
+											<a href="/product?category=<%= data._id%>"
+												class="filter-link stext-106 trans-04">
+												<%= data.category_name%>
+											</a>
+											<%}%>
+								</li>
+								<% }) %>
+
 						</ul>
 					</div>
 				</div>
@@ -162,17 +221,171 @@
 				</div>
 
 				<!-- Load more -->
-				<div class="flex-c-m flex-w w-full p-t-45">
-					<!-- <i class='fas fa-caret-right'></i> -->
-					<%for( let j=1 ;j <=totalPages; j++){%>
-						<a href="?page=<%= j%>"
-							class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-							<%= j%>
-						</a>
+				<!-- **************************************** -->
+				<nav>
+					<ul class="pagination">
+						<% if(search){%>
+							<% if (page> 1) { %>
+								<li class="page-item">
+									<a class="page-link"
+										href="/product?page=<%= page - 1 %>&search=<%= search%>">&laquo;</a>
+								</li>
+								<% } %>
 
-						<%}%>
+									<% for(let i=1; i <=totalPages; i++) { %>
+										<li class="page-item <%= page === i ? 'active' : '' %>">
+											<a class="page-link" href="/product?page=<%= i %>&search=<%= search%>">
+												<%= i %>
+											</a>
+										</li>
+										<% } %>
 
-				</div>
+											<% if(page < totalPages){%>
+												<li class="page-item">
+													<a class="page-link"
+														href="/product?page=<%= page + 1 %>&search=<%=search%>">&raquo;</a>
+												</li>
+												<% } %>
+
+													<%}else if(sort && categ){%>
+														<% if (page> 1) { %>
+															<li class="page-item">
+																<a class="page-link"
+																	href='/product?page=<%= page - 1 %>&sort=<%=sort%>&category=<%= categ%>'>&laquo;</a>
+															</li>
+															<% } %>
+																<% for(let i=1; i <=totalPages; i++) { %>
+																	<li
+																		class="page-item <%= page === i ? 'active' : '' %>">
+																		<a class="page-link"
+																			href="/product?page=<%= i %>&sort=<%=sort%>&category=<%= categ%>">
+																			<%= i %>
+																		</a>
+																	</li>
+																	<% } %>
+
+																		<% if (page < totalPages) { %>
+																			<li class="page-item">
+																				<a class="page-link"
+																					href="/product?page=<%= page + 1 %>&sort=<%=sort%>&category=<%= categ%>">&raquo;</a>
+																			</li>
+																			<% } %>
+																				<%}else if(sort){%>
+																					<% if (page> 1) { %>
+																						<li class="page-item">
+																							<a class="page-link"
+																								href='/product?page=<%= page - 1 %>&sort=<%=sort%>'>&laquo;</a>
+																						</li>
+																						<% } %>
+																							<% for(let i=1; i
+																								<=totalPages; i++) { %>
+																								<li
+																									class="page-item <%= page === i ? 'active' : '' %>">
+																									<a class="page-link"
+																										href="/product?page=<%= i %>&sort=<%=sort%>">
+																										<%= i %>
+																									</a>
+																								</li>
+																								<% } %>
+
+																									<% if (page <
+																										totalPages) { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link"
+																												href="/product?page=<%= page + 1 %>&sort=<%=sort%>">&raquo;</a>
+																										</li>
+																										<% } %>
+																											<%}else
+																												if(categ){%>
+																												<% if
+																													(page>
+																													1) {
+																													%>
+																													<li
+																														class="page-item">
+																														<a class="page-link"
+																															href='/product?page=<%= page - 1 %>&category=<%=categ%>'>&laquo;</a>
+																													</li>
+																													<% }
+																														%>
+																														<% for(let
+																															i=1;
+																															i
+																															<=totalPages;
+																															i++)
+																															{
+																															%>
+																															<li
+																																class="page-item <%= page === i ? 'active' : '' %>">
+																																<a class="page-link"
+																																	href="/product?page=<%= i %>&category=<%=categ%>">
+																																	<%= i
+																																		%>
+																																</a>
+																															</li>
+																															<% }
+																																%>
+
+																																<% if
+																																	(page
+																																	<
+																																	totalPages)
+																																	{
+																																	%>
+																																	<li
+																																		class="page-item">
+																																		<a class="page-link"
+																																			href="/product?page=<%= page + 1 %>&category=<%=categ%>">&raquo;</a>
+																																	</li>
+																																	<% }
+																																		%>
+																																		<%} else
+																																			{%>
+																																			<%
+																																				if(page>
+																																				1){
+																																				%>
+																																				<li
+																																					class="page-item">
+																																					<a class="page-link"
+																																						href="/product?page=<%= page - 1 %>">&laquo;</a>
+																																				</li>
+																																				<%
+																																					}%>
+																																					<% for(let
+																																						i=1;
+																																						i
+																																						<=totalPages;
+																																						i++)
+																																						{
+																																						%>
+																																						<li
+																																							class="page-item <%= page === i ? 'active' : '' %>">
+																																							<a class="page-link"
+																																								href="/product?page=<%= i %>">
+																																								<%= i
+																																									%>
+																																							</a>
+																																						</li>
+																																						<%
+																																							}%>
+
+																																							<% if(
+																																								page<
+																																								totalPages){
+																																								%>
+																																								<li
+																																									class="page-item">
+																																									<a class="page-link"
+																																										href="/product?page=<%= page + 1 %>">&raquo;</a>
+																																								</li>
+																																								<% }
+																																									%>
+																																									<%}%>
+
+					</ul>
+				</nav>
 			</div>
 		</div>
 
@@ -303,34 +516,41 @@
 						.then(response => response.json())
 						.then(items => {
 							if (items.success) {
-								const itemsContainer = document.querySelector('.isotope-grid');
-								itemsContainer.innerHTML = '';
+								// const itemsContainer = document.querySelector('.isotope-grid');
+								// itemsContainer.innerHTML = '';
+								console.log(items.item);
+								const imgElement = document.querySelector('.block2-pic img');
+								const aElement = document.querySelector('.block2-pic a');
+
 								items.item.forEach(item => {
-									const html = `
-            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${item.category}">
-              <div class="block2">
-                <div class="block2-pic hov-img0">
-                  <img src="/${item.images[1].path}" alt="Product Image">
-                  <a href="/productDetail?id=${item._id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                    Quick View
-                  </a>
-                </div>
-                <div class="block2-txt flex-w flex-t p-t-14">
-                  <div class="block2-txt-child1 flex-col-l">
-                    <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
-                    <span class="stext-105 cl3">${item.price}</span>
-                  </div>
-                  <div class="block2-txt-child2 flex-r p-t-3">
-                    <a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="return addToWish(${item._id})">
-                      <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-                      <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-									itemsContainer.insertAdjacentHTML('beforeend', html);
+									imgElement.setAttribute('src', `/${item.images[1].path}`);
+									aElement.setAttribute('href', `/productDetail?id=${item._id}`);
+
+									// 							const html = `
+									//     <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${item.category}">
+									//       <div class="block2">
+									//         <div class="block2-pic hov-img0">
+									//           <img src="/${item.images[1].path}" alt="Product Image">
+									//           <a href="/productDetail?id=${item._id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+									//             Quick View
+									//           </a>
+									//         </div>
+									//         <div class="block2-txt flex-w flex-t p-t-14">
+									//           <div class="block2-txt-child1 flex-col-l">
+									//             <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+									//             <span class="stext-105 cl3">${item.price}</span>
+									//           </div>
+									//           <div class="block2-txt-child2 flex-r p-t-3">
+									//             <a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="return addToWish(${item._id})">
+									//               <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+									//               <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+									//             </a>
+									//           </div>
+									//         </div>
+									//       </div>
+									//     </div>
+									//   `;
+									// itemsContainer.insertAdjacentHTML('beforeend', html);
 								})
 
 							} else {

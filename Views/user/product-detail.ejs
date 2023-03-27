@@ -43,7 +43,7 @@
 
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
 	<!--===============================================================================================-->
 </head>
@@ -123,31 +123,30 @@
 
 
 								<div class="form-group row flex-w flex-r-m p-b-10">
-                                    <div class="col-sm-6 mb-3 mb-sm-0 size-204 flex-w flex-m respon6-next">
-                                        <button
+									<div class="col-sm-6 mb-3 mb-sm-0 size-204 flex-w flex-m respon6-next">
+										<button
 											class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-5 trans-04 js-addcart-detail "
 											onclick="return addToCart('<%= product._id %>')">
 											Add to cart
 										</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button
+									</div>
+									<div class="col-sm-6">
+										<button
 											class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-5 trans-04 js-addwish-button"
 											onclick="return addToWish('<%= product._id %>')">
 											Add to Wishlist
 										</button>
-                                    </div>
-                                    
-                                
-                                </div>
-                                <div class="form-group row flex-w flex-r-m p-b-10">
-                                    
-										<button 
-											
-											class=" btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-											<a href="/buyNow?id=<%= product._id %>" class="cl0 pointer">BUY NOW</a>
-										</button>
-                                </div>
+									</div>
+
+
+								</div>
+								<div class="form-group row flex-w flex-r-m p-b-10">
+
+									<button
+										class=" btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+										<a href="/buyNow?id=<%= product._id %>" class="cl0 pointer">BUY NOW</a>
+									</button>
+								</div>
 
 
 							</div>
@@ -155,8 +154,7 @@
 							<!--  -->
 							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
 								<div class="flex-m bor9 p-r-10 m-r-11">
-									<a href="#"
-										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-b2 "
+									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-b2 "
 										data-tooltip="Add to Wishlist">
 										<i class="zmdi zmdi-favorite"></i>
 									</a>
@@ -203,10 +201,10 @@
 							</div>
 
 							<!-- - -->
-							
+
 
 							<!-- - -->
-							
+
 						</div>
 					</div>
 				</div>
@@ -225,7 +223,7 @@
 
 
 		<!-- Related Products -->
-		<section class="sec-relate-product bg0 p-t-45 p-b-105">
+		<!-- <section class="sec-relate-product bg0 p-t-45 p-b-105">
 			<div class="container">
 				<div class="p-b-45">
 					<h3 class="ltext-106 cl5 txt-center">
@@ -237,7 +235,7 @@
 
 
 
-				<!-- Slide2 -->
+				Slide2
 				<div class="wrap-slick2">
 					<div class="slick2">
 						<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
@@ -281,7 +279,7 @@
 				</div>
 			</div>
 			</div>
-		</section>
+		</section> -->
 
 
 		<%- include('./partials/footer') -%>
@@ -295,7 +293,7 @@
 			</div>
 
 			<!-- Modal1 -->
-			
+
 
 
 			<script>
@@ -318,18 +316,23 @@
 
 				}
 
-				function addToWish (productId){
-					fetch('/addToWish',{
-						method : 'POST',
-						headers  : {
-							'Content-Type' : 'application/json'
-						},
-						body : JSON.stringify({
-								
-							})
-					})
+				function addToWish(productId) {
 
-					
+					fetch('/addToWish', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ productId })
+					})
+						.then(response => response.json())
+						.then(response => {
+							if (response.success) {
+								swal(response.name, "is added to wishlist !", "successful");
+							} else {
+								swal(response.name, "is failed to add wishlist ! ,Please Login", "warning");
+							}
+						})
 				}
 			</script>
 
@@ -418,11 +421,11 @@
 				$('.js-addwish-button').each(function () {
 					var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
 					$(this).on('click', function () {
-						swal(nameProduct, "is added to das !", "success");
+						swal(nameProduct, "is added to whishlist !", "success");
 					});
 				});
 
-				
+
 			</script>
 			<!--===============================================================================================-->
 			<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>

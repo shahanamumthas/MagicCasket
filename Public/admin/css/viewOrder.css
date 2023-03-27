@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+html {
+    font-family: 'Lato', sans-serif;
+}
+.cards-list {
+    padding: 10px;
+}
+.card-holder {
+    box-sizing: content-box;
+    margin-bottom: 10px;
+}
+body.hidden {
+    overflow: hidden;
+}
+.card {
+    box-shadow: 0 0 20px 0 rgba(102, 102, 102, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    transition: all 400ms ease;
+}
+.card .close {
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #555;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+}
+.card .close:after, .card .close:before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    left: 5px;
+    top: 12px;
+}
+.card .close:after {
+    transform: rotate(45deg);
+}
+.card .close:before {
+    transform: rotate(-45deg);
+}
+.card.is-open {
+    border-radius: 0px !important;
+    left: 0px !important;
+    top: 0px !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+.card.is-open .card-article {
+    max-height: 100%;
+    overflow: auto;
+}
+.card.is-open .close {
+    opacity: 1;
+    visibility: visible;
+}
+.card-head {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px;
+    color: #fff;
+    background-position: center;
+    background-size: cover;
+}
+.card-article {
+    max-height: 0;
+    overflow: hidden;
+}
+.card-article article {
+    padding: 20px;
+}

@@ -18,9 +18,9 @@ router.get('/', admindController.getLogin)
 
 router.post('/login', admindController.postLogin)
 
-router.get('/users',adminLoginVerify,admindController.getUsers);
+router.get('/users', adminLoginVerify, admindController.getUsers);
 
-router.post('/blockUser',adminLoginVerify,admindController.blockUser);
+router.post('/blockUser', adminLoginVerify, admindController.blockUser);
 
 router.get('/home', adminLoginVerify, admindController.getHome)
 
@@ -56,35 +56,43 @@ router.get('/editBanner', adminLoginVerify, admindController.geteditBanner)
 
 router.put('/editBanner', adminLoginVerify, admindController.puteditBanner)
 
-router.get('/orders',adminLoginVerify, async (req, res) => {
-    const orders = await order.find({}).populate('userId')
-        .populate({
-            path: "orderDetail.productId",
-            model: "product",
-            populate: [
-                {
-                  path: "category",
-                  model: "category"
-                }
-              ]
-        })
+router.get('/orders', adminLoginVerify, admindController.getOrder)
 
-        orders.forEach(data => {
-          console.log(data.userId);
-            data.orderDetail.forEach( datass => {
-              // console.log(datass,'datass');
-              datass.productId.forEach( proo => {
-                // console.log(proo);
-              })
-            })
-          })
+router.get('/viewOrder',adminLoginVerify,admindController.viewOrder)
+
+router.get('/cancelOrder',adminLoginVerify,admindController.changeOrderStatus)
+
+// router.get('/orders',adminLoginVerify, async (req, res) => {
+//   console.log("############");
+//     const orders = await order.find({}).populate('userId')
+//         .populate({
+//             path: "orderDetail.productId",
+//             model: "order",
+//             populate: [
+//                 {
+//                   path: "category",
+//                   model: "category"
+//                 }
+//               ]
+//         })
+
+//         orders.forEach(data => {
+//           // console.log(data.userId);
+//             data.orderDetail.forEach( datass => {
+//               // console.log(datass,'datass');
+//               datass.productId.forEach( proo => {
+//                 console.log(proo);
+//                 res.render('admin/order', { orders,proo })
+//               })
+//             })
+//           })
 
 
-    res.render('admin/order', { orders })
-})
+
+// })
 
 router.get('/404', (req, res) => {
-    res.render('admin/404')
+  res.render('admin/404')
 })
 
 router.get('/signout', admindController.getSignout)

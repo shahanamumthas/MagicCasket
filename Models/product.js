@@ -19,13 +19,7 @@ const productSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    // tag : {
-    //     type :  [{
-    //         path: { 
-    //             type: String, 
-    //         },
-    //     }],
-    // },
+   
     images: [{
         path: { 
             type: String, 

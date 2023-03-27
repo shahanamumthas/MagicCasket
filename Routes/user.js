@@ -35,15 +35,7 @@ router.post('/otp', userController.postOTP)
 
 router.get('/product', userController.getProduct)
 
-router.get('/paginateItems',)
-
-router.post('/productSearch', userController.postSearch)
-
 router.get('/productDetail', userController.getProductDetails)
-
-router.post('/sortLowToHigh', userController.postSortLowToHigh)
-
-router.post('/sortHighToLow', userController.postSorHighToLow)
 
 router.post('/addToCart', userLoginVerify, userController.postAddToCart)
 
@@ -74,6 +66,8 @@ router.get('/orderSuccess',userLoginVerify,userController.getOrderSuccess)
 router.post('/addToWish',userLoginVerify,userController.addToWishlist)
 
 router.get('/whishlist',userLoginVerify,userController.getWishlist)
+
+router.get('/delWishlisttItem',userLoginVerify,userController.getDelWishlistItem)
 
 router.get('/buyNow',userLoginVerify,userController.getBuyNow)
 

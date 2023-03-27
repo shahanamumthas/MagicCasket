@@ -55,9 +55,9 @@
                     <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
                         <div class="m-l-25 m-r--38 m-lr-0-xl">
                             <div class="wrap-table-shopping-cart">
-
+                                <%if(product){%>
                                 <table class="table-shopping-cart">
-                                   
+                                   <%product.forEach((data)=>{%>
                                     <tr class="table_head">
                                         <th class="column-1" >
                                             My Wishlist
@@ -66,26 +66,38 @@
                                     <tr class="table_row">
                                         <td class="column-1">
                                             <div class="how-itemcart1">
-                                                <img src=" = data.productId.images[0].path " alt="IMG">
+                                                <img src=" <%= data.images[0].path%> " alt="IMG">
                                             </div>
                                         </td>
                                         <td class="column-2">
-                                           name
+                                          <%=data.name%>
                                         </td>
                                         <td class="column-3">
-                                           price
+                                           <%=data.price%>
                                         </td>
-                                        
+                                        <td>
+                                            dfsdfs
+                                        </td>
 
                                         <td class="column-5">
-                                            <a href="/delCartItem/ = data.productId._id " role="button">
-                                                <i class="fas fa-times"></i>
+                                            <a href="/delWishlisttItem?id=<%= data._id%> " role="button">
+                                                <!-- <i class="fas fa-times"></i> -->
+                                                cancel
                                             </a>
                                         </td>
                                     </tr>
 
-                                   
+                                   <%})%>
                                 </table>
+                                <%}else{%>
+                                    <div class=" text-center">
+				
+										<h2>
+											Your whishlist is currently empty</h2><br>
+										<p> Before proceed to checkout you must add some products to your shopping cart. You will
+											find a lot of interesting products on our "Shop" page.</p>
+						  </div>
+                          <%}%>
                             </div>
                         </div>
                     </div>

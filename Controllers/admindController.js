@@ -6,7 +6,8 @@ const Category = require('../Models/category');
 const multer = require('../Middlewares/multer');
 const Banner = require("../Models/banner");
 const Contact = require('../Models/contact');
-const Users =require('../Models/user');
+const Users = require('../Models/user');
+const order = require('../Models/orders')
 const { findOne, findOneAndUpdate } = require('../models/product');
 
 
@@ -50,18 +51,18 @@ module.exports = {
 
     getHome: async (req, res) => {
         const message = await Contact.find();
-        res.render('admin/index',{ message })
+        res.render('admin/index', { message })
     },
 
-    getUsers : async (req,res)=>{
+    getUsers: async (req, res) => {
         const users = await Users.find();
-        res.render('admin/users',{ users })
-      },
+        res.render('admin/users', { users })
+    },
 
-    blockUser:async(req,res)=> {
+    blockUser: async (req, res) => {
         const id = req.body.userId
-        await Users.findByIdAndUpdate({_id:id},{$set:{status:false}})
-        res.json({success:true})
+        await Users.findByIdAndUpdate({ _id: id }, { $set: { status: false } })
+        res.json({ success: true })
     },
 
     getProducts: async (req, res) => {
@@ -87,26 +88,26 @@ module.exports = {
             ({ path: file.filename })
         )
         console.log(typeof (image));
-        await Product.findOne({ name: req.body.name})
+        await Product.findOne({ name: req.body.name })
             .then(async (product) => {
-            if (product) {
-                res.redirect('/admin/addProduct')
-            }
-            else {
-                let product = new Product({
-                    name: req.body.name,
-                    price: req.body.price,
-                    category: req.body.category,
-                    mrp: req.body.mrp,
-                    stock: req.body.stock,
-                    description: req.body.description,
-                    images: image
+                if (product) {
+                    res.redirect('/admin/addProduct')
+                }
+                else {
+                    let product = new Product({
+                        name: req.body.name,
+                        price: req.body.price,
+                        category: req.body.category,
+                        mrp: req.body.mrp,
+                        stock: req.body.stock,
+                        description: req.body.description,
+                        images: image
 
-                })
-                product.save()
-                res.redirect('/admin/Products')
-            }
-        })
+                    })
+                    product.save()
+                    res.redirect('/admin/Products')
+                }
+            })
         console.log(req.body.category);
         // Initialize Toastr
         // toastr.options = {
@@ -155,7 +156,7 @@ module.exports = {
 
     },
 
-    getDeleteCategory : async (req,res)=>{
+    getDeleteCategory: async (req, res) => {
         const id = req.query.id
         await Category.findOneAndDelete(id)
         res.redirect('/admin/addCategory')
@@ -220,7 +221,7 @@ module.exports = {
         }).then(async (banner) => {
             if (banner) {
                 res.redirect('/admin/addBanner')
-                res.json({ success: false})
+                res.json({ success: false })
 
             }
             else {
@@ -232,10 +233,87 @@ module.exports = {
                 })
                 banner.save()
                 res.redirect('/admin/home')
-                res.json({ success: true})
+                res.json({ success: true })
 
             }
         })
+    },
+
+    getOrder: async (req, res) => {
+        const orders = await order.find().populate('userId')
+            .populate({
+                path: 'orderDetail.productDetail.productId',
+                model: 'product',
+                populate: 'category'
+            })
+        console.log(orders.orderDetail);
+
+        res.render('admin/order', { orders })
+    },
+
+    viewOrder: async (req, res) => {
+        const productId = req.query.productId
+        const orderId = req.query.orderId;
+        const userId = req.query.userId;
+        try {
+            const data = await order.findOne({ userId: userId }).populate('userId')
+                .populate({
+                    path: 'orderDetail.productDetail.productId',
+                    model: 'product',
+                    populate:'category'
+                })
+
+            console.log(data.userId);
+
+            const orderData = data.orderDetail.find(obj => obj._id.toString() === orderId);
+            console.log(orderData);
+
+            const productData = orderData.productDetail.find(obj => obj.productId._id.toString() === productId)
+            console.log(productData.productId.images);
+
+            res.render('admin/orderDetail',{ data, orderData, productData })
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    changeOrderStatus: async(req,res)=>{
+        const productId = req.query.productId
+        const orderId = req.query.orderId;
+        const userId = req.query.userId;
+
+        try {
+            const result = await order.updateOne(
+              {
+                  userId: userId,
+                  'orderDetail._id': orderId,
+                  'orderDetail.productDetail.productId': productId
+              },
+              {
+                  $set: {
+                      'orderDetail.$.productDetail.$[prod].orderStatus': 'Cancel'
+                  }
+              },
+              {
+                  arrayFilters: [
+                      {
+                          'prod.productId': productId
+                      }
+                  ]
+              }
+          )
+          .then(() => {
+              console.log('Order status updated successfully');
+          })
+          .catch((error) => {
+              console.error(error);
+          })
+          
+            res.redirect('/admin/orders')
+          } catch (err) {
+            console.log(err)
+            //handle the error
+          }
     },
 
     getBanner: async (req, res) => {

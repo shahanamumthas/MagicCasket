@@ -67,8 +67,9 @@
                                                     <th>Customer Name</th>
                                                     <th>Price</th>
                                                     <th>Quantity</th>
-                                                    <th class="d-none">Category</th>
+                                                    <th>Category</th>
                                                     <th>Total</th>
+                                                    <th>View</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -81,106 +82,99 @@
                                                     <th>Customer Name</th>
                                                     <th>Price</th>
                                                     <th>Quantity</th>
-                                                    <th class="d-none">Category</th>
+                                                    <th>Category</th>
                                                     <th>Total</th>
+                                                    <th>View</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
                                                 <% orders.forEach((data)=>{%>
                                                     <% data.orderDetail.forEach((orderData)=>{%>
-                                                        <% var j=0 %>
-                                                            <%orderData.productId.forEach((productData)=>{%>
-                                                                <tr>
-                                                                    <td>
-                                                                    </td>
-                                                                    <td class="d-flex flex-raw">
-                                                                        <div class="d-flex flex-column">
-                                                                            <img style="height: 10vh; width: 10vh;"
-                                                                                src="/<%= productData.images[0].path%>"
-                                                                                alt=""><a href=""></a>
-                                                                        </div>
-                                                                    </td>
+                                                        <%orderData.productDetail.forEach((productData)=>{%>
+                                                            <tr>
+                                                                <td>
+                                                                </td>
+                                                                <td class="d-flex flex-raw">
+                                                                    <div class="d-flex flex-column">
+                                                                        <img height="10vh"  width: = '10vh'
+                                                                            src="/<%= productData.productId.images[1].path%>"
+                                                                            alt=""><a href=""></a>
+                                                                    </div>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <%= productData.name%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= data._id%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= data.userId.fname%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= productData.price%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= orderData.quantity[j]%>
-                                                                    </td>
-                                                                    <td class="d-none">
-                                                                        <%= productData.category.category_name%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= orderData.total[j]%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= orderData.status%>
-                                                                    </td>
-                                                                    <!-- <td class="d-flex justify-content-center">
+                                                                <td>
+                                                                    <%= productData.productId.name%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orderData._id%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= data.userId.fname%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= productData.productId.price%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= productData.quantity%> 
+                                                                </td>
+                                                                <td >
+                                                                    <%= productData.productId.category.category_name%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= productData.total%>
+                                                                </td>
+                                                                <td>
+                                                                   <a href="/admin/viewOrder?orderId=<%=orderData._id%>&productId=<%= productData.productId._id%>&userId=<%=data.userId._id%>" role="button" class="btn btn-primary">View</a>
+                                                                </td>
+                                                                <td class="">
                                                                         <a type="button"
                                                                             class="btn btn-danger text-light"
                                                                             data-toggle="modal"
-                                                                            data-target="#exampleModalCenter<%= productData._id%>">
+                                                                            data-target="#exampleModalCenter<%= productData.productId._id%><%=orderData._id%>">
                                                                             Cancel
                                                                         </a>
-                                                                    </td> -->
-
-                                                                </tr>
-                                                                <!-- Modal -->
-                                                                <div class="modal fade"
-                                                                    id="exampleModalCenter<%= productData._id%>"
-                                                                    tabindex="-1" role="dialog"
-                                                                    aria-labelledby="exampleModalLabel"
-                                                                    aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="exampleModalLongTitle">
-                                                                                    Delete Warning
-                                                                                </h5>
-                                                                                <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                    <span
-                                                                                        aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                Are you sure you want to cancel <b
-                                                                                    class="text-black">
-                                                                                    <%= productData.name%>
-                                                                                </b><span>
-
-                                                                                </span>
-                                                                            </div>
-                                                                            <!-- <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-dismiss="modal">Close</button>
-                                                                                <a type="button"
-                                                                                    href="/admin/deleteproduct?id=<%= productData._id%>"
-                                                                                    class="btn btn-danger">Cancel</a>
-
-                                                                            </div> -->
+                                                                    </td>
+                                                            </tr>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade"
+                                                                id="exampleModalCenter<%= productData.productId._id%><%=orderData._id%>""
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="exampleModalLongTitle">
+                                                                                Delete Warning
+                                                                            </h5>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
                                                                         </div>
+                                                                        <div class="modal-body">
+                                                                            Are you sure you want to cancel <b
+                                                                                class="text-black">
+                                                                                <%= productData.productId.name%>
+                                                                            </b><span>
+
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <a type="button" href="/admin/cancelItem?orderId=<%=orderData._id%>&id=<%= productData.productId._id%>"
+                                                                            class="btn btn-danger">Cancel</a>
+
+                                                                            </div>
                                                                     </div>
                                                                 </div>
-                                                                <%= j++%>
-                                                                    <%})%>
+                                                            </div>
+                                                            <%})%>
 
-                                                                        <%})%>
-                                                                            <%})%>
+                                                                <%})%>
+                                                                    <%})%>
                                             </tbody>
                                         </table>
                                     </div>

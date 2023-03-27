@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <link rel="stylesheet" href="/admin/css/sb-admin-2.css">
+    <link rel="stylesheet" href="/admin/js/sb-admin-2.js">
+</head> 
+<body class="bg-light">
+
+    <!-- get user data   -->
+    <h1>User Details</h1>
+    <%= data.userId.fname %>
+    <%= data.userId.lname%>
+    <%%= data.userId.email>
+    <br><hr>
+    <!-- get order data -->
+    <h1>Order Details</h1>
+    <%= orderData.paymentStatus%>
+    <%= orderData.time%>
+    <br>
+    <h5>address</h5>
+    <%= orderData.address.state %>  <%= orderData.address.city %> 
+        <%= orderData.address.housename %>   <%= orderData.address.pin %>
+    <br><hr>
+    <!-- get product details -->
+
+    <h1>product Detail</h1>
+    <%= productData.productId.name%> 
+    <br>    <%= productData.productId.price%>
+    <%= productData.productId.stock%> 
+    <br>
+    <img src="/<%=productData.productId.images[1].path%>" height="100px" width="100px" alt="">
+
+    <!-- cancel -->
+    <%= orderData._id%> <%= productData.productId._id%> <%= data.userId._id%>
+    <a href="/admin/cancelOrder?orderId=<%=orderData._id%>&productId=<%= productData.productId._id%>&userId=<%=data.userId._id%>">Cancel</a>
+    <%= productData.orderStatus%> 
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+           
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+         
+          </tr>
+        </tbody>
+      </table>
+</body>  
+</html>
+  
+  
+  
