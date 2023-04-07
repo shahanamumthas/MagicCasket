@@ -50,7 +50,7 @@
 					<% }) %> -->
 			</div>
 
-			<div class="flex-w flex-c-m m-tb-10">
+			<div class="flex-w flex-c-m m-t-50">
 				<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
 					<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
 					<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
@@ -226,7 +226,7 @@
 					<ul class="pagination">
 						<% if(search){%>
 							<% if (page> 1) { %>
-								<li class="page-item">
+								<li class="page-item text-center">
 									<a class="page-link"
 										href="/product?page=<%= page - 1 %>&search=<%= search%>">&laquo;</a>
 								</li>
@@ -241,8 +241,8 @@
 										<% } %>
 
 											<% if(page < totalPages){%>
-												<li class="page-item">
-													<a class="page-link"
+												<li class="page-item text-center">
+													<a class="page-link "
 														href="/product?page=<%= page + 1 %>&search=<%=search%>">&raquo;</a>
 												</li>
 												<% } %>
@@ -250,13 +250,13 @@
 													<%}else if(sort && categ){%>
 														<% if (page> 1) { %>
 															<li class="page-item">
-																<a class="page-link"
+																<a class="page-link text-center"
 																	href='/product?page=<%= page - 1 %>&sort=<%=sort%>&category=<%= categ%>'>&laquo;</a>
 															</li>
 															<% } %>
 																<% for(let i=1; i <=totalPages; i++) { %>
 																	<li
-																		class="page-item <%= page === i ? 'active' : '' %>">
+																		class="text-center page-item <%= page === i ? 'active' : '' %>">
 																		<a class="page-link"
 																			href="/product?page=<%= i %>&sort=<%=sort%>&category=<%= categ%>">
 																			<%= i %>
@@ -265,14 +265,14 @@
 																	<% } %>
 
 																		<% if (page < totalPages) { %>
-																			<li class="page-item">
+																			<li class="page-item text-center">
 																				<a class="page-link"
 																					href="/product?page=<%= page + 1 %>&sort=<%=sort%>&category=<%= categ%>">&raquo;</a>
 																			</li>
 																			<% } %>
 																				<%}else if(sort){%>
 																					<% if (page> 1) { %>
-																						<li class="page-item">
+																						<li class="page-item text-center">
 																							<a class="page-link"
 																								href='/product?page=<%= page - 1 %>&sort=<%=sort%>'>&laquo;</a>
 																						</li>
@@ -281,7 +281,7 @@
 																								<=totalPages; i++) { %>
 																								<li
 																									class="page-item <%= page === i ? 'active' : '' %>">
-																									<a class="page-link"
+																									<a class="page-link text-center"
 																										href="/product?page=<%= i %>&sort=<%=sort%>">
 																										<%= i %>
 																									</a>
@@ -291,7 +291,7 @@
 																									<% if (page <
 																										totalPages) { %>
 																										<li
-																											class="page-item">
+																											class="page-item text-center">
 																											<a class="page-link"
 																												href="/product?page=<%= page + 1 %>&sort=<%=sort%>">&raquo;</a>
 																										</li>
@@ -303,8 +303,8 @@
 																													1) {
 																													%>
 																													<li
-																														class="page-item">
-																														<a class="page-link"
+																														class="page-item text-center">
+																														<a class="page-link text-center"
 																															href='/product?page=<%= page - 1 %>&category=<%=categ%>'>&laquo;</a>
 																													</li>
 																													<% }
@@ -317,8 +317,8 @@
 																															{
 																															%>
 																															<li
-																																class="page-item <%= page === i ? 'active' : '' %>">
-																																<a class="page-link"
+																																class="text-center page-item <%= page === i ? 'active' : '' %>">
+																																<a class="page-link "
 																																	href="/product?page=<%= i %>&category=<%=categ%>">
 																																	<%= i
 																																		%>
@@ -334,7 +334,7 @@
 																																	{
 																																	%>
 																																	<li
-																																		class="page-item">
+																																		class="text-center page-item">
 																																		<a class="page-link"
 																																			href="/product?page=<%= page + 1 %>&category=<%=categ%>">&raquo;</a>
 																																	</li>
@@ -347,8 +347,8 @@
 																																				1){
 																																				%>
 																																				<li
-																																					class="page-item">
-																																					<a class="page-link"
+																																					class="text-center page-item">
+																																					<a class="page-link center"
 																																						href="/product?page=<%= page - 1 %>">&laquo;</a>
 																																				</li>
 																																				<%
@@ -361,8 +361,8 @@
 																																						{
 																																						%>
 																																						<li
-																																							class="page-item <%= page === i ? 'active' : '' %>">
-																																							<a class="page-link"
+																																							class="text-center page-item <%= page === i ? 'active' : '' %>">
+																																							<a class="page-link center"
 																																								href="/product?page=<%= i %>">
 																																								<%= i
 																																									%>
@@ -376,7 +376,7 @@
 																																								totalPages){
 																																								%>
 																																								<li
-																																									class="page-item">
+																																									class="text-center page-item">
 																																									<a class="page-link"
 																																										href="/product?page=<%= page + 1 %>">&raquo;</a>
 																																								</li>

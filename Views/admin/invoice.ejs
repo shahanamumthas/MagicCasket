@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/css/invoice.css">
+    <title>invoice</title>
+</head>
+<body>
+    <div class="page">
+        <div class="us">
+            <img src="/images/three-gifts-boxes.svg" alt="">
+            <h1>Magic Casket</h3>
+        </div>
+    
+        <div class="title">
+            <h4>INVOICE #</h4>
+            <p>19-001</p>
+        </div>
+        <div class="billed-to">
+            <h4>ClientX Pvt Ltd.</h4>
+            <p>Street 404, Mountain View</p>
+        </div>
+        <div class="table">
+            <div class="one">
+                <p>Sr No</p>
+                <span>1</span>
+            </div>
+            <div class="two">
+                <p>Description</p>
+                <span><%=name%></span>
+            </div>
+            <div class="three">
+                <p>Rate</p>
+                <span><%=Order.orderDetail[0].total%></span>
+            </div>
+        </div>
+        <div class=" info-container">
+            <div class="info">
+                <div class="one">
+                    <h4>Bank Info</h4>
+                    <p><%=address.fname%> <%=address.lname%></p>
+                    <p><%=address.housename%> <%=address.city%> <%=address.state%></p>
+                    <p><%=address.pin   %></p>
+                </div>
+                <div class="two">
+                    <h4>Date</h4>
+                    <p><%=Order.orderDetail[0].time%></p>
+                </div>
+                <div class="three">
+                    <h4>Total Due</h4>
+                    <h3 id="total"><%=Order.orderDetail[0].total%> &#8377; </h3>
+                </div>
+            </div>
+            <div class="bottom ">
+                <div class="note">
+                    <h4>For any assistance please contact</h4>
+                    <p>email: magiccaasket@gmail.com</p>
+                    <p>phone: +91 1223454554</p>
+                </div>
+                <h4 class="thanks">Thank You! </h4>
+            </div>
+            <div class="btnBlock">
+                <a href="/"class="btn">Print</a>
+            </div>
+        </div>
+        <div>
+           
+        </div>
+    
+    </div>
+</body>
+</html>

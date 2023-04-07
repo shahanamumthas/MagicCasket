@@ -15,12 +15,12 @@ module.exports = {
             next();
         }
         else{
-            res.redirect('/')
+            res.redirect('/profile')
         }
     },
     verifyUserLogout :(req,res,next)=>{
         if(req.session.email){
-            res.redirect('/')
+            res.redirect('/profile')
         
         }
         else{

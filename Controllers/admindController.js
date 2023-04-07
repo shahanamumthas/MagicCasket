@@ -9,6 +9,7 @@ const Contact = require('../Models/contact');
 const Users = require('../Models/user');
 const order = require('../Models/orders')
 const { findOne, findOneAndUpdate } = require('../models/product');
+// const order = require('../Models/orders');
 
 
 
@@ -245,8 +246,7 @@ module.exports = {
                 path: 'orderDetail.productDetail.productId',
                 model: 'product',
                 populate: 'category'
-            })
-        console.log(orders.orderDetail);
+            }).sort({ 'orderDetail.time':-1})
 
         res.render('admin/order', { orders })
     },
@@ -263,13 +263,13 @@ module.exports = {
                     populate:'category'
                 })
 
-            console.log(data.userId);
+            // console.log(data.userId.email);
 
             const orderData = data.orderDetail.find(obj => obj._id.toString() === orderId);
-            console.log(orderData);
+            // console.log(orderData);
 
             const productData = orderData.productDetail.find(obj => obj.productId._id.toString() === productId)
-            console.log(productData.productId.images);
+            // console.log(productData.productId.images);
 
             res.render('admin/orderDetail',{ data, orderData, productData })
         } catch (error) {
@@ -278,20 +278,31 @@ module.exports = {
     },
 
     changeOrderStatus: async(req,res)=>{
-        const productId = req.query.productId
-        const orderId = req.query.orderId;
-        const userId = req.query.userId;
+        const productId = req.body.productId
+        const orderId = req.body.orderId;
+        const userId = req.body.userId;
+        const orderStatus = req.body.orderStatus;
+        console.log(productId);
+        console.log(orderId);
+        console.log(orderStatus);
+
+        const pro = await order.findOne({
+            userId: userId,
+            'orderDetail._id': orderId,
+            'orderDetail.productDetail.productId': productId
+        })
+        // console.log(JSON.stringify(pro));
 
         try {
             const result = await order.updateOne(
               {
-                  userId: userId,
+                  
                   'orderDetail._id': orderId,
                   'orderDetail.productDetail.productId': productId
               },
               {
                   $set: {
-                      'orderDetail.$.productDetail.$[prod].orderStatus': 'Cancel'
+                      'orderDetail.$.productDetail.$[prod].orderStatus': orderStatus
                   }
               },
               {
@@ -302,8 +313,8 @@ module.exports = {
                   ]
               }
           )
-          .then(() => {
-              console.log('Order status updated successfully');
+          .then((data) => {
+              console.log(`order updated succesfully${JSON.stringify(data)}`);
           })
           .catch((error) => {
               console.error(error);
@@ -314,6 +325,16 @@ module.exports = {
             console.log(err)
             //handle the error
           }
+    },
+
+    getInvoice: async (req,res)=>{
+        const id = req.query.id
+        const name = req.query.name
+        console.log(name);
+        const Order = await order.findOne({'orderDetail._id': id})
+        const address = Order.orderDetail[0].address
+        console.log(address);
+        res.render('admin/invoice',{address , Order ,name})
     },
 
     getBanner: async (req, res) => {

@@ -60,36 +60,10 @@ router.get('/orders', adminLoginVerify, admindController.getOrder)
 
 router.get('/viewOrder',adminLoginVerify,admindController.viewOrder)
 
-router.get('/cancelOrder',adminLoginVerify,admindController.changeOrderStatus)
+router.post('/changeOrderStatus',adminLoginVerify,admindController.changeOrderStatus)
 
-// router.get('/orders',adminLoginVerify, async (req, res) => {
-//   console.log("############");
-//     const orders = await order.find({}).populate('userId')
-//         .populate({
-//             path: "orderDetail.productId",
-//             model: "order",
-//             populate: [
-//                 {
-//                   path: "category",
-//                   model: "category"
-//                 }
-//               ]
-//         })
+router.get('/invoice',adminLoginVerify,admindController.getInvoice)
 
-//         orders.forEach(data => {
-//           // console.log(data.userId);
-//             data.orderDetail.forEach( datass => {
-//               // console.log(datass,'datass');
-//               datass.productId.forEach( proo => {
-//                 console.log(proo);
-//                 res.render('admin/order', { orders,proo })
-//               })
-//             })
-//           })
-
-
-
-// })
 
 router.get('/404', (req, res) => {
   res.render('admin/404')

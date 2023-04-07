@@ -67,8 +67,8 @@
 										<th class="column-5">Total</th>
 										<th class="column-5">Delete</th>
 									</tr>
-									<% var i = 0%>
-									<%cart?.product?.forEach((data)=>{%>
+									
+									<%cart?.product?.forEach((data ,i)=>{%>
 										<tr class="table_row">
 											<td class="column-1">
 												<div class="how-itemcart1">
@@ -91,7 +91,7 @@
 
 													<input class="mtext-104 cl3 txt-center num-product" type="number"
 														id="count1<%= data.productId._id%>" name="count"
-														value="<%= data.quantity%>">
+														value="<%= data.quantity%>" readonly>
 
 													<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
 														role="button"
@@ -114,7 +114,6 @@
 											</td>
 										</tr>
 
-										<%= i++%>
 										<%})%>
 
 								</table>

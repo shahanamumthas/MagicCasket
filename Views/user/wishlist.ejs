@@ -49,19 +49,21 @@
 
 
         <!-- Shoping Cart -->
-        <form class="bg0 p-t-75 m-t-50 p-b-85" action="/getProceedToBuy" method="post">
+        <form class="bg0 p-t-75 m-t-50 p-b-85" >
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
                         <div class="m-l-25 m-r--38 m-lr-0-xl">
                             <div class="wrap-table-shopping-cart">
-                                <%if(product){%>
                                 <table class="table-shopping-cart">
+                                    <th class="column-1" >
+                                        My Wishlist
+                                    </th>
+                                <%if(product.length !== 0 ){%>
+
                                    <%product.forEach((data)=>{%>
                                     <tr class="table_head">
-                                        <th class="column-1" >
-                                            My Wishlist
-                                        </th>
+                                       
                                     </tr>
                                     <tr class="table_row">
                                         <td class="column-1">
@@ -89,25 +91,25 @@
 
                                    <%})%>
                                 </table>
-                                <%}else{%>
-                                    <div class=" text-center">
-				
-										<h2>
-											Your whishlist is currently empty</h2><br>
-										<p> Before proceed to checkout you must add some products to your shopping cart. You will
-											find a lot of interesting products on our "Shop" page.</p>
-						  </div>
-                          <%}%>
+                                
                             </div>
                         </div>
                     </div>
-
+                    <%}else{%>
+                        <div class=" text-center">
+            
+                            <h2>
+                                Your whishlist is currently empty</h2><br>
+                            <p> Before proceed to checkout you must add some products to your whishlist. You will
+                                find a lot of interesting products on our "Shop" page.</p>
+              </div>
+              <%}%>
                     
                 </div>
             </div>
         </form>
 
-
+        
 
 
         <%- include('./partials/footer') -%>

@@ -144,7 +144,7 @@
 
 									<button
 										class=" btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-										<a href="/buyNow?id=<%= product._id %>" class="cl0 pointer">BUY NOW</a>
+										<a href="/buyNow?id=<%=product._id %>" class="cl0 pointer">BUY NOW</a>
 									</button>
 								</div>
 
@@ -212,18 +212,19 @@
 
 			<div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
 				<span class="stext-107 cl6 p-lr-25">
-					SKU: JAK-01
+					<!-- SKU: JAK-01 -->
 				</span>
-
-				<span class="stext-107 cl6 p-lr-25">
-					Categories: Jacket, Men
+				
+				<span class="stext-107 cl6 p-lr-25" style="text-transform: capitalize;">
+					Categories: <%=product.category.category_name%>
 				</span>
+			
 			</div>
 		</section>
 
 
 		<!-- Related Products -->
-		<!-- <section class="sec-relate-product bg0 p-t-45 p-b-105">
+		<section class="sec-relate-product bg0 p-t-45 p-b-105">
 			<div class="container">
 				<div class="p-b-45">
 					<h3 class="ltext-106 cl5 txt-center">
@@ -235,14 +236,18 @@
 
 
 
-				Slide2
+				<!-- Slide2 -->
 				<div class="wrap-slick2">
 					<div class="slick2">
-						<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-							Block2
+						<%category.forEach(data => {%>
+
+						<div class="item-slick2  p-l-15 p-r-15 p-t-15 p-b-15">
+							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="images/product-01.jpg" alt="IMG-PRODUCT">
+									<!-- <img src="images/product-01.jpg" alt="IMG-PRODUCT"> -->
+									<img src="/<%= data.images[1].path %>" alt="Product Image">
+
 
 									<a href="#"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
@@ -254,11 +259,12 @@
 									<div class="block2-txt-child1 flex-col-l ">
 										<a href="product-detail.html"
 											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											Esprit Ruffle Shirt
+											<%= data.name%>
 										</a>
 
 										<span class="stext-105 cl3">
-											$16.64
+											<%= data.price%>
+
 										</span>
 									</div>
 
@@ -273,13 +279,14 @@
 								</div>
 							</div>
 						</div>
+						<%})%>
 
 
 					</div>
 				</div>
 			</div>
 			</div>
-		</section> -->
+		</section>
 
 
 		<%- include('./partials/footer') -%>

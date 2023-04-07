@@ -25,15 +25,15 @@
                                             alt="product.title" />
                                     </a>
 
-                                    <!-- <div class="label-top shadow-sm">
-          <a class="text-white" href="#">asus</a>
-        </div> -->
+                                    <div class="label-top shadow-sm">
+          <a class="text-white" href="">MC</a>
+        </div>
                                     <div class="card-body">
                                         <div class="clearfix mb-3">
-                                            <span class="float-start badge rounded-pill bg-success"><%= productData.productId.price%>$</span>
+                                      
 
-                                            <span class="float-end"><a href="#"
-                                                    class="small text-muted text-uppercase aff-link">reviews</a></span>
+                                            <!-- <span class="float-end"><a href="#"
+                                                    class="small text-muted text-uppercase aff-link">reviews</a></span> -->
                                         </div>
                                         <h5 class="card-title">
                                             <p>
@@ -45,18 +45,27 @@
                                         </h5>
 
                                         <div class="d-grid gap-2 my-4">
-                                            Total: <%= productData.total%>
-                                            <%if(productData.orderStatus=='Cancel' ){%>
-                                                Cencelled
-                                                <%}else{%>
+                                                    <span class="float-start badge rounded-pill bg-success">Total: <%= productData.total%>
+                                                        <%if(productData.orderStatus=='Cancel' ){%>
+                                                            Cencelled
+                                                            <%}else{%></span>
                                                     <button type="button" class="btn btn-danger text-light"
                                                         data-toggle="modal"
                                                         data-target="#exampleModalCenter<%= productData.productId._id%><%=orderData._id%>">
                                                         Cancel
                                                     </button>
                                                     <%}%>
+                                                   
+                                                    <form class="d-grid gap-2 my-4" action="/addReview" method="post" >
+                                                        Add Review:
+                                                        
+                                                        <input type="hidden" value="<%= productData.productId._id%>" name="produId" >
+                                                        <input name="head" type="text" placeholder="Title" required>
+                                                        <input type="text" name="description" placeholder="Description" required>
+                                                        <input value=" ADD review" class="btn btn-primary text-light" type="submit">
+                                                    </form>
                                         </div>
-                                        <div class="clearfix mb-1">
+                                        <!-- <div class="clearfix mb-1">
 
                                             <span class="float-start"><a href="#"><i
                                                         class="fas fa-question-circle"></i></a></span>
@@ -65,7 +74,7 @@
                                                 <i class="far fa-heart" style="cursor: pointer"></i>
 
                                             </span>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

@@ -9,6 +9,8 @@ const Order = require('../Models/orders')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const userController = require("../Controllers/userController");
+const cartController = require('../Controllers/cartController')
+const wishlistController = require('../Controllers/wishlistController')
 const Cart = require('../Models/cart')
 const Contact = require('../Models/contact')
 const { userLoginVerify, verifyUserLogout } = require('../Middlewares/session');
@@ -71,6 +73,12 @@ router.get('/delWishlisttItem',userLoginVerify,userController.getDelWishlistItem
 
 router.get('/buyNow',userLoginVerify,userController.getBuyNow)
 
+router.post('/postBuyNow/:method',userLoginVerify,userController.postBuyNow)
+
+router.post('/buyNowVerifyPayment', userLoginVerify,userController.buyNowVerifyPayment)
+
+router.get('/category',userController.getCategory)
+
 router.get('/about', userController.getAbout)
 
 router.get('/contact', userController.getContact)
@@ -79,9 +87,19 @@ router.post('/contact', userController.postContact)
 
 router.get('/orders', userLoginVerify, userController.getOrders )
 
-router.get('/cancelItem',userController.cancelItem)
+router.get('/cancelItem',userLoginVerify,userController.cancelItem)
+
+router.post('/addReview',userLoginVerify,userController.AddReview)
 
 router.get('/loginUser',userLoginVerify,userController.getUserProfile)
+
+router.get('/forgetPassword',userController.getforgetPassword)
+
+router.post('/forgetPassword',userController.PostforgotPassword)
+
+router.get('/reset',userController.getNewPassword)
+
+router.post('/reset',userController.postNewPassword)
 
 router.get('/logout',userController.getLogOut)
 
