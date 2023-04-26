@@ -31,7 +31,7 @@ module.exports = {
       const banner = await Banner.find()
       const products = await Product.find()
       const category = await Category.find()
-      res.render('user/index', { banner, products, category, user });
+      res.render('../Views/user/index.ejs', { banner, products, category, user });
     } catch (error) {
       console.log(error);
     }
