@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../Models/admin')
-const Product = require('../models/product');
+const Product = require('../Models/product');
 const Category = require('../Models/category');
 const multer = require('../Middlewares/multer');
 const Banner = require("../Models/banner");
 const Contact = require('../Models/contact');
 const Users = require('../Models/user');
 const order = require('../Models/orders')
-const { findOne, findOneAndUpdate } = require('../models/product');
+const { findOne, findOneAndUpdate } = require('../Models/product');
 // const order = require('../Models/orders');
 
 
@@ -364,15 +364,20 @@ module.exports = {
 
     puteditBanner: async (req, res) => {
         const id = req.body.id
+
+        const banner = req.body
+        console.log(id,'id')
+        console.log(banner,'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
         await Banner.findByIdAndUpdate(id, {
             $set: {
-
-                title: req.body.title,
-                description: req.body.description,
-                imgUrl: req.body.image
+                title: banner.title,
+                description: banner.description,
+                imgUrl: banner.imgUrl
             }
         }, { new: true }
-        );
+        ).then(banner => {
+            console.log(banner);
+        });
         res.redirect('/admin/banner');
 
 

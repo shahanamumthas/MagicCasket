@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router()
 const Banner = require('../Models/banner')
-const Product = require('../models/product');
+const Product = require('../Models/product');
 const User = require('../Models/user')
 const newOTP = require('../Models/otp')
 const Category = require('../Models/category')
@@ -15,7 +15,7 @@ const Contact = require('../Models/contact')
 const { userLoginVerify, verifyUserLogout } = require('../Middlewares/session');
 const { render } = require("ejs");
 const order = require("../Models/orders");
-const product = require("../models/product");
+const product = require("../Models/product");
 let msg = ""
 // let showProduct=""
 

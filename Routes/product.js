@@ -4,7 +4,7 @@ const Category = require('../Models/category');
 const multer = require('../Middlewares/multer');
 const { adminLoginVerify } = require('../Middlewares/session')
 const admindController = require("../Controllers/admindController");
-const product = require("../models/product");
+const product = require("../Models/product");
 
 router.get('/products', adminLoginVerify, admindController.getProducts)
 
