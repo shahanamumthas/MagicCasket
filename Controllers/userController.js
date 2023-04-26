@@ -15,6 +15,7 @@ const nodemailer = require('nodemailer');
 const { countDocuments } = require("../Models/banner");
 const Razorpay = require("razorpay");
 const crypto = require('crypto');
+const { log } = require("console");
 require('dotenv').config({ path: '.env' });
 
 let msg = ""
@@ -61,6 +62,7 @@ module.exports = {
 
     }
   },
+
 
   getProfile: async (req, res) => {
     const mail = req.session.email
@@ -284,18 +286,19 @@ module.exports = {
     const user = await User.findOne({ email: mail })
     const id = req.query.id
     const product = await Product.findById(id).populate('category')
+    const review = await Review.findOne({ productId: id })
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", review);
     const c_id = product.category._id
     const category = await Product.find({ category: c_id })
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$", product);
+    // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$", product);
     // console.log(product.category);
-    res.render('user/product-detail', { product, category, user })
+    res.render('user/product-detail', { product, category, user, review })
   },
 
   postAddToCart: async (req, res) => {
     const mail = req.session.email
     const user = await User.findOne({ email: mail })
     const productId = req.body.productId
-
     const existingUser = await Cart.findOne({ user: user._id })
     const product = await Product.findById({ _id: productId })
     if (existingUser) {
@@ -336,6 +339,8 @@ module.exports = {
       })
       newCart.save()
     }
+
+
   },
 
   getCart: async (req, res) => {
@@ -1005,18 +1010,18 @@ module.exports = {
     const produId = req.body.produId;
     const mail = req.session.email
     const product = await Review.findOne({ productId: produId });
-    const userId = await User.findOne({email:mail})
+    const userId = await User.findOne({ email: mail })
 
-    if(product){
+    if (product) {
       msg = 'Already Posted One Review'
       res.redirect('/orders')
-    }else{
+    } else {
       msg = ''
       const newReview = new Review({
-        userId:userId._id,
-        productId:produId,
-        description:description,
-        head:head,
+        userId: userId._id,
+        productId: produId,
+        description: description,
+        head: head,
       })
       newReview.save()
     }
@@ -1025,14 +1030,15 @@ module.exports = {
   },
 
   addToWishlist: async (req, res) => {
-    const id = req.body.productId
-    const data = await Product.findById({ _id: id })
-    const name = data.name
     try {
       const mail = req.session.email
       const user = await User.findOne({ email: mail })
+      const id = req.body.productId
       const currentUser = await Wishlist.findOne({ userId: user.id })
+      const data = await Product.findById({ _id: id })
+      const name = data.name
       if (currentUser) {
+
         await Wishlist.findOneAndUpdate({ userId: currentUser.userId }, { $push: { productId: data._id } }).then(() => {
           res.json({ success: true, name })
         })
@@ -1158,29 +1164,37 @@ module.exports = {
 
   getforgetPassword: (req, res) => {
     res.render('user/forgetPassword')
+    // message = ''
   },
 
   PostforgotPassword: async (req, res, next) => {
     try {
       crypto.randomBytes(32, (err, buffer) => {
         if (err) {
+          console.log(err,'error on post frogot');
           return res.redirect('/forgetPassword')
         }
         const token = buffer.toString('hex')
         User.findOne({ email: req.body.email }).then(users => {
           if (!users) {
-            req.flash('error',
-              'Sorry No such account with this email,Please enter a valid email id')
+
+            message = 'Sorry No such account with this email,Please enter a valid email id';
+            console.log(message);
             return res.redirect('/forgetPassword')
           }
           users.resetToken = token;
           users.resetTokenExpiration = Date.now() + 3600000
           users.save()
+          console.log('user saved',users);
         })
           .then(result => {
-            req.flash('emailSent',
-              'We have send an email to your email Id, It may be in spam messages')
-            res.redirect('/')
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'magiccaasket@gmail.com',
+                pass: 'stfgyumzikoqmpst'
+              }
+            })
             var emails = {
               to: req.body.email,
               from: ` magiccaasket@gmail.com `,
@@ -1190,23 +1204,27 @@ module.exports = {
              <p>Click this <a href="http://localhost:3000/reset?token=${token}">link</a> to set a password.</p>
      `
             }
-            mailer.sendMail(emails, function (err, res) {
+            console.log('We have send an email to your email Id, It may be in spam messages');
+            transporter.sendMail(emails, (err, res)=> {
               if (err) {
-
+                console.log(err, 'email error');
               } else {
+                console.log('email sented',res);
               }
-            })
+              
+            }) 
+            res.redirect('/')
+
           })
           .catch(err => {
+            console.log(err, 'catched error');
+            res.redirect('/');
           })
       })
     } catch (e) {
       next(new Error(e))
     }
   },
-
-
-
 
   getNewPassword: (req, res, next) => {
     try {
@@ -1218,7 +1236,7 @@ module.exports = {
         .catch(err => {
         })
     } catch (e) {
-      next(new Error(e))
+      console.log(e,'error on new password html');
     }
   },
 
@@ -1228,12 +1246,17 @@ module.exports = {
       const newpassword = req.body.pass;
       const userId = req.body.userid;
       const passwordToken = req.body.passwordToken
-      user.findOne({
+      User.findOne({
         resetToken: passwordToken,
         resetTokenExpiration: { $gt: Date.now() },
         _id: userId
       }).then(users => {
+        if(!users){
+          console.log('user not found line - 1255');
+        }
+        console.log(users);
         updatedUser = users
+        console.log(newpassword,'new password');
         return bcrypt.hash(newpassword, 12)
       }).then(hashedpassword => {
         updatedUser.password = hashedpassword
@@ -1242,9 +1265,11 @@ module.exports = {
         updatedUser.resetTokenExpiration = undefined
         return updatedUser.save()
       }).then(result => {
-        res.redirect('/login')
+        console.log(result,'password updated succesfuly');
+        res.redirect('/profile')
       })
     } catch (e) {
+      console.log(e,'error occurd');
       next(new Error(e))
     }
   },

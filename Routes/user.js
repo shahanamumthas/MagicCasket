@@ -9,15 +9,13 @@ const Order = require('../Models/orders')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const userController = require("../Controllers/userController");
-const cartController = require('../Controllers/cartController')
-const wishlistController = require('../Controllers/wishlistController')
+const wishlistController = require('../Controllers/productController')
 const Cart = require('../Models/cart')
 const Contact = require('../Models/contact')
 const { userLoginVerify, verifyUserLogout } = require('../Middlewares/session');
 const { render } = require("ejs");
 const order = require("../Models/orders");
 const product = require("../models/product");
-// const Contact = require("../Models/contact");
 let msg = ""
 // let showProduct=""
 
@@ -39,7 +37,7 @@ router.get('/product', userController.getProduct)
 
 router.get('/productDetail', userController.getProductDetails)
 
-router.post('/addToCart', userLoginVerify, userController.postAddToCart)
+router.post('/addToCart', userController.postAddToCart)
 
 router.get('/cart', userLoginVerify, userController.getCart)
 
@@ -65,7 +63,7 @@ router.post('/verifyPayment', userLoginVerify,userController.verifyPayment)
 
 router.get('/orderSuccess',userLoginVerify,userController.getOrderSuccess)
 
-router.post('/addToWish',userLoginVerify,userController.addToWishlist)
+router.post('/addToWish',userController.addToWishlist)
 
 router.get('/whishlist',userLoginVerify,userController.getWishlist)
 

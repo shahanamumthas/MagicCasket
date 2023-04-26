@@ -65,6 +65,11 @@ module.exports = {
         await Users.findByIdAndUpdate({ _id: id }, { $set: { status: false } })
         res.json({ success: true })
     },
+    unBlockUser: async (req, res) => {
+        const id = req.body.userId
+        await Users.findByIdAndUpdate({ _id: id }, { $set: { status: true } })
+        res.json({ success: true })
+    },
 
     getProducts: async (req, res) => {
 
@@ -88,28 +93,29 @@ module.exports = {
         const image = req.files.map(file =>
             ({ path: file.filename })
         )
-        console.log(typeof (image));
-        await Product.findOne({ name: req.body.name })
-            .then(async (product) => {
-                if (product) {
-                    res.redirect('/admin/addProduct')
-                }
-                else {
-                    let product = new Product({
-                        name: req.body.name,
-                        price: req.body.price,
-                        category: req.body.category,
-                        mrp: req.body.mrp,
-                        stock: req.body.stock,
-                        description: req.body.description,
-                        images: image
+        // console.log(typeof (image));
+        const newProduct = req.body
+        const product = await Product.findOne({ name: req.body.name })
 
-                    })
-                    product.save()
-                    res.redirect('/admin/Products')
-                }
+        if (product) {
+            res.redirect('/admin/addProduct')
+        }
+        else {
+            let product = new Product({
+                name: newProduct.name,
+                price: newProduct.price,
+                category: newProduct.category,
+                mrp: newProduct.mrp,
+                stock: newProduct.stock,
+                description: newProduct.description,
+                images: image
+
             })
-        console.log(req.body.category);
+            product.save()
+            res.redirect('/admin/Products')
+        }
+
+        // console.log(req.body.category);
         // Initialize Toastr
         // toastr.options = {
         // positionClass: 'toast-top-right', // Position of the toast message
@@ -136,22 +142,21 @@ module.exports = {
             return image?.filename
         })
         console.log(image);
-        await Category.findOne({
+        const category = await Category.findOne({
             category_name: req.body.category
-        }).then((category) => {
-            if (category || req.body.category == "") {
-                res.redirect('/admin/addCategory')
-            }
-            else {
-                let category = new Category({
-                    category_name: req.body.category,
-                    images: image
-
-                })
-                category.save()
-                res.redirect('/admin/addCategory')
-            }
         })
+        if (category || req.body.category == "") {
+            res.redirect('/admin/addCategory')
+        }
+        else {
+            let category = new Category({
+                category_name: req.body.category,
+                images: image
+
+            })
+            category.save()
+            res.redirect('/admin/addCategory')
+        }
 
 
 
@@ -178,14 +183,15 @@ module.exports = {
         })
     },
     puteditProduct: async (req, res) => {
-        const id = req.body.id
+        const product = req.body
+        const id = product.id
         await Product.findByIdAndUpdate(id, {
             $set: {
-                name: req.body.name,
-                price: req.body.price,
-                mrp: req.body.mrp,
-                stock: req.body.stock,
-                description: req.body.description
+                name: product.name,
+                price: product.price,
+                mrp: product.mrp,
+                stock: product.stock,
+                description: product.description
             }
         }, { new: true }
         );
@@ -213,31 +219,30 @@ module.exports = {
     },
 
     postaddBanner: async (req, res) => {
-
+        const newBanner =req.body
         const image = req.files.map((image) => {
             return image?.filename
         })
-        await Product.findOne({
+        const banner = await Product.findOne({
             title: req.body.title
-        }).then(async (banner) => {
-            if (banner) {
-                res.redirect('/admin/addBanner')
-                res.json({ success: false })
-
-            }
-            else {
-                let banner = new Banner({
-                    title: req.body.title,
-                    description: req.body.description,
-                    image: image,
-                    imgUrl: req.body.imgUrl
-                })
-                banner.save()
-                res.redirect('/admin/home')
-                res.json({ success: true })
-
-            }
         })
+        if (banner) {
+            res.redirect('/admin/addBanner')
+            res.json({ success: false })
+
+        }
+        else {
+            let banner = new Banner({
+                title: newBanner.title,
+                description: newBanner.description,
+                image: image,
+                imgUrl: newBanner.imgUrl
+            })
+            banner.save()
+            res.redirect('/admin/home')
+            res.json({ success: true })
+
+        }
     },
 
     getOrder: async (req, res) => {
@@ -246,7 +251,7 @@ module.exports = {
                 path: 'orderDetail.productDetail.productId',
                 model: 'product',
                 populate: 'category'
-            }).sort({ 'orderDetail.time':-1})
+            }).sort({ 'orderDetail.time': -1 })
 
         res.render('admin/order', { orders })
     },
@@ -260,7 +265,7 @@ module.exports = {
                 .populate({
                     path: 'orderDetail.productDetail.productId',
                     model: 'product',
-                    populate:'category'
+                    populate: 'category'
                 })
 
             // console.log(data.userId.email);
@@ -271,13 +276,13 @@ module.exports = {
             const productData = orderData.productDetail.find(obj => obj.productId._id.toString() === productId)
             // console.log(productData.productId.images);
 
-            res.render('admin/orderDetail',{ data, orderData, productData })
+            res.render('admin/orderDetail', { data, orderData, productData })
         } catch (error) {
             console.log(error);
         }
     },
 
-    changeOrderStatus: async(req,res)=>{
+    changeOrderStatus: async (req, res) => {
         const productId = req.body.productId
         const orderId = req.body.orderId;
         const userId = req.body.userId;
@@ -295,46 +300,46 @@ module.exports = {
 
         try {
             const result = await order.updateOne(
-              {
-                  
-                  'orderDetail._id': orderId,
-                  'orderDetail.productDetail.productId': productId
-              },
-              {
-                  $set: {
-                      'orderDetail.$.productDetail.$[prod].orderStatus': orderStatus
-                  }
-              },
-              {
-                  arrayFilters: [
-                      {
-                          'prod.productId': productId
-                      }
-                  ]
-              }
-          )
-          .then((data) => {
-              console.log(`order updated succesfully${JSON.stringify(data)}`);
-          })
-          .catch((error) => {
-              console.error(error);
-          })
-          
+                {
+
+                    'orderDetail._id': orderId,
+                    'orderDetail.productDetail.productId': productId
+                },
+                {
+                    $set: {
+                        'orderDetail.$.productDetail.$[prod].orderStatus': orderStatus
+                    }
+                },
+                {
+                    arrayFilters: [
+                        {
+                            'prod.productId': productId
+                        }
+                    ]
+                }
+            )
+                .then((data) => {
+                    console.log(`order updated succesfully${JSON.stringify(data)}`);
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+
             res.redirect('/admin/orders')
-          } catch (err) {
+        } catch (err) {
             console.log(err)
             //handle the error
-          }
+        }
     },
 
-    getInvoice: async (req,res)=>{
+    getInvoice: async (req, res) => {
         const id = req.query.id
         const name = req.query.name
         console.log(name);
-        const Order = await order.findOne({'orderDetail._id': id})
+        const Order = await order.findOne({ 'orderDetail._id': id })
         const address = Order.orderDetail[0].address
         console.log(address);
-        res.render('admin/invoice',{address , Order ,name})
+        res.render('admin/invoice', { address, Order, name })
     },
 
     getBanner: async (req, res) => {
@@ -343,18 +348,6 @@ module.exports = {
         res.render('admin/banner', { banners })
 
     },
-
-
-    getDeleteBanner: (req, res) => {
-        const id = req.query.id;
-        Banner.findByIdAndDelete(id)
-        res.redirect('/admin/banner', { banners })
-    },
-
-    // geteditBanner :(req,res)=>{
-
-    // },
-
 
     geteditBanner: async (req, res) => {
 

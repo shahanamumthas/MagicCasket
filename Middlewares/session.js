@@ -15,7 +15,7 @@ module.exports = {
             next();
         }
         else{
-            res.redirect('/profile')
+            res.redirect('/')
         }
     },
     verifyUserLogout :(req,res,next)=>{

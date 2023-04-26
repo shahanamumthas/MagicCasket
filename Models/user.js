@@ -21,7 +21,13 @@ const userSchema = new mongoose.Schema({
         state:String,
         pin:Number,
         country:String
-    }]
+    }],
+    resetToken:String,
+    resetTokenExpiration:Date,
+    access:{
+        type:Boolean,
+        default:true 
+    }
 })
 
 const User = mongoose.model('User',userSchema);

@@ -18,6 +18,9 @@ db.dbConnect()
 
 const adminRouter = require('./Routes/admin')
 const userRouter = require('./Routes/user')
+const cartRouter = require('./Routes/cart')
+const productRouter = require('./Routes/product')
+
 
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine','ejs')
@@ -41,7 +44,10 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/admin',adminRouter)
+app.use('/product',productRouter)
 app.use('/',userRouter)
+app.use('/cart',cartRouter)
+
 
 
 app.listen(process.env.PORT,()=>{
