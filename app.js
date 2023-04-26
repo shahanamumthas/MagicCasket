@@ -12,7 +12,7 @@ const methodOverride = require('method-override')
 
 const app = express();
 
-const db = require('./config/connection')
+const db = require('./Config/connection')
 db.dbConnect()
 
 
