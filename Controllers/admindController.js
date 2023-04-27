@@ -10,6 +10,7 @@ const Users = require('../Models/user');
 const order = require('../Models/orders')
 const { findOne, findOneAndUpdate } = require('../Models/product');
 // const order = require('../Models/orders');
+require('dotenv').config({ path : '.env'})
 
 
 
@@ -31,12 +32,8 @@ module.exports = {
 
     postLogin: async (req, res) => {
         const email = req.body.email;
-        console.log(email);
         const password = req.body.password;
-        const admin = await Admin.findOne({ email: email });
-        console.log(admin);
-        if (admin) {
-            if (email == admin.email && password == admin.password) {
+            if (process.env.Admin_Username == email && process.env.Admin_Password == password) {
                 req.session.email = email;
                 console.log(req.session.email);
                 res.redirect('/admin/home');
@@ -45,8 +42,6 @@ module.exports = {
                 msg = "Invalid user"
                 res.redirect('/admin')
             }
-        }
-
     },
 
 
