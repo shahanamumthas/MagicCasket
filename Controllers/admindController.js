@@ -25,7 +25,7 @@ module.exports = {
             res.redirect('/admin/home')
         }
         else {
-            res.render('admin/login', { msg });
+            res.render('../Views/admin/login', { msg });
         }
     },
 
@@ -52,12 +52,12 @@ module.exports = {
 
     getHome: async (req, res) => {
         const message = await Contact.find();
-        res.render('admin/index', { message })
+        res.render('../Views/admin/index', { message })
     },
 
     getUsers: async (req, res) => {
         const users = await Users.find();
-        res.render('admin/users', { users })
+        res.render('../Views/admin/users', { users })
     },
 
     blockUser: async (req, res) => {
@@ -74,13 +74,13 @@ module.exports = {
     getProducts: async (req, res) => {
 
         const products = await Product.find();
-        res.render('admin/products', { products })
+        res.render('../Views/admin/products', { products })
     },
 
     getaddProduct: async (req, res) => {
         if (req.session.email) {
             const category = await Category.find()
-            res.render('admin/addProduct', { category })
+            res.render('../Views/admin/addProduct', { category })
         }
         else {
             res.redirect('/admin')
@@ -131,7 +131,7 @@ module.exports = {
     getaddCategory: async (req, res) => {
         if (req.session.email) {
             const category = await Category.find()
-            res.render('admin/category', { category })
+            res.render('../Views/admin/category', { category })
         }
         else {
             res.redirect('/admin')
@@ -175,7 +175,7 @@ module.exports = {
         await Product.findById(id).then(async (product) => {
             const category = await Category.find()
             if (product) {
-                res.render('admin/editProduct', { product, category })
+                res.render('../Views/admin/editProduct', { product, category })
             }
             else {
                 res.redirect('/admin/404')
@@ -215,7 +215,7 @@ module.exports = {
     },
 
     getaddBanner: (req, res) => {
-        res.render('admin/addBanner')
+        res.render('../Views/admin/addBanner')
     },
 
     postaddBanner: async (req, res) => {
@@ -253,7 +253,7 @@ module.exports = {
                 populate: 'category'
             }).sort({ 'orderDetail.time': -1 })
 
-        res.render('admin/order', { orders })
+        res.render('../Views/admin/order', { orders })
     },
 
     viewOrder: async (req, res) => {
@@ -276,7 +276,7 @@ module.exports = {
             const productData = orderData.productDetail.find(obj => obj.productId._id.toString() === productId)
             // console.log(productData.productId.images);
 
-            res.render('admin/orderDetail', { data, orderData, productData })
+            res.render('../Views/admin/orderDetail', { data, orderData, productData })
         } catch (error) {
             console.log(error);
         }
@@ -339,13 +339,13 @@ module.exports = {
         const Order = await order.findOne({ 'orderDetail._id': id })
         const address = Order.orderDetail[0].address
         console.log(address);
-        res.render('admin/invoice', { address, Order, name })
+        res.render('../Views/admin/invoice', { address, Order, name })
     },
 
     getBanner: async (req, res) => {
         const banners = await Banner.find();
         console.log(banners)
-        res.render('admin/banner', { banners })
+        res.render('../Views/admin/banner', { banners })
 
     },
 
@@ -354,7 +354,7 @@ module.exports = {
         const id = req.query.id;
         await Banner.findById(id).then((banner) => {
             if (banner) {
-                res.render('admin/editBanner', { banner })
+                res.render('../Views/admin/editBanner', { banner })
             }
             else {
                 res.redirect('/admin/404')
@@ -390,7 +390,7 @@ module.exports = {
     },
 
     get404: (req, res) => {
-        res.render('admin/404')
+        res.render('../Views/admin/404')
     },
 
     getSignout: (req, res) => {

@@ -86,9 +86,9 @@ postAddToCart: async (req, res) => {
           }
           // totals = total.reduce((value,currentTotal) => value + currentTotal, 0 )
 
-          res.render('user/shoping-cart', { user, cart, total, totals })
+          res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         } else {
-          res.render('user/shoping-cart', { user, cart, total, totals })
+          res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         }
       }
       else {
@@ -198,7 +198,7 @@ postAddToCart: async (req, res) => {
 
   getAddAddress: (req, res) => {
     const total = req.body.total
-    res.render('user/addAddress', { total })
+    res.render('../Views/user/addAddress', { total })
   },
 
   postAddaddress: async (req, res) => {

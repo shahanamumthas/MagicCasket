@@ -67,14 +67,14 @@ module.exports = {
   getProfile: async (req, res) => {
     const mail = req.session.email
     const userData = await User.findOne({ email: mail })
-    res.render('user/login', { msg, userData })
+    res.render('../Views/user/login', { msg, userData })
     msg = ""
 
   },
 
 
   getRegister: (req, res) => {
-    res.render('user/register', { msg })
+    res.render('../Views/user/register', { msg })
     msg = ""
   },
 
@@ -146,7 +146,7 @@ module.exports = {
   getOTP: (req, res) => {
     const user = req.query;
     console.log("otp");
-    res.render('user/otp', { user })
+    res.render('../Views/user/otp', { user })
   },
 
   postOTP: async (req, res) => {
@@ -277,7 +277,7 @@ module.exports = {
         .populate('category', 'name');
     }
 
-    res.render('user/product', { products, totalPages, page, user, category, categ, sort, search });
+    res.render('../Views/user/product', { products, totalPages, page, user, category, categ, sort, search });
 
   },
 
@@ -292,7 +292,7 @@ module.exports = {
     const category = await Product.find({ category: c_id })
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$", product);
     // console.log(product.category);
-    res.render('user/product-detail', { product, category, user, review })
+    res.render('../Views/user/product-detail', { product, category, user, review })
   },
 
   postAddToCart: async (req, res) => {
@@ -366,9 +366,9 @@ module.exports = {
           }
           // totals = total.reduce((value,currentTotal) => value + currentTotal, 0 )
 
-          res.render('user/shoping-cart', { user, cart, total, totals })
+          res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         } else {
-          res.render('user/shoping-cart', { user, cart, total, totals })
+          res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         }
       }
       else {
@@ -473,12 +473,12 @@ module.exports = {
     })
     let totals = total.reduce((value, total) => value + total, 0)
 
-    res.render('user/checkout', { totals, data: user, user })
+    res.render('../Views/user/checkout', { totals, data: user, user })
   },
 
   getAddAddress: (req, res) => {
     const total = req.body.total
-    res.render('user/addAddress', { total })
+    res.render('../Views/user/addAddress', { total })
   },
 
   postAddaddress: async (req, res) => {
@@ -933,7 +933,7 @@ module.exports = {
   },
 
   getOrderSuccess: (req, res) => {
-    res.render('user/orderSuccess')
+    res.render('../Views/user/orderSuccess')
   },
 
   getOrders: async (req, res) => {
@@ -960,7 +960,7 @@ module.exports = {
       })
     })
 
-    res.render('user/ord', { orders, user, msg })
+    res.render('../Views/user/ord', { orders, user, msg })
 
   },
 
@@ -1067,7 +1067,7 @@ module.exports = {
     const data = await Wishlist.findOne({ userId: id })
     const proId = data?.productId
     const product = await Product.find({ _id: proId })
-    res.render('user/wishlist', { product, user })
+    res.render('../Views/user/wishlist', { product, user })
 
   },
 
@@ -1091,7 +1091,7 @@ module.exports = {
     const product = await Product.findById({ _id: p_id })
     const user = await User.findOne({ email: mail })
     totals = product.price;
-    res.render('user/buynow', { product, totals, data: user, user })
+    res.render('../Views/user/buynow', { product, totals, data: user, user })
   },
 
   getCategory: async (req, res) => {
@@ -1104,13 +1104,13 @@ module.exports = {
   getAbout: async (req, res) => {
     const id = req.session.email
     const user = await User.findOne({ email: id })
-    res.render('user/about', { user })
+    res.render('../Views/user/about', { user })
   },
 
   getContact: async (req, res) => {
     const id = req.session.email
     const user = await User.findOne({ email: id })
-    res.render('user/contact', { user }, msg)
+    res.render('../Views/user/contact', { user }, msg)
     msg = ""
   },
 
@@ -1159,11 +1159,11 @@ module.exports = {
   },
 
   getUserProfile: (req, res) => {
-    res.render('user/userProfile')
+    res.render('../Views/user/userProfile')
   },
 
   getforgetPassword: (req, res) => {
-    res.render('user/forgetPassword')
+    res.render('../Views/user/forgetPassword')
     // message = ''
   },
 
@@ -1231,7 +1231,7 @@ module.exports = {
       const token = req.query.token;
       User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
         .then(usserz => {
-          res.render('user/newPassword', { userid: usserz._id, passwordToken: token })
+          res.render('../Views/user/newPassword', { userid: usserz._id, passwordToken: token })
         })
         .catch(err => {
         })

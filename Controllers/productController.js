@@ -10,13 +10,13 @@ module.exports = {
   getProducts: async (req, res) => {
 
     const products = await Product.find();
-    res.render('admin/products', { products })
+    res.render('../Views/admin/products', { products })
 },
 
 getaddProduct: async (req, res) => {
     if (req.session.email) {
         const category = await Category.find()
-        res.render('admin/addProduct', { category })
+        res.render('../Views/admin/addProduct', { category })
     }
     else {
         res.redirect('/admin')
@@ -66,7 +66,7 @@ postaddProduct: async (req, res) => {
 getaddCategory: async (req, res) => {
     if (req.session.email) {
         const category = await Category.find()
-        res.render('admin/category', { category })
+        res.render('../Views/admin/category', { category })
     }
     else {
         res.redirect('/admin')
@@ -111,7 +111,7 @@ geteditProduct: async (req, res) => {
     await Product.findById(id).then(async (product) => {
         const category = await Category.find()
         if (product) {
-            res.render('admin/editProduct', { product, category })
+            res.render('../Views/admin/editProduct', { product, category })
         }
         else {
             res.redirect('/admin/404')
