@@ -418,7 +418,7 @@
                                                         }
                                                     }
                                                     function cashOnDelivery(address,productId) {
-                                                        fetch('/postBuyNow/cod', {
+                                                        fetch('/cart/postBuyNow/cod', {
                                                             method: 'POST',
                                                             headers: {
                                                                 'Content-Type': 'application/json'
@@ -448,7 +448,7 @@
                                                     }
 
                                                     function onlinePayment(address,productId) {
-                                                        fetch('/postBuyNow/online', {
+                                                        fetch('/cart/postBuyNow/online', {
                                                             method: 'POST',
                                                             headers: {
                                                                 'Content-Type': 'application/json'
@@ -493,7 +493,7 @@
                                                     }
 
                                                     function verifyPayment(response, order) {
-                                                        fetch("/buyNowVerifyPayment", {
+                                                        fetch("/cart/buyNowVerifyPayment", {
                                                             method: "POST",
                                                             headers: {
                                                                 "Content-Type": "application/json",

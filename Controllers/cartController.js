@@ -176,9 +176,6 @@ postAddToCart: async (req, res) => {
     res.redirect('/cart')
   },
 
-  PostProceedToBuy: async (req, res) => {
-    res.redirect(`/checkout`)
-  },
 
   getCheckout: async (req, res) => {
     const mail = req.session.email
@@ -359,6 +356,15 @@ postAddToCart: async (req, res) => {
 
     }
   },
+  getBuyNow: async (req, res) => {
+    const mail = req.session.email;
+    const p_id = req.query.id;
+    const product = await Product.findById({ _id: p_id })
+    const user = await User.findOne({ email: mail })
+    totals = product.price;
+    res.render('../Views/user/buynow', { product, totals, data: user, user })
+  },
+
 
 
 

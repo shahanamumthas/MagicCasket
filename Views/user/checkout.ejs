@@ -70,7 +70,7 @@
 
                                             <input type="hidden" name="totals" value="<%= totals %>">
 
-                                            <a href="/addAddress?total<%= totals%>"
+                                            <a href="/cart/addAddress?total<%= totals%>"
                                                 class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                                                 ADD ADDRESS
                                             </a>
@@ -156,7 +156,7 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Close</button>
                                                             <a type="button"
-                                                                href="/deleteOrderAddress?id=<%= address._id%>"
+                                                                href="/cart/deleteOrderAddress?id=<%= address._id%>"
                                                                 class="btn btn-danger">Delete</a>
                                                         </div>
                                                     </div>
@@ -289,7 +289,7 @@
                 }
 
                 function cashOnDelivery(address) {
-                    fetch('/postCheckout/cod', {
+                    fetch('/cart/postCheckout/cod', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -319,7 +319,7 @@
                 }
 
                 function onlinePayment(address) {
-                    fetch('/postCheckout/online', {
+                    fetch('/cart/postCheckout/online', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -364,7 +364,7 @@
                 }
 
                 function verifyPayment(response, order) {
-                    fetch("/verifyPayment", {
+                    fetch("/cart/verifyPayment", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

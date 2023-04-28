@@ -129,7 +129,7 @@
 
 									<button
 										class=" btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-										<a href="/buyNow?id=<%=product._id %>" class="cl0 pointer">BUY NOW</a>
+										<a href="/cart/buyNow?id=<%=product._id %>" class="cl0 pointer">BUY NOW</a>
 									</button>
 								</div>
 
@@ -320,7 +320,7 @@
 			<script>
 				function addToCart(productId) {
 
-					fetch('/addToCart', {
+					fetch('/cart/addToCart', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'

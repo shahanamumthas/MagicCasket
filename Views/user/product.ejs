@@ -183,7 +183,7 @@
 							<div class="block2">
 
 								<div class="block2-pic hov-img0">
-									<img src="/<%= data.images[1].path %>" alt="Product Image">
+									<img src="/<%= data.images[0].path %>" alt="Product Image">
 
 									<a href="/productDetail?id=<%=data._id%>"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
@@ -223,7 +223,7 @@
 				<!-- Load more -->
 				<!-- **************************************** -->
 				<nav>
-					<ul class="pagination">
+					<ul class="pagination" style="display: flex; justify-content: flex-end;">
 						<% if(search){%>
 							<% if (page> 1) { %>
 								<li class="page-item text-center">

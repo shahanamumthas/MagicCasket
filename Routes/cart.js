@@ -1,41 +1,39 @@
 const express = require('express')
 const router = express.Router()
-const userController =require('../Controllers/userController')
+const cartController =require('../Controllers/cartController')
 // const cartController = require('../Controllers/cartController')
 const {userLoginVerify} = require('../Middlewares/session')
 
 
 
-router.post('/addToCart',userController.postAddToCart)
+router.post('/addToCart',userLoginVerify,cartController.postAddToCart)
 
-router.get('/cart', userLoginVerify, userController.getCart)
+router.get('/cartPage', userLoginVerify, cartController.getCart)
 
-router.post('/countInc', userLoginVerify, userController.postCountIncrease)
+router.post('/countInc', userLoginVerify, cartController.postCountIncrease)
 
-router.post('/countDec', userLoginVerify, userController.postCountDesrease)
+router.post('/countDec', userLoginVerify, cartController.postCountDesrease)
 
-router.get('/delCartItem/:id', userLoginVerify, userController.getDelCartItem)
+router.get('/delCartItem/:id', userLoginVerify, cartController.getDelCartItem)
 
-router.post('/getProceedToBuy', userLoginVerify, userController.PostProceedToBuy)
+// router.post('/getProceedToBuy', userLoginVerify, cartController.PostProceedToBuy)
 
-router.get('/checkout', userLoginVerify, userController.getCheckout)
+router.get('/checkout', userLoginVerify, cartController.getCheckout)
 
-router.get('/addAddress', userLoginVerify, userController.getAddAddress)
+router.get('/addAddress', userLoginVerify, cartController.getAddAddress)
 
-router.post('/addAddress', userLoginVerify, userController.postAddaddress)
+router.post('/addAddress', userLoginVerify, cartController.postAddaddress)
 
-router.get('/deleteOrderAddress', userLoginVerify, userController.getdeleteOrderAddress);
+router.get('/deleteOrderAddress', userLoginVerify, cartController.getdeleteOrderAddress);
 
-router.post('/postCheckout/:method',userLoginVerify,userController.postCheckOut)
+router.post('/postCheckout/:method',userLoginVerify,cartController.postCheckOut)
 
-router.post('/verifyPayment', userLoginVerify,userController.verifyPayment)
+router.post('/verifyPayment', userLoginVerify,cartController.verifyPayment)
 
-router.get('/orderSuccess',userLoginVerify,userController.getOrderSuccess)
+router.get('/buyNow',userLoginVerify,cartController.getBuyNow)
 
-router.get('/buyNow',userLoginVerify,userController.getBuyNow)
+router.post('/postBuyNow/:method',userLoginVerify,cartController.postBuyNow)
 
-router.post('/postBuyNow/:method',userLoginVerify,userController.postBuyNow)
-
-router.post('/buyNowVerifyPayment', userLoginVerify,userController.buyNowVerifyPayment)
+router.post('/buyNowVerifyPayment', userLoginVerify,cartController.buyNowVerifyPayment)
 
 module.exports = router;

@@ -150,7 +150,7 @@ module.exports = {
 
             })
             category.save()
-            res.redirect('/admin/addCategory')
+            res.redirect('/admin/home')
         }
 
 

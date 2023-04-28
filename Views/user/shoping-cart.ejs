@@ -8,22 +8,26 @@
 	<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">	<!--===============================================================================================-->
 	<!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"> -->
 	<!--===============================================================================================-->
 	<!-- <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css"> -->
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.css">
+	<link rel="stylesheet" href="fonts/linearicons-v1.0.0/icon-font.css">
 
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet"  href="vendor/animate/animate.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="/css/util.css">
+	<link rel="stylesheet"  href="/css/main.css">
 	<link rel="stylesheet" href="./notify.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
 </head>
 
@@ -49,7 +53,7 @@
 
 
 		<!-- Shoping Cart -->
-		<form class="bg0 p-t-75 m-t-50 p-b-85" action="/getProceedToBuy" method="post">
+		<form class="bg0 p-t-75 m-t-50 p-b-85" action="/cart/checkout">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -108,7 +112,7 @@
 											</td>
 
 											<td class="column-5">
-												<a href="/delCartItem/<%= data.productId._id%>" role="button">
+												<a href="/cart/delCartItem/<%= data.productId._id%>" role="button">
 													<i class="fas fa-times"></i>
 												</a>
 											</td>
@@ -211,7 +215,7 @@
 					
 
 
-					fetch('/countInc', {
+					fetch('/cart/countInc', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -264,7 +268,7 @@
 						const lessPars = parseInt(countLess.value)
 						const less = lessPars - 1
 
-						fetch('/countDec', {
+						fetch('/cart/countDec', {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json'
@@ -323,20 +327,20 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 			<!--===============================================================================================-->
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-			<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+			<link rel="stylesheet" type="text/javascript"  href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+			<script type="application/json" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 			<!--===============================================================================================-->
-			<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+			<script type="application/json" src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 			<!--===============================================================================================-->
-			<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+			<script type="application/json" src="/vendor/jquery/jquery-3.2.1.min.js"></script>
 			<!--===============================================================================================-->
-			<script src="/vendor/animsition/js/animsition.min.js"></script>
+			<script type="application/json" src="/vendor/animsition/js/animsition.min.js"></script>
 			<!--===============================================================================================-->
-			<script src="/vendor/bootstrap/js/popper.js"></script>
-			<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+			<script type="application/json" src="/vendor/bootstrap/js/popper.js"></script>
+			<script type="application/json" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 			<!--===============================================================================================-->
-			<script src="/vendor/select2/select2.min.js"></script>
+			<script type="application/json" src="/vendor/select2/select2.min.js"></script>
 			<script>
 				$(".js-select2").each(function () {
 					$(this).select2({
@@ -346,9 +350,9 @@
 				})
 			</script>
 			<!--===============================================================================================-->
-			<script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+			<script type="application/json" src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 			<!--===============================================================================================-->
-			<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+			<script type="text/javascript"  src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 			<script>
 				$('.js-pscroll').each(function () {
 					$(this).css('position', 'relative');
@@ -365,7 +369,7 @@
 				});
 			</script>
 			<!--===============================================================================================-->
-			<script src="/js/main.js"></script>
+			<script type="application/json" src="/js/main.js"></script>
 
 </body>
 
