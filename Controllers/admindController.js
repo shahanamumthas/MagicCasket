@@ -130,7 +130,7 @@ module.exports = {
         const product = await Product.findOne({ name: req.body.name })
 
         if (product) {
-            res.redirect('/admin/addProduct')
+            res.redirect('/product/addProduct')
         }
         else {
             let product = new Product({
@@ -144,7 +144,7 @@ module.exports = {
 
             })
             product.save()
-            res.redirect('/admin/Products')
+            res.redirect('/product/Products')
         }
 
     },
@@ -187,7 +187,7 @@ module.exports = {
         const id = req.query.id;
         console.log(id);
         await Product.findByIdAndDelete(id)
-        res.redirect('/admin/products')
+        res.redirect('/product/products')
 
     },
 

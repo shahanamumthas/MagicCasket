@@ -63,7 +63,7 @@
                                 <h1 class="h4 text-gray-900 mb-4">Edit Product
                                 </h1>
                             </div>
-                            <form class="user" method="post" action="/cart/editProduct?_method=put" id="edit">
+                            <form class="user" method="post" action="/product/editProduct?_method=put" id="edit">
                                 <input type="text" value="<%= product._id%>" style="display: none;" name="id">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -101,7 +101,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <select name="category" class="form-control-user">
-                                            <option selected value="<%= product.category %>">select category</option>
+                                            <label for="category">Category</label>
+                                            <option id="category" selected value="<%= product.category %>">select category</option>
                                             <% category.forEach((category)=>{ %>
                                                 <option value="<%= category._id %>">
                                                     <%= category.category_name %>
