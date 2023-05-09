@@ -10,12 +10,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"> -->
-    <!--===============================================================================================-->
-    <!-- <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css"> -->
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.css">
-
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
     <!--===============================================================================================-->
@@ -31,23 +26,6 @@
 
     <!-- Header -->
     <%- include('./partials/head.ejs') -%>
-
-
-        <!-- breadcrumb -->
-        <!-- <div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.ejs" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				Shoping Cart
-			</span>
-		</div>
-	</div> -->
-
-
         <!-- Shoping Cart -->
         <form class="bg0 p-t-75 m-t-50 p-b-85" >
             <div class="container">
@@ -83,7 +61,6 @@
 
                                         <td class="column-5">
                                             <a href="/delWishlisttItem?id=<%= data._id%> " role="button">
-                                                <!-- <i class="fas fa-times"></i> -->
                                                 cancel
                                             </a>
                                         </td>
@@ -108,12 +85,7 @@
                 </div>
             </div>
         </form>
-
-        
-
-
         <%- include('./partials/footer') -%>
-
             <!-- Back to top -->
             <div class="btn-back-to-top" id="myBtn">
                 <span class="symbol-btn-back-to-top">

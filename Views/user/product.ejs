@@ -8,20 +8,20 @@
 	<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/vendor/animate/animate.css">
+	<link rel="stylesheet" href="/vendor/animate/animate.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" href="/vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/vendor/slick/slick.css">
+	<link rel="stylesheet" href="/vendor/slick/slick.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/vendor/MagnificPopup/magnific-popup.css">
+	<link rel="stylesheet" href="/vendor/MagnificPopup/magnific-popup.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet"  href="/css/util.css">
-	<link rel="stylesheet"  href="/css/main.css">
+	<link rel="stylesheet" href="/css/util.css">
+	<link rel="stylesheet" href="/css/main.css">
 	<!--===============================================================================================-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,23 +33,10 @@
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
 <body class="animsition">
-
 	<%- include('./partials/head'); -%>
-
-		<!-- ********************************* -->
-
 		<div class="flex-w flex-sb-m p-t-45 p-b-52 p-lr-40">
 			<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-				<!-- <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-					All Products
-				</button>
-				<% category.forEach((data)=>{ %>
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".<%= data._id%>">
-						<%= data.category_name%>
-					</button>
-					<% }) %> -->
 			</div>
-
 			<div class="flex-w flex-c-m m-t-50">
 				<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
 					<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
@@ -167,39 +154,26 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- **************************************** -->
-
-		<!-- Product -->
 		<div class="bg0 m-t-23 p-b-140">
 			<div class="container">
-
-
-
 				<div class="row isotope-grid">
 					<% products.forEach((data)=>{ %>
-
 						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item <%= data.category%>">
 							<div class="block2">
-
 								<div class="block2-pic hov-img0">
 									<img src="/<%= data.images[0].path %>" alt="Product Image">
-
 									<a href="/productDetail?id=<%=data._id%>"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
 										Quick View
 									</a>
 								</div>
-
 								<div class="block2-txt flex-w flex-t p-t-14">
 									<div class="block2-txt-child1 flex-col-l ">
 										<a href="product-detail.ejs"
 											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 											<%= data.name %>
 										</a>
-
 										<span class="stext-105 cl3">
-
 											<%= data.price %>
 										</span>
 									</div>
@@ -219,9 +193,6 @@
 						</div>
 						<% }) %>
 				</div>
-
-				<!-- Load more -->
-				<!-- **************************************** -->
 				<nav>
 					<ul class="pagination" style="display: flex; justify-content: flex-end;">
 						<% if(search){%>
@@ -272,7 +243,8 @@
 																			<% } %>
 																				<%}else if(sort){%>
 																					<% if (page> 1) { %>
-																						<li class="page-item text-center">
+																						<li
+																							class="page-item text-center">
 																							<a class="page-link"
 																								href='/product?page=<%= page - 1 %>&sort=<%=sort%>'>&laquo;</a>
 																						</li>
@@ -388,20 +360,12 @@
 				</nav>
 			</div>
 		</div>
-
-
 		<%- include('./partials/footer') -%>
-
-
-			<!-- Back to top -->
 			<div class="btn-back-to-top" id="myBtn">
 				<span class="symbol-btn-back-to-top">
 					<i class="fa fa-chevron-up"></i>
 				</span>
 			</div>
-
-
-
 			<script>
 				function searchProduct(params) {
 					const data = document.getElementById('productSearch').value
@@ -583,15 +547,17 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+			<!-- yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy -->
+			<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
 			<!--===============================================================================================-->
-			<script type="application/json" src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+			<script src="/vendor/animsition/js/animsition.min.js"></script>
 			<!--===============================================================================================-->
-			<script type="application/json" src="/vendor/animsition/js/animsition.min.js"></script>
+			<script src="/vendor/bootstrap/js/popper.js"></script>
+			<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 			<!--===============================================================================================-->
-			<script type="application/json" src="/vendor/bootstrap/js/popper.js"></script>
-			<script type="application/json" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-			<!--===============================================================================================-->
-			<script type="application/json" src="/vendor/select2/select2.min.js"></script>
+			<script src="/vendor/select2/select2.min.js"></script>
+
+			<!-- yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy -->
 			<script>
 				$(".js-select2").each(function () {
 					$(this).select2({
@@ -626,15 +592,10 @@
 				});
 			</script>
 			<!--===============================================================================================-->
-			<script type="application/json"  src="/vendor/isotope/isotope.pkgd.min.js"></script>
+			<script type="application/json" src="/vendor/isotope/isotope.pkgd.min.js"></script>
 			<!--===============================================================================================-->
 			<script type="application/json" src="/vendor/sweetalert/sweetalert.min.js"></script>
-			<script>
 
-
-
-				/*---------------------------------------------*/
-			</script>
 			<!--===============================================================================================-->
 			<script type="application/json" src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 			<script>
@@ -653,7 +614,7 @@
 				});
 			</script>
 			<!--===============================================================================================-->
-			<script type="application/json" src="/js/main.js"></script>
+			<script src="/js/main.js"></script>
 
 </body>
 

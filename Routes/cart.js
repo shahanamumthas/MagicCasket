@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const cartController =require('../Controllers/cartController')
-// const cartController = require('../Controllers/cartController')
 const {userLoginVerify} = require('../Middlewares/session')
 
 
@@ -16,8 +15,6 @@ router.post('/countDec', userLoginVerify, cartController.postCountDesrease)
 
 router.get('/delCartItem/:id', userLoginVerify, cartController.getDelCartItem)
 
-// router.post('/getProceedToBuy', userLoginVerify, cartController.PostProceedToBuy)
-
 router.get('/checkout', userLoginVerify, cartController.getCheckout)
 
 router.get('/addAddress', userLoginVerify, cartController.getAddAddress)
@@ -31,6 +28,10 @@ router.post('/postCheckout/:method',userLoginVerify,cartController.postCheckOut)
 router.post('/verifyPayment', userLoginVerify,cartController.verifyPayment)
 
 router.get('/buyNow',userLoginVerify,cartController.getBuyNow)
+
+router.get('/buynowAddAddress', userLoginVerify, cartController.getAddAddress)
+
+router.post('/buynowAddAddress', userLoginVerify, cartController.postAddaddress)
 
 router.post('/postBuyNow/:method',userLoginVerify,cartController.postBuyNow)
 

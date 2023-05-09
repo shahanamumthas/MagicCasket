@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Customer Profile Page</title>
-
     <!-- Custom Css -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/css/user.css">
-
     <!-- FontAwesome 5 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 </head>
@@ -18,23 +16,11 @@
         <div class="title">
             <h1>Customer Profile</h1>
         </div>
-
         <!-- Navbar -->
         <ul>
+
             <li>
-                <a href="#message">
-                    <span class="icon-count">29</span>
-                    <i class="fa fa-envelope fa-2x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#notification">
-                    <span class="icon-count">59</span>
-                    <i class="fa fa-bell fa-2x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#sign-out">
+                <a href="/">
                     <i class="fa fa-sign-out-alt fa-2x"></i>
                 </a>
             </li>
@@ -46,14 +32,9 @@
     <!-- Sidenav -->
     <div class="sidenav">
         <div class="profile">
-            <img src="https://lh3.googleusercontent.com/wq1iR0WpiLZsugptQLnD7d-EF4La-f7IZlD4oR_jbuTyUmIQpwV-uWSgapp9Tg3qrRGV=s85" alt="" width="100" height="100">
+            <img src="/images/default-avatar-profile-.jpg" alt="" width="100" height="100">
 
-            <div class="name">
-                Alvin
-            </div>
-            <div class="job">
-                CUSTOMER
-            </div>
+           
         </div>
 
         <div class="sidenav-url">
@@ -80,47 +61,23 @@
                         <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td>Alvin A/L N.Balakrishnan</td>
+                            <td><%=user.fname%><%=user.lname%></td>
                         </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
-                            <td>Alvinboyyie01@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td>Identity Card No</td>
-                            <td>:
-                          </td>
-                            <td>000301-05-XXXX</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>:</td>
-                            <td>Pahang, Malaysia</td>
-                        </tr>
-                        <tr>
-                            <td>Gender</td>
-                            <td>:</td>
-                            <td>Male</td>
-                        </tr>
-                        <tr>
-                            <td>Birthday</td>
-                            <td>:</td>
-                            <td>01/03/2000</td>
+                            <td><%=user.email%></td>
                         </tr>
                         <tr>
                             <td>Phone Number</td>
                             <td>:</td>
-                            <td>013-3935241</td>
+                            <td><%=user.number%></td>
                         </tr>
                       
                     </tbody>
                 </table>
             </div>
         </div>
-
-       
-        <%- include('./partials/footer') -%>
     </div>
     <!-- End -->
        

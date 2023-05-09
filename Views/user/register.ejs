@@ -58,11 +58,11 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input name="password" type="password" class="form-control form-control-user"
-                                            id="userPassword" placeholder="Password" >
+                                            id="userPassword" placeholder="Password" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input name="cpassword" type="password" class="form-control form-control-user"
-                                            id="usercPassword" placeholder="Confirm Password"  >
+                                            id="usercPassword" placeholder="Confirm Password"  required>
                                     </div>
                                     
                                 <hr>
@@ -76,47 +76,25 @@
                                     <%= msg %>
                                 </p>
                                 <input class="btn btn-primary btn-user btn-block" value="NEXT" type="submit">
-                                    
-                                <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a> -->
                             </form>
                             <hr>
-                            <!-- <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
-                            </div> -->
                         </div>
                      </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-
     <script>
         const form = document.getElementById('form')
         const userPassword = document.getElementById('userPassword')
         const usercPassword = document.getElementById('usercPassword')
         const error = document.getElementById('error')
-
-
         function hideErrorMessage() {
             error.innerHTML = "";
         }
-
-
         function showErrorMessage(message) {
             error.innerHTML = `<div class=" alert text-danger bg-none " role="alert">${message}</div>`
-
         }
-
         function submitform(e) {
             console.log(usercPassword+'dfghjkl');
             if(userPassword.value !== usercPassword.value)
@@ -135,23 +113,13 @@
             return true;
         }
 
-
-
     </script>
-
-
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="/admin/js/sb-admin-2.min.js"></script>
-
 </body>
-
 </html>

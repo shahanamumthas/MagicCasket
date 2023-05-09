@@ -16,50 +16,52 @@ require('dotenv').config({ path: '.env' });
 
 module.exports = {
 
-postAddToCart: async (req, res) => {
+  postAddToCart: async (req, res) => {
     const mail = req.session.email
     const user = await User.findOne({ email: mail })
     const productId = req.body.productId
 
     const existingUser = await Cart.findOne({ user: user._id })
     const product = await Product.findById({ _id: productId })
-    if (existingUser) {
-      const existingProduct = await Cart.findOne({
-        user: user._id,
-        'product.productId': productId
-      })
-      if (existingProduct) {
-        await Cart.findOneAndUpdate({ user: user._id, 'product.productId': productId },
-          {
-            $inc: {
-              'product.$.quantity': 1,
-              'product.$.total': product.price
-            }
-          })
-        res.redirect('/profile')
-      } else {
-        await Cart.findOneAndUpdate({ user: user._id },
-          {
-            $push: {
-              product: {
-                productId: productId,
-                quantity: 1,
-                total: product.price
+    if (product.stock > 0) {
+      if (existingUser) {
+        const existingProduct = await Cart.findOne({
+          user: user._id,
+          'product.productId': productId
+        })
+        if (existingProduct) {
+          await Cart.findOneAndUpdate({ user: user._id, 'product.productId': productId },
+            {
+              $inc: {
+                'product.$.quantity': 1,
+                'product.$.total': product.price
+              }
+            })
+          res.redirect('/user/login')
+        } else {
+          await Cart.findOneAndUpdate({ user: user._id },
+            {
+              $push: {
+                product: {
+                  productId: productId,
+                  quantity: 1,
+                  total: product.price
+                }
               }
             }
-          }
-        )
+          )
+        }
+      } else {
+        const newCart = new Cart({
+          product: {
+            productId: productId,
+            quantity: 1,
+            total: product.price
+          },
+          user: user._id
+        })
+        newCart.save()
       }
-    } else {
-      const newCart = new Cart({
-        product: {
-          productId: productId,
-          quantity: 1,
-          total: product.price
-        },
-        user: user._id
-      })
-      newCart.save()
     }
   },
 
@@ -84,15 +86,13 @@ postAddToCart: async (req, res) => {
             return totals + total
 
           }
-          // totals = total.reduce((value,currentTotal) => value + currentTotal, 0 )
-
           res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         } else {
           res.render('../Views/user/shoping-cart', { user, cart, total, totals })
         }
       }
       else {
-        res.redirect('/profile')
+        res.redirect('/user/login')
         msg = "Please Do Login"
       }
     } catch (error) {
@@ -173,7 +173,7 @@ postAddToCart: async (req, res) => {
     const user = await User.findOne({ email: mail })
     await Cart.findOneAndUpdate({ user: user._id }, { $pull: { product: { productId: productId } } })
 
-    res.redirect('/cart')
+    res.redirect('/cart/cartPage')
   },
 
 
@@ -190,7 +190,7 @@ postAddToCart: async (req, res) => {
     })
     let totals = total.reduce((value, total) => value + total, 0)
 
-    res.render('user/checkout', { totals, data: user, user })
+    res.render('../Views/user/checkout', { totals, data: user, user })
   },
 
   getAddAddress: (req, res) => {
@@ -200,39 +200,60 @@ postAddToCart: async (req, res) => {
 
   postAddaddress: async (req, res) => {
     const email = req.session.email
-    // const address = req.body
-    // const total = req.body.total
-    // console.log(address, total);
+    const address = req.body
     const user = await User.findOneAndUpdate({ email: email },
       {
         $push: {
           address: {
-            fname: req.body.fname,
-            lname: req.body.lname,
-            housename: req.body.housename,
-            city: req.body.city,
-            state: req.body.state,
-            pin: req.body.pin,
-            country: req.body.country
+            fname: address.fname,
+            lname: address.lname,
+            housename: address.housename,
+            city: address.city,
+            state: address.state,
+            pin: address.pin,
+            country: address.country
           }
         }
       });
 
-    res.redirect('/checkout')
+    res.redirect('/cart/checkout')
+  },
 
+  buynowAddAddress: (req, res) => {
+    const total = req.body.total
+    res.render('../Views/user/addAddress', { total })
+  },
 
+  buynowAddAddress: async (req, res) => {
+    const email = req.session.email
+    const address = req.body
+    const user = await User.findOneAndUpdate({ email: email },
+      {
+        $push: {
+          address: {
+            fname: address.fname,
+            lname: address.lname,
+            housename: address.housename,
+            city: address.city,
+            state: address.state,
+            pin: address.pin,
+            country: address.country
+          }
+        }
+      });
+
+    res.redirect('/cart/buyNow')
   },
 
   getdeleteOrderAddress: async (req, res) => {
     const mail = req.session.email;
     const addressId = req.query.id;
     await User.findOneAndUpdate({ email: mail }, { $pull: { address: { _id: addressId } } });
-    res.redirect('/checkout');
+    res.redirect('/cart/checkout');
   },
 
   postCheckOut: async (req, res) => {
     const method = req.params.method
-    // console.log(method);
     const addressId = req.body.address
     if (addressId && method == "cod") {
 
@@ -279,8 +300,6 @@ postAddToCart: async (req, res) => {
             })
 
           })
-
-
 
       } else {
         let datas;
@@ -347,7 +366,7 @@ postAddToCart: async (req, res) => {
         if (err) {
           msg = err;
           console.log(err, 'error on notes');
-          res.redirect('/500')
+          res.redirect('/404')
         } else {
           console.log('successs', order);
           res.json({ success: true, order, amount, addressId, method })
@@ -369,30 +388,22 @@ postAddToCart: async (req, res) => {
 
 
   postBuyNow: async (req, res) => {
-    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     const method = req.params.method
     const addressId = req.body.address
     const productId = req.body.productId
-
     if (addressId && method == "cod") {
-
       const mail = req.session.email
       const address = await User.findOne({ email: mail, "address._id": addressId }, { "address.$": 1 })
       const user = await User.findOne({ email: mail })
       const userId = user._id
       const detail = await Product.findOne({ _id: productId })
-
       let total = detail.price
-
       const existingUser = await order.findOne({ userId: userId })
-
       let product = [{
         productId: detail._id,
         quantity: 1,
         total: detail.price,
       }]
-
-      console.log(address);
 
       if (existingUser) {
         let datas;
@@ -415,9 +426,6 @@ postAddToCart: async (req, res) => {
           .then(async () => {
             await Product.findOneAndUpdate({ _id: productId }, { $inc: { stock: -1 } })
           })
-
-
-
       } else {
         let datas;
         address.address.forEach(data => {
@@ -448,11 +456,7 @@ postAddToCart: async (req, res) => {
       const user = await User.findOne({ email: mail })
       const userId = user._id
       const detail = await Product.findById({ _id: productId })
-
-
-
       let total = detail.price
-
       const razorpayInstance = new Razorpay({
         key_id: process.env.Razor_Pay_Key,
         key_secret: process.env.Razor_Pay_Secret
@@ -490,7 +494,6 @@ postAddToCart: async (req, res) => {
       const method = orderDetails.method
       const productId = orderDetails.productId
       let hmac = crypto.createHmac('SHA256', process.env.Razor_Pay_Secret)
-
       hmac.update(payment.response.razorpay_order_id + '|' + payment.response.razorpay_payment_id)
       hmac = hmac.digest('hex');
       if (hmac == payment.response.razorpay_signature) {
@@ -500,9 +503,7 @@ postAddToCart: async (req, res) => {
         const user = await User.findOne({ email: mail })
         const userId = user._id
         const detail = await Product.findOne({ _id: productId })
-
         let total = detail.price
-
         const existingUser = await order.findOne({ userId: userId })
 
         let product = [{

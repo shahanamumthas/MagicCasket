@@ -34,10 +34,10 @@ module.exports = {
       let count = 0
       let cart;
       let wishlist;
-      
-      if (user ) {
+
+      if (user) {
         cart = await Cart.findOne({ user: user._id })
-        if(cart){
+        if (cart) {
           console.log(cart);
           if (cart.product) {
             count = cart.product.length
@@ -46,9 +46,9 @@ module.exports = {
         }
         wishlist = await Wishlist.findOne({ user: user._id })
 
-       
+
       }
-      res.render('../Views/user/index.ejs', { banner, products, category, user,count });
+      res.render('../Views/user/index', { banner, products, category, user, count });
     } catch (error) {
       console.log(error);
     }
@@ -67,26 +67,30 @@ module.exports = {
           req.session.email = req.body.email;
           res.redirect('/');
         } else {
-          res.redirect('/profile')
+          res.redirect('/login')
         }
 
       })
 
     }
     else {
-      res.redirect('/profile')
+      res.redirect('/login')
       msg = "User Not Found"
 
     }
   },
 
 
-  getProfile: async (req, res) => {
-    const mail = req.session.email
-    const userData = await User.findOne({ email: mail })
-    res.render('../Views/user/login', { msg, userData })
-    msg = ""
+  getLogin: async (req, res) => {
+    try {
+      const mail = req.session.email
+      const userData = await User.findOne({ email: mail })
+      res.render('../Views/user/login', { msg, userData })
+      msg = ""
 
+    } catch (error) {
+      res.render('../Views/404')
+    }
   },
 
 
@@ -207,14 +211,17 @@ module.exports = {
         console.error(err + "delete");
       }
     })
-    res.redirect('/profile')
+    res.redirect('/login')
 
   },
 
 
   getProduct: async (req, res) => {
     const perPage = 4;
-    const page = req.query.page;
+    let page = 1
+    if (req.query.page != undefined) {
+      page = req.query.page;
+    }
     const search = req.query.search
     console.log(req.query);
     const totalDocs = await Product.countDocuments({});
@@ -305,18 +312,15 @@ module.exports = {
     const id = req.query.id
     const product = await Product.findById(id).populate('category')
     const review = await Review.findOne({ productId: id })
-    // console.log(review);
     const c_id = product.category._id
     const category = await Product.find({ category: c_id })
-    // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$", product);
-    // console.log(product.category);
     res.render('../Views/user/product-detail', { product, category, user, review })
   },
 
-
-
-  getOrderSuccess: (req, res) => {
-    res.render('../Views/user/orderSuccess')
+  getUserProfile: async (req, res) => {
+    const mail = req.session.email
+    const user = await User.findOne({ email: mail })
+    res.render('../Views/user/userProfile', { user })
   },
 
   getOrders: async (req, res) => {
@@ -464,9 +468,7 @@ module.exports = {
     res.redirect('/whishlist')
   },
 
-  PostProceedToBuy: async (req, res) => {
-    res.redirect(`/checkout`)
-  },
+
 
   getBuyNow: async (req, res) => {
     const mail = req.session.email;
@@ -541,8 +543,12 @@ module.exports = {
     }
   },
 
-  getUserProfile: (req, res) => {
-    res.render('../Views/user/userProfile')
+  getUserProfile: async (req, res) => {
+    const mail = req.session.email
+    console.log(mail);
+    const user = await User.findOne({ email: mail })
+    console.log(user);
+    res.render('../Views/user/userProfile', { user })
   },
 
   getforgetPassword: (req, res) => {
@@ -649,7 +655,7 @@ module.exports = {
         return updatedUser.save()
       }).then(result => {
         console.log(result, 'password updated succesfuly');
-        res.redirect('/profile')
+        res.redirect('/login')
       })
     } catch (e) {
       console.log(e, 'error occurd');
@@ -659,7 +665,11 @@ module.exports = {
 
   getLogOut: (req, res) => {
     req.session.email = null
-    res.redirect('/profile')
+    res.redirect('/login')
+  },
+
+  get404: (req, res) => {
+    res.render('../Views/404')
   },
 
 

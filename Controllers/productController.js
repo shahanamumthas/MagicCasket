@@ -19,89 +19,35 @@ getaddProduct: async (req, res) => {
         res.render('../Views/admin/addProduct', { category })
     }
     else {
-        res.redirect('/admin')
+        res.redirect('/admin/')
     }
 },
-
 
 postaddProduct: async (req, res) => {
 
     const image = req.files.map(file =>
         ({ path: file.filename })
     )
-    console.log(typeof (image));
-    await Product.findOne({ name: req.body.name })
-        .then(async (product) => {
-            if (product) {
-                res.redirect('/admin/addProduct')
-            }
-            else {
-                let product = new Product({
-                    name: req.body.name,
-                    price: req.body.price,
-                    category: req.body.category,
-                    mrp: req.body.mrp,
-                    stock: req.body.stock,
-                    description: req.body.description,
-                    images: image
+    const newProduct = req.body
+    const product = await Product.findOne({ name: req.body.name })
 
-                })
-                product.save()
-                res.redirect('/admin/Products')
-            }
-        })
-    console.log(req.body.category);
-    // Initialize Toastr
-    // toastr.options = {
-    // positionClass: 'toast-top-right', // Position of the toast message
-    // closeButton: true, // Show close button
-    // progressBar: true, // Show progress bar
-    // preventDuplicates: true // Prevent duplicates
-    // };
-
-
-},
-
-
-getaddCategory: async (req, res) => {
-    if (req.session.email) {
-        const category = await Category.find()
-        res.render('../Views/admin/category', { category })
+    if (product) {
+        res.redirect('/product/addProduct')
     }
     else {
-        res.redirect('/admin')
+        let product = new Product({
+            name: newProduct.name,
+            price: newProduct.price,
+            category: newProduct.category,
+            mrp: newProduct.mrp,
+            stock: newProduct.stock,
+            description: newProduct.description,
+            images: image
+
+        })
+        product.save()
+        res.redirect('/product/Products')
     }
-},
-postaddCategory: async (req, res) => {
-    const image = req.files.map(image => {
-        return image?.filename
-    })
-    console.log(image);
-    await Category.findOne({
-        category_name: req.body.category
-    }).then((category) => {
-        if (category || req.body.category == "") {
-            res.redirect('/admin/addCategory')
-        }
-        else {
-            let category = new Category({
-                category_name: req.body.category,
-                images: image
-
-            })
-            category.save()
-            res.redirect('/admin/addCategory')
-        }
-    })
-
-
-
-},
-
-getDeleteCategory: async (req, res) => {
-    const id = req.query.id
-    await Category.findOneAndDelete(id)
-    res.redirect('/admin/addCategory')
 
 },
 
@@ -130,7 +76,7 @@ puteditProduct: async (req, res) => {
         }
     }, { new: true }
     );
-    res.redirect('/admin/products');
+    res.redirect('/product/products');
 
 
 },
@@ -139,7 +85,7 @@ getdeleteProduct: async (req, res) => {
     const id = req.query.id;
     console.log(id);
     await Product.findByIdAndDelete(id)
-    res.redirect('/admin/products')
+    res.redirect('/product/products')
 
 },
 }

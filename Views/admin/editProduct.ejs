@@ -31,6 +31,7 @@
     <!--===============================================================================================-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -62,33 +63,40 @@
                                 <h1 class="h4 text-gray-900 mb-4">Edit Product
                                 </h1>
                             </div>
-                            <form class="user" method="post" action="/admin/editProduct?_method=put" id="edit">
+                            <form class="user" method="post" action="/product/editProduct?_method=put" id="edit">
                                 <input type="text" value="<%= product._id%>" style="display: none;" name="id">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="name">Product Name : </label>
                                         <input type="text" name="name" class="form-control form-control-user"
-                                            id="exampleFirstName" placeholder="Product Name"
+                                            id="name" placeholder="Product Name"
                                             value="<%= product.name %>">
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="mrp">MRP</label>
                                         <input type="text" name="mrp" class="form-control form-control-user" id="mrp"
-                                            placeholder="MRP" value="<%= product.mrp %>">
+                                            placeholder="MRP" onchange="validate()" value="<%= product.mrp %>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="price">Price</label>
                                         <input type="text" name="price" class="form-control form-control-user"
-                                            id="price" placeholder="Price" value="<%= product.price %>">
+                                            id="price" placeholder="Price" onchange="validate()"
+                                            value="<%= product.price %>">
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="stock">Stock</label>
                                         <input type="text" name="stock" class="form-control form-control-user"
-                                            id="stock" placeholder="Stock" value="<%= product.stock %>">
+                                            id="stock" placeholder="Stock" onchange="validate()"
+                                            value="<%= product.stock %>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="description">Description</label>
                                         <input type="text" name="description" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Description"
+                                            id="description" placeholder="Description"
                                             value="<%= product.description %>">
                                     </div>
                                     <div class="col-sm-6">
@@ -128,18 +136,34 @@
     <script src="/admin/js/sb-admin-2.min.js"></script>
 
     <script>
-        const stock = document.getElementById('stock')
-        const mrp = document.getElementById('mrp')
-        const price = document.getElementById('price')
-        if (stock || mrp || price < 1) {
-            swal("Number should be valid");
-           
 
+
+        function validate() {
+            const stock = form.querySelector("stock")
+            const mrp = document.getElementById("mrp")
+            const price = document.getElementById("price")
+
+            const stockValue = stock.value
+            const priceValue = price.value;
+            const mrpValue = mrp.value;
+
+            console.log(mrp);
+
+            if (!isNumeric(mrp) || !isNumeric(price) || !isNumeric(stock)) {
+
+                new swal('Please select address', 'Address is mandatory for ordering product', 'warning', 'Okay')
+            }
         }
 
-
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+    
 
 </body>
 

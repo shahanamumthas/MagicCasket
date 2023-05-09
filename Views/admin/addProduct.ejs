@@ -45,7 +45,6 @@
                         <%- include('./partials/sidebar') -%>
                 
                     </div>
-                    <!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -53,7 +52,7 @@
                                 </h1>
                             </div>
                             <form class="user" enctype="multipart/form-data" id="form" method="post"
-                                action="/admin/addProduct">
+                                action="/product/addProduct">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" name="name" class="form-control form-control-user"
@@ -74,14 +73,6 @@
                                             id="stock" placeholder="Stock" required>
                                     </div>
                                 </div>
-
-                                <!-- <div class="form-group row">
-                                    <div class="col-sm-6">
-                                        <input type="text" name="tag" class="form-control form-control-user "
-                                            id="tag" placeholder="Tag" required>
-                                    </div>
-                                </div> -->
-
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" name="description" class="form-control form-control-user"
@@ -112,12 +103,6 @@
                                 <!-- <hr> -->
 
                             </form>
-                            <!-- <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -126,13 +111,6 @@
 
     </div>
 
-    <script>
-        const form = document.getElementsByTagName('#form')
-        const fname = document.getElementById("#FirstName");
-        const image = document.getElementById('#image')
-
-
-    </script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

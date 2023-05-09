@@ -9,15 +9,9 @@ const Contact = require('../Models/contact');
 const Users = require('../Models/user');
 const order = require('../Models/orders')
 const { findOne, findOneAndUpdate } = require('../Models/product');
-// const order = require('../Models/orders');
-require('dotenv').config({ path : '.env'})
+require('dotenv').config({ path : '.env' })
 
-
-
-// const adminName = "shahana";
-// const adminPswd = "12345";
 let msg = "";
-
 
 module.exports = {
 
@@ -30,20 +24,18 @@ module.exports = {
         }
     },
 
-    postLogin: async (req, res) => {
+    postLogin: (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
-            if (process.env.Admin_Username == email && process.env.Admin_Password == password) {
-                req.session.email = email;
-                console.log(req.session.email);
-                res.redirect('/admin/home');
-            }
-            else {
-                msg = "Invalid user"
-                res.redirect('/admin')
-            }
+        if (process.env.Admin_Username == email && process.env.Admin_Password == password) {
+            req.session.email = email;
+            res.redirect('/admin/home');
+        }
+        else {
+            msg = "Invalid user"
+            res.redirect('/admin/')
+        }
     },
-
 
     getHome: async (req, res) => {
         const message = await Contact.find();
@@ -60,66 +52,11 @@ module.exports = {
         await Users.findByIdAndUpdate({ _id: id }, { $set: { status: false } })
         res.json({ success: true })
     },
+
     unBlockUser: async (req, res) => {
         const id = req.body.userId
         await Users.findByIdAndUpdate({ _id: id }, { $set: { status: true } })
         res.json({ success: true })
-    },
-
-    getProducts: async (req, res) => {
-
-        const products = await Product.find();
-        res.render('../Views/admin/products', { products })
-    },
-
-    getaddProduct: async (req, res) => {
-        if (req.session.email) {
-            const category = await Category.find()
-            res.render('../Views/admin/addProduct', { category })
-        }
-        else {
-            res.redirect('/admin')
-        }
-    },
-
-
-    postaddProduct: async (req, res) => {
-
-        const image = req.files.map(file =>
-            ({ path: file.filename })
-        )
-        // console.log(typeof (image));
-        const newProduct = req.body
-        const product = await Product.findOne({ name: req.body.name })
-
-        if (product) {
-            res.redirect('/admin/addProduct')
-        }
-        else {
-            let product = new Product({
-                name: newProduct.name,
-                price: newProduct.price,
-                category: newProduct.category,
-                mrp: newProduct.mrp,
-                stock: newProduct.stock,
-                description: newProduct.description,
-                images: image
-
-            })
-            product.save()
-            res.redirect('/admin/Products')
-        }
-
-        // console.log(req.body.category);
-        // Initialize Toastr
-        // toastr.options = {
-        // positionClass: 'toast-top-right', // Position of the toast message
-        // closeButton: true, // Show close button
-        // progressBar: true, // Show progress bar
-        // preventDuplicates: true // Prevent duplicates
-        // };
-
-
     },
 
 
@@ -153,8 +90,6 @@ module.exports = {
             res.redirect('/admin/home')
         }
 
-
-
     },
 
     getDeleteCategory: async (req, res) => {
@@ -164,18 +99,71 @@ module.exports = {
 
     },
 
+    unBlockUser: async (req, res) => {
+        const id = req.body.userId
+        await Users.findByIdAndUpdate({ _id: id }, { $set: { status: true } })
+        res.json({ success: true })
+    },
+
+    getProducts: async (req, res) => {
+
+        const products = await Product.find();
+        res.render('../Views/admin/products', { products })
+    },
+
+    getaddProduct: async (req, res) => {
+        if (req.session.email) {
+            const category = await Category.find()
+            res.render('../Views/admin/addProduct', { category })
+        }
+        else {
+            res.redirect('/admin')
+        }
+    },
+
+    postaddProduct: async (req, res) => {
+
+        const image = req.files.map(file =>
+            ({ path: file.filename })
+        )
+        const newProduct = req.body
+        const product = await Product.findOne({ name: req.body.name })
+
+        if (product) {
+            res.redirect('/admin/addProduct')
+        }
+        else {
+            let product = new Product({
+                name: newProduct.name,
+                price: newProduct.price,
+                category: newProduct.category,
+                mrp: newProduct.mrp,
+                stock: newProduct.stock,
+                description: newProduct.description,
+                images: image
+
+            })
+            product.save()
+            res.redirect('/admin/Products')
+        }
+
+    },
+
+
+
+
     geteditProduct: async (req, res) => {
 
         const id = req.query.id;
-        await Product.findById(id).then(async (product) => {
-            const category = await Category.find()
-            if (product) {
-                res.render('../Views/admin/editProduct', { product, category })
-            }
-            else {
-                res.redirect('/admin/404')
-            }
-        })
+        const product = await Product.findById(id)
+        const category = await Category.find()
+        if (product) {
+            res.render('../Views/admin/editProduct', { product, category })
+        }
+        else {
+            res.redirect('/404')
+        }
+
     },
     puteditProduct: async (req, res) => {
         const product = req.body
@@ -190,7 +178,7 @@ module.exports = {
             }
         }, { new: true }
         );
-        res.redirect('/admin/products');
+        res.redirect('/product/products');
 
 
     },
@@ -214,7 +202,7 @@ module.exports = {
     },
 
     postaddBanner: async (req, res) => {
-        const newBanner =req.body
+        const newBanner = req.body
         const image = req.files.map((image) => {
             return image?.filename
         })
@@ -263,14 +251,8 @@ module.exports = {
                     populate: 'category'
                 })
 
-            // console.log(data.userId.email);
-
             const orderData = data.orderDetail.find(obj => obj._id.toString() === orderId);
-            // console.log(orderData);
-
             const productData = orderData.productDetail.find(obj => obj.productId._id.toString() === productId)
-            // console.log(productData.productId.images);
-
             res.render('../Views/admin/orderDetail', { data, orderData, productData })
         } catch (error) {
             console.log(error);
@@ -291,8 +273,6 @@ module.exports = {
             'orderDetail._id': orderId,
             'orderDetail.productDetail.productId': productId
         })
-        // console.log(JSON.stringify(pro));
-
         try {
             const result = await order.updateOne(
                 {
@@ -323,7 +303,6 @@ module.exports = {
             res.redirect('/admin/orders')
         } catch (err) {
             console.log(err)
-            //handle the error
         }
     },
 
@@ -347,22 +326,19 @@ module.exports = {
     geteditBanner: async (req, res) => {
 
         const id = req.query.id;
-        await Banner.findById(id).then((banner) => {
-            if (banner) {
-                res.render('../Views/admin/editBanner', { banner })
-            }
-            else {
-                res.redirect('/admin/404')
-            }
-        })
+        const banner = await Banner.findById(id)
+        if (banner) {
+            res.render('../Views/admin/editBanner', { banner })
+        }
+        else {
+            res.redirect('/404')
+        }
     },
 
     puteditBanner: async (req, res) => {
         const id = req.body.id
 
         const banner = req.body
-        console.log(id,'id')
-        console.log(banner,'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
         await Banner.findByIdAndUpdate(id, {
             $set: {
                 title: banner.title,
@@ -385,7 +361,7 @@ module.exports = {
     },
 
     get404: (req, res) => {
-        res.render('../Views/admin/404')
+        res.render('../Views/404')
     },
 
     getSignout: (req, res) => {
@@ -393,9 +369,5 @@ module.exports = {
         res.redirect('/admin')
 
     }
-
-
-
-
 
 }

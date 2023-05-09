@@ -21,7 +21,7 @@ let msg = ""
 
 router.get('/', userController.getHome);
 
-router.get('/profile', verifyUserLogout, userController.getProfile);
+router.get('/login', verifyUserLogout, userController.getLogin);
 
 router.post('/login', userController.postLogin);
 
@@ -51,6 +51,8 @@ router.get('/contact', userController.getContact)
 
 router.post('/contact', userController.postContact)
 
+router.get('/userProfile',userController.getUserProfile)
+
 router.get('/orders', userLoginVerify, userController.getOrders )
 
 router.get('/cancelItem',userLoginVerify,userController.cancelItem)
@@ -68,5 +70,7 @@ router.get('/reset',userController.getNewPassword)
 router.post('/reset',userController.postNewPassword)
 
 router.get('/logout',userController.getLogOut)
+
+router.get('/404',userController.get404)
 
 module.exports = router;
