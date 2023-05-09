@@ -1,0 +1,127 @@
+body {
+    overflow-x: hidden;
+    background: #f7efef !important;
+    width: 100%;
+  }
+  .opinions {
+    position: relative;
+    margin-top: 50px;
+  }
+  .peopleOpinions {
+    text-align: center;
+    color: #3c3b3b;
+    background-color: linear-gradient(to left, #ffffff 0%, #e6bbbc 100%);
+  }
+  .testmon {
+    margin-top: 50px;
+  }
+  
+  .testmon .card {
+    width: 100%;
+    min-height: 254px;
+    background: transparent;
+    border: 2px solid #d9d9d9;
+    box-shadow: 2px 2px 15px #f6c6c6 inset;
+    text-align: center;
+    color: #3d3d3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Pacifico";
+  }
+  .testmon .card:hover {
+    box-shadow: 2px 2px 15px #f49d9d inset;
+  }
+  .testmon .card-body {
+    max-width: 450px;
+    margin: auto;
+  }
+  .testmon .card-detailes {
+    margin-top: 40px;
+  }
+  .testmon .card-text {
+    text-align: center;
+  }
+  .testmon .card-foter {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+  }
+  .testmon .cardImage2 {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+  }
+  .testmon #cardName2,
+  .testmon #roleName2 {
+    padding-left: 10px;
+    font-size: 15px;
+    margin: 0;
+    color: #3e3d3d;
+  }
+  .testmon .slick-dots .slick-active button {
+    background: #f3aeb1 !important;
+  }
+  
+  .testmon .slick-dots li button:before {
+    content: "" !important;
+  }
+  .testmon .slick-dots .slick-active button:active {
+    background: #d5999b !important;
+  }
+  .testmon .slick-dots li button {
+    width: 61px !important;
+    height: 8px !important;
+    left: 825px !important;
+    border: 20px !important;
+    background: #f3a2a5 !important;
+    border-radius: 20px !important;
+  }
+  .testmon .slick-dots li {
+    width: 60px !important;
+    height: 0 !important;
+  }
+  
+  .testmon .slick-slide {
+    margin: 0 20px;
+  }
+  
+  .btn {
+    display: inline-block;
+    margin-left: 8.5rem;
+    font-weight: 400;
+    color: #858796;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    /* padding: 0.3rem 0.75rem; */
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.35rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+  }
+  
+  .btn:hover {
+    color: #858796;
+    text-decoration: none;
+  }
+  
+  .btn:focus, .btn.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+  }
+  
+  .btn.disabled, .btn:disabled {
+    opacity: 0.65;
+  }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Edit product</title>
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+</head>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+
+<!-- Custom fonts for this template-->
+<link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/admin/css/sb-admin-2.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary animsition">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Edit Product
+                                </h1>
+                            </div>
+                            <form class="user" method="post" action="/product/editProduct?_method=put" id="edit">
+                                <input type="text" value="<%= product._id%>" style="display: none;" name="id">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="name">Product Name : </label>
+                                        <input type="text" name="name" class="form-control form-control-user"
+                                            id="name" placeholder="Product Name"
+                                            value="<%= product.name %>">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="mrp">MRP</label>
+                                        <input type="text" name="mrp" class="form-control form-control-user" id="mrp"
+                                            placeholder="MRP" onchange="validate()" value="<%= product.mrp %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="price">Price</label>
+                                        <input type="text" name="price" class="form-control form-control-user"
+                                            id="price" placeholder="Price" onchange="validate()"
+                                            value="<%= product.price %>">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="stock">Stock</label>
+                                        <input type="text" name="stock" class="form-control form-control-user"
+                                            id="stock" placeholder="Stock" onchange="validate()"
+                                            value="<%= product.stock %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="description">Description</label>
+                                        <input type="text" name="description" class="form-control form-control-user"
+                                            id="description" placeholder="Description"
+                                            value="<%= product.description %>">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select name="category" class="form-control-user">
+                                            <option selected value="<%= product.category %>">select category</option>
+                                            <% category.forEach((category)=>{ %>
+                                                <option value="<%= category._id %>">
+                                                    <%= category.category_name %>
+                                                </option>
+
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input value="Edit Product" type="submit" class="btn btn-primary btn-user btn-block">
+                                <!-- <hr> -->
+
+                            </form>
+                            <hr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/admin/js/sb-admin-2.min.js"></script>
+
+    <script>
+
+
+        function validate() {
+            const stock = form.querySelector("stock")
+            const mrp = document.getElementById("mrp")
+            const price = document.getElementById("price")
+
+            const stockValue = stock.value
+            const priceValue = price.value;
+            const mrpValue = mrp.value;
+
+            console.log(mrp);
+
+            if (!isNumeric(mrp) || !isNumeric(price) || !isNumeric(stock)) {
+
+                new swal('Please select address', 'Address is mandatory for ordering product', 'warning', 'Okay')
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+    
+
+</body>
+
+</html>

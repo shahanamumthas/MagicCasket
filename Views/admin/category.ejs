@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>MC Admin</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Custom fonts for this template-->
+    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/admin/css/sb-admin-2.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="container-fluid">
+
+                                <!-- Page Heading -->
+                                <h1 class="h3 mb-2 text-gray-800"></h1>
+                                <p class="mb-4"></p>
+
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-dark   ">Categories</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%"
+                                                cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Delelte</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Delete</th>
+
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <%var i=1%>
+                                                        <%category.forEach(function(cats){ %>
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <%= i%>
+                                                                </th>
+                                                                <td style="color: rgb(77, 77, 77);font-weight: 700;">
+                                                                    <%= cats.category_name%>
+                                                                </td>
+                                                            
+                                                                <td class="d-flex justify-content-center">
+                                                                    
+                                                                    <!-- Button trigger modal -->
+                                                                    <button type="button" class="btn " data-toggle="modal"
+                                                                        data-target="#exampleModalCenter<%= cats._id %>"
+                                                                        style="color : rgb(255, 0, 0);">
+                                                                        Delete
+                                                                    </button>
+            
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade"
+                                                                        id="exampleModalCenter<%= cats._id %>" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered"
+                                                                            role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLongTitle">Delete Warning
+                                                                                    </h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Are you sure <span
+                                                                                        style="color : rgb(255, 0, 0);">
+                                                                                        <%= cats.name %>
+                                                                                    </span> delete
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <a class="btn"
+                                                                                        href="/admin/deleteCategory?id=<%= cats._id %>"
+                                                                                        style="color : rgb(255, 0, 0);">
+                                                                                        Delete</a>
+                                                                                    <a href="/admin/addCategory">Cancel</a>
+            
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <%= i++%>
+                                                                <% }) %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Add Category</h1>
+                                        <p class="mb-4">Category!</p>
+                                    </div>
+
+                                    <!-- add category -->
+
+                                    <form class="user" onsubmit="return addCategory('hey')" action="/admin/addCategory" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Enter Category Name" name="category" required>
+                                        </div>
+                                        <div class="form-group row">
+                                            <input type="file" multiple name="image" accept="image/*">
+
+                                        </div>
+                                        <div class="text-danger d-flex justify-content-center mb-2"></div>
+                                        <input type="submit"  value="Add Category"
+                                            class="btn btn-dark btn-user btn-block" style="font-weight: bold;">
+                                    </form>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        function addCategory(e){
+            Toastify({
+										text: `Category Added Successfully`,
+										duration: 5000,
+										newWindow: true,
+										close: true,
+										gravity: "top", // top or bottom
+										position: "center", // left, center or right
+										backgroundColor: "linear-gradient(to right, #FF0000, #000000)",
+									}).showToast();
+        }
+    </script>
+        <!-- toaster -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/admin/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>

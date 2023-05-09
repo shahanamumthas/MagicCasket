@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">	
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="fonts/linearicons-v1.0.0/icon-font.css">
+
+	<!--===============================================================================================-->
+	<link rel="stylesheet"  href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/css/util.css">
+	<link rel="stylesheet"  href="/css/main.css">
+	<link rel="stylesheet" href="./notify.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+</head>
+
+<body class="animsition">
+
+	<!-- Header -->
+	<%- include('./partials/head.ejs') -%>
+		<!-- Shoping Cart -->
+		<form class="bg0 p-t-75 m-t-50 p-b-85" action="/cart/checkout">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+						<div class="m-l-25 m-r--38 m-lr-0-xl">
+							<div class="wrap-table-shopping-cart">
+								<% if (cart){%>
+								<table class="table-shopping-cart">
+									<tr class="table_head">
+										<th class="column-1">Product</th>
+										<th class="column-2"></th>
+										<th class="column-3">Price</th>
+										<th class="column-4">Quantity</th>
+										<th class="column-5">Total</th>
+										<th class="column-5">Delete</th>
+									</tr>
+									<%cart?.product?.forEach((data ,i)=>{%>
+										<tr class="table_row">
+											<td class="column-1">
+												<div class="how-itemcart1">
+													<img src="/<%= data.productId.images[1].path%>" alt="IMG">
+												</div>
+											</td>
+											<td class="column-2">
+												<%= data.productId.name%>
+											</td>
+											<td class="column-3">
+												<%= data.productId.price%>
+											</td>
+											<td class="column-4">
+												<div class="wrap-num-product flex-w m-l-auto m-r-0">
+													<div role="button"
+														onclick="return decreaseCount('<%= data.productId._id%>')"
+														class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+														<i class=''><h4>&minus;</h4></i>
+													</div>
+
+													<input class="mtext-104 cl3 txt-center num-product" type="number"
+														id="count1<%= data.productId._id%>" name="count"
+														value="<%= data.quantity%>" readonly>
+
+													<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+														role="button"
+														onclick="return increaseCount('<%= data.productId._id%>')">
+														<i class=''><h4>&#x2b;</h4></i>
+													</div>
+												</div>
+											</td>
+											<td class="column-5">
+
+												<h6 id="totalInd<%= data.productId._id%>">
+													<%= total[i] %>
+												</h6>
+											</td>
+											<td class="column-5">
+												<a href="/cart/delCartItem/<%= data.productId._id%>" role="button">
+													<i class='text-dark'><h4>&#215;</h4></i>
+												</a>
+											</td>
+										</tr>
+										<%})%>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+						<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+							<h4 class="mtext-109 cl2 p-b-30">
+								Cart Totals
+							</h4>
+							<div class="flex-w flex-t p-t-27 p-b-33">
+								<input type="hidden" value="<%= totals%>" id="hiddenTotal">
+								<div class="size-208">
+									<span class="mtext-101 cl2" id="cartTotal">
+										<input type="hidden" name="total" value="<%= totals%>">
+										Total: <%= totals %>
+									</span>
+								</div>
+								<div class="size-209 p-t-1">
+									<span class="mtext-110 cl2" id="cartTotal">
+
+									</span>
+								</div>
+								<button type="submit"
+							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							Proceed to buy
+						</button>
+								<%} else{%>
+									<div class=" text-center">
+				
+										<h2>
+											Your cart is currently empty</h2><br>
+										<p> Before proceed to checkout you must add some products to your shopping cart. You will
+											find a lot of interesting products on our "Shop" page.</p>
+						  </div>
+						  <%}%>
+							</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</form>
+		<%- include('./partials/footer') -%>
+			<div class="btn-back-to-top" id="myBtn">
+				<span class="symbol-btn-back-to-top">
+					<i class="zmdi zmdi-chevron-up"></i>
+				</span>
+			</div>
+			<script>
+				var total;
+				function increaseCount(productId) {
+
+					const countAdd = document.getElementById(`count1${productId}`)
+					const addPars = parseInt(countAdd.value)
+					const add = addPars + 0
+					fetch('/cart/countInc', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							add,
+							productId
+						})
+					})
+						.then(response => response.json())
+						.then(response => {
+							if (response.success) {
+								console.log(response.product);
+									document.getElementById(`totalInd${response.product._id}`).innerText = response.total+response.product.price;
+									total = 0;
+									cartTotal(response)
+							} else {
+								console.log(response.product);
+								document.getElementById(`count1${response.product._id}`).value = response.product.stock
+								Toastify({
+										text: `Only ${response.product.stock} items are availiable`,
+										duration: 3000,
+										newWindow: true,
+										close: true,
+										gravity: "bottom", // top or bottom
+										position: "center", // left, center or right
+										backgroundColor: "#f123 cd",
+									}).showToast();
+							}
+						})
+				}
+				function decreaseCount(productId) {
+					const countLess = document.getElementById(`count1${productId}`)
+					if (countLess.value == 1) {
+						Toastify({
+							text: `Quantity should be greater than zero`,
+							duration: 3000,
+							newWindow: true,
+							close: true,
+							gravity: "bottom", // top or bottom
+							position: "center", // left, center or right
+							backgroundColor: "linear-gradient(to right, #FF0000, #000000)",
+						}).showToast();
+						document.getElementById(`count1${productId}`).value = 2
+					} else {
+						console.log(countLess,'less');
+						const lessPars = parseInt(countLess.value)
+						const less = lessPars - 1
+
+						fetch('/cart/countDec', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								less,
+								productId
+							})
+						})
+							.then(response => response.json())
+							.then(response => {
+								if (response.success) {
+									if (response.inc > 0) {
+										console.log(response.product);
+										document.getElementById(`totalInd${response.product._id}`).innerText = response.total
+										total = 1;
+										cartTotal(response)
+									} else {
+										document.getElementById(`count1${response.product._id}`).value = 0;
+										Toastify({
+											text: `Quantity should be greater than zero`,
+											duration: 3000,
+											newWindow: true,
+											close: true,
+											gravity: "bottom", // top or bottom
+											position: "center", // left, center or right
+											backgroundColor: "linear-gradient(to right, #FF0000, #000000)",
+										}).showToast();
+
+									}
+								} else {
+									console.log('Failed');
+								}
+							})
+					}
+				}
+				let hiddenTotal = document.getElementById('hiddenTotal').value
+				let totalset = parseInt(hiddenTotal);
+				function cartTotal(response) {
+					console.log(response.product.price);
+					if (total == 0) {
+						totalset = totalset + response.product.price;
+					} else {
+						totalset = totalset - response.product.price;
+					}
+
+					document.getElementById(`cartTotal`).innerText = `Total : ${totalset}`
+				}
+
+			</script>
+			<script src="./notify.min.js"></script>
+			<!--===============================================================================================-->
+			<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+			<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/javascript"  href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+			<script type="application/json" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/animsition/js/animsition.min.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/bootstrap/js/popper.js"></script>
+			<script type="application/json" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/select2/select2.min.js"></script>
+			<script>
+				$(".js-select2").each(function () {
+					$(this).select2({
+						minimumResultsForSearch: 20,
+						dropdownParent: $(this).next('.dropDownSelect2')
+					});
+				})
+			</script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+			<!--===============================================================================================-->
+			<script type="text/javascript"  src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+			<script>
+				$('.js-pscroll').each(function () {
+					$(this).css('position', 'relative');
+					$(this).css('overflow', 'hidden');
+					var ps = new PerfectScrollbar(this, {
+						wheelSpeed: 1,
+						scrollingThreshold: 1000,
+						wheelPropagation: false,
+					});
+
+					$(window).on('resize', function () {
+						ps.update();
+					})
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>MC Admin - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
+    <!-- Custom styles for this template-->
+    <link href="/admin/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+
+</head>
+
+
+<body class="bg-gradient-primary">
+    
+
+    <div class="">
+
+        <div class="card o-hidden border-0 shadow-lg ">
+            
+            <div class=" p-0">
+
+                
+
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div>
+                        <%- include('./partials/sidebar') -%>
+                
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Add Product
+                                </h1>
+                            </div>
+                            <form class="user" enctype="multipart/form-data" id="form" method="post"
+                                action="/product/addProduct">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="name" class="form-control form-control-user"
+                                            id="FirstName" placeholder="Product Name" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="mrp" class="form-control form-control-user"
+                                            id="LastName" placeholder="MRP" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="price" class="form-control form-control-user"
+                                            id="price" placeholder="Price" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="stock" class="form-control form-control-user"
+                                            id="stock" placeholder="Stock" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="description" class="form-control form-control-user"
+                                            id="description" placeholder="Description" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select name="category" class="form-control-user " >
+                                            <option selected>select category</option>
+                                            <% category.forEach((category)=>{ %>
+                                                <option value="<%= category._id %>">
+                                                    <%= category.category_name %>
+                                                </option>
+
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input id="image" type="file" multiple name="image" accept="image/*">
+                                <hr>
+                                <div id="message">
+
+
+
+                                    <!-- mesaage -->
+                                </div>
+
+                                <input value="Add Product" type="submit" class="btn btn-primary btn-user btn-block">
+                                <!-- <hr> -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/admin/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>

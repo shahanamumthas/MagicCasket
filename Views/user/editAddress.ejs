@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.css">
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="./notify.min.css" />
+    <!--===============================================================================================-->
+</head>
+
+<body >
+
+   
+
+    <div >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Address form </h5>
+                </div>
+                <div class="modal-body">
+                    <form class="user box-s" method="post" action="/addAddress" id="form">
+                        <div class="form-group row">
+                            <div class="col-md-12 sm-6 mb-3 mb-sm-0">
+                                <input type="text" name="email" class="bor14 form-control form-control-user " id="email"
+                                    placeholder="email" required>
+                                    <input type="hidden" value="<%= total%>" name="total">
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="txt-center">
+                            Edit Shipping Address
+                        </h5>
+                        <button></button>
+                        <hr>
+                        <div class="form-group row ">
+                            <div class="col-md-12 sm-6 mb-3 mb-sm-0">
+                                <input type="text" value="<%= address.country %>" name="country" class="bor14 form-control form-control-user"
+                                    id="FirstName" placeholder="country" required>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" value="<%= address.fname %>" name="fname" class="bor14 form-control form-control-user"
+                                    id="fstname" placeholder="First Name" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" value="<%= address.lname %>" name="lname" class="bor14 form-control form-control-user"
+                                    id="lstname" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input type="text" value="<%= address.housename %>" name="housename" class="bor14 form-control form-control-user "
+                                    id="address" placeholder="House Name" required>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group row">
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <input type="text" value="<%= address.city %>" name="city" class="bor14 form-control form-control-user" id="city"
+                                    placeholder="city" required>
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <input type="state" value="<%= address.state %>" name="state" class="bor14 form-control form-control-user"
+                                    id="description" placeholder="state" required>
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <input type="number" value="<%= address.pin %>" name="pin" class="bor14 form-control form-control-user" id="pin"
+                                    placeholder="pin" required>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <input type="submit" class="bor14 btn btn-primary btn-user btn-block"
+                            value="Delivery to this address">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
