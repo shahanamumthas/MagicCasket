@@ -169,7 +169,7 @@
 								</div>
 								<div class="block2-txt flex-w flex-t p-t-14">
 									<div class="block2-txt-child1 flex-col-l ">
-										<a href="product-detail.ejs"
+										<a href="/productDetail?id=<%=data._id%>"
 											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 											<%= data.name %>
 										</a>
@@ -396,7 +396,7 @@
                 </div>
                 <div class="block2-txt flex-w flex-t p-t-14">
                   <div class="block2-txt-child1 flex-col-l">
-                    <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+                    <a href="/${item.images[1].path}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
                     <span class="stext-105 cl3">${item.price}</span>
                   </div>
                   <div class="block2-txt-child2 flex-r p-t-3">
@@ -445,7 +445,7 @@
                 </div>
                 <div class="block2-txt flex-w flex-t p-t-14">
                   <div class="block2-txt-child1 flex-col-l">
-                    <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+                    <a href="/${item.images[1].path}s" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
                     <span class="stext-105 cl3">${item.price}</span>
                   </div>
                   <div class="block2-txt-child2 flex-r p-t-3">
