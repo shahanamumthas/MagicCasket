@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Product Detail</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+	<!--===============================================================================================-->
+</head>
+
+<body class="animsition">
+	<%- include('./partials/head') -%>
+		<section class="sec-product-detail bg0 p-t-65 p-b-60">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-lg-7 p-b-30">
+						<div class="p-l-25 p-r-30 p-lr-0-lg">
+							<div class="wrap-slick3 flex-sb flex-w">
+								<div class="wrap-slick3-dots">
+								</div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w">
+								</div>
+								<div class="slick3 gallery-lb">
+									<% for (var i=0; i < 3 && i < product.images.length; i++) { %>
+										<div class="item-slick3" data-thumb="/<%= product.images[i].path %>">
+											<div class="wrap-pic-w pos-relative">
+												<img src="/<%= product.images[i].path %>" alt="IMG-PRODUCT">
+
+												<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+													href="/<%= product.images[i].path %>">
+													<i class="fa fa-expand"></i>
+												</a>
+											</div>
+										</div>
+										<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-5 p-b-30">
+						<div class="p-r-50 p-t-5 p-lr-0-lg">
+							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+								<%= product.name%>
+							</h4>
+							<span class="mtext-106 cl2">
+								<%= product.price%>
+							</span>
+							<p class="stext-102 cl3 p-t-23">
+								<%= product.description%>
+							</p>
+							<div class="p-t-33">
+								<%if(user){%>
+									<div class="form-group row flex-w flex-r-m p-b-10">
+										<div class="col-sm-6 mb-3 mb-sm-0 size-204 flex-w flex-m respon6-next">
+											<button
+												class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-5 trans-04 js-addcart-detail "
+												onclick="return addToCart('<%= product._id %>')">
+												Add to cart
+											</button>
+										</div>
+										<div class="col-sm-6">
+											<button
+												class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-5 trans-04 js-addwish-button"
+												onclick="return addToWish('<%= product._id %>')">
+												Add to Wishlist
+											</button>
+										</div>
+									</div>
+									<div class="form-group row flex-w flex-r-m p-b-10">
+										<button
+											class=" btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+											<a href="/cart/buyNow?id=<%=product._id %>" class="cl0 pointer">BUY NOW</a>
+										</button>
+									</div>
+									<%}else{%>
+										<div class="flex-w flex-r-m p-b-10">
+											<div
+												class="d-flex btn-block flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+												<a class="txt-center cl0 pointer" href='/profile'>
+													please do login
+												</a>
+											</div>
+										</div>
+										<%}%>
+							</div>
+							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+								<div class="flex-m bor9 p-r-10 m-r-11">
+									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-b2 "
+										data-tooltip="Add to Wishlist">
+										<i class="zmdi zmdi-favorite"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bor10 m-t-50 p-t-43 p-b-40">
+					<div class="tab01">
+						<div class="tab-content p-t-43">
+							<% if(review){ %>
+								<div>
+									<div class="row">
+										<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+											<div class="p-b-30 m-lr-15-sm">
+												<div class="flex-w flex-t p-b-68">
+													<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+														<img src="" alt="AVATAR">
+													</div>
+													<div class="size-207">
+														<div class="flex-w flex-sb-m p-b-17">
+															<span class="mtext-107 cl2 p-r-20">
+																<h5>
+																	<%=review.head%>
+																</h5>
+															</span>
+															<span class="fs-18 cl11">
+																<i class="zmdi zmdi-star"></i>
+																<i class="zmdi zmdi-star"></i>
+																<i class="zmdi zmdi-star"></i>
+																<i class="zmdi zmdi-star"></i>
+																<i class="zmdi zmdi-star-half"></i>
+															</span>
+														</div>
+														<p class="stext-102 cl6">
+															<%=review.description%>
+														</p>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<%}else{%>
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item p-b-10">
+											<a class="nav-link active" data-toggle="tab" href="#description"
+												role="tab">Description</a>
+										</li>
+									</ul>
+									<%}%>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
+				<span class="stext-107 cl6 p-lr-25">
+				</span>
+				<span class="stext-107 cl6 p-lr-25" style="text-transform: capitalize;">
+					Categories: <%=product.category.category_name%>
+				</span>
+			</div>
+		</section>
+		<section class="sec-relate-product bg0 p-t-45 p-b-105">
+			<div class="container">
+				<div class="p-b-45">
+					<h3 class="ltext-106 cl5 txt-center">
+						Related Products
+					</h3>
+				</div>
+				<div class="wrap-slick2">
+					<div class="slick2">
+						<%category.forEach(data=> {%>
+							<div class="item-slick2  p-l-15 p-r-15 p-t-15 p-b-15">
+								<!-- Block2 -->
+								<div class="block2">
+									<div class="block2-pic hov-img0">
+										<img src="/<%= data.images[1].path %>" alt="Product Image">
+										<a href="#"
+											class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+											Quick View
+										</a>
+									</div>
+									<div class="block2-txt flex-w flex-t p-t-14">
+										<div class="block2-txt-child1 flex-col-l ">
+											<a href="product-detail.html"
+												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+												<%= data.name%>
+											</a>
+											<span class="stext-105 cl3">
+												<%= data.price%>
+											</span>
+										</div>
+										<div class="block2-txt-child2 flex-r p-t-3">
+											<button class="flex-c-m bor1  trans-04 js-addwish-button"
+												onclick="return addToWish('<%= product._id %>')">
+												<img class="icon-heart1 dis-block trans-04"
+													src="images/icons/icon-heart-01.png" alt="ICON">
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<%})%>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+		<%- include('./partials/footer') -%>
+			<!-- Back to top -->
+			<div class="btn-back-to-top" id="myBtn">
+				<span class="symbol-btn-back-to-top">
+					<i class="zmdi zmdi-chevron-up"></i>
+				</span>
+			</div>
+			<script>
+				function addToCart(productId) {
+
+					fetch('/cart/addToCart', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							productId
+						})
+					})
+						.then(response => response.json())
+						.then(response => {
+							toString(response)
+
+						})
+
+				}
+
+				function addToWish(productId) {
+
+					fetch('/addToWish', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ productId })
+					})
+						.then(response => response.json())
+						.then(response => {
+							if (response.success) {
+								swal(response.name, "is added to wishlist !", "successful");
+							} else {
+								swal(response.name, "is failed to add wishlist ! ,Please Login", "warning");
+							}
+						})
+				}
+			</script>
+
+			<!--===============================================================================================-->
+			<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/animsition/js/animsition.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/bootstrap/js/popper.js"></script>
+			<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/select2/select2.min.js"></script>
+			<script>
+				$(".js-select2").each(function () {
+					$(this).select2({
+						minimumResultsForSearch: 20,
+						dropdownParent: $(this).next('.dropDownSelect2')
+					});
+				})
+			</script>
+			<!--===============================================================================================-->
+			<script src="vendor/daterangepicker/moment.min.js"></script>
+			<script src="vendor/daterangepicker/daterangepicker.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/slick/slick.min.js"></script>
+			<script src="js/slick-custom.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/parallax100/parallax100.js"></script>
+			<script>
+				$('.parallax100').parallax100();
+			</script>
+			<!--===============================================================================================-->
+			<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+			<script>
+				$('.gallery-lb').each(function () { // the containers for all your galleries
+					$(this).magnificPopup({
+						delegate: 'a', // the selector for gallery item
+						type: 'image',
+						gallery: {
+							enabled: true
+						},
+						mainClass: 'mfp-fade'
+					});
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script src="vendor/isotope/isotope.pkgd.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/sweetalert/sweetalert.min.js"></script>
+			<script>
+				$('.js-addwish-b2, .js-addwish-detail').on('click', function (e) {
+					e.preventDefault();
+				});
+
+				$('.js-addwish-b2').each(function () {
+					var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+					$(this).on('click', function () {
+						swal(nameProduct, "is added to wishlist !", "success");
+
+						$(this).addClass('js-addedwish-b2');
+						$(this).off('click');
+					});
+				});
+
+				$('.js-addwish-detail').each(function () {
+					var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+					$(this).on('click', function () {
+						swal(nameProduct, "is added to wishlist !", "success");
+
+						$(this).addClass('js-addedwish-detail');
+						$(this).off('click');
+					});
+				});
+
+				/*---------------------------------------------*/
+
+				$('.js-addcart-detail').each(function () {
+					var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+					$(this).on('click', function () {
+						swal(nameProduct, "is added to cart !", "success");
+					});
+				});
+
+
+				$('.js-addwish-button').each(function () {
+					var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+					$(this).on('click', function () {
+						swal(nameProduct, "is added to whishlist !", "success");
+					});
+				});
+
+
+			</script>
+			<!--===============================================================================================-->
+			<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+			<script>
+				$('.js-pscroll').each(function () {
+					$(this).css('position', 'relative');
+					$(this).css('overflow', 'hidden');
+					var ps = new PerfectScrollbar(this, {
+						wheelSpeed: 1,
+						scrollingThreshold: 1000,
+						wheelPropagation: false,
+					});
+
+					$(window).on('resize', function () {
+						ps.update();
+					})
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script src="js/main.js"></script>
+
+</body>
+
+</html>

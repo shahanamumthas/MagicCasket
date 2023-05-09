@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Product</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/images/icons/mc-logo-letter-design-vector-14081808.jpg" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/slick/slick.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/MagnificPopup/magnific-popup.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="/css/util.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<!--===============================================================================================-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Lora:wght@700&display=swap" rel="stylesheet">
+	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> </a>
+
+</head>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+<body class="animsition">
+	<%- include('./partials/head'); -%>
+		<div class="flex-w flex-sb-m p-t-45 p-b-52 p-lr-40">
+			<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+			</div>
+			<div class="flex-w flex-c-m m-t-50">
+				<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+					<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+					<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+					Filter
+				</div>
+
+				<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+					<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+					<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+					Search
+				</div>
+			</div>
+
+			<!-- Search product -->
+			<div class="dis-none panel-search w-full p-t-10 p-b-15">
+				<div class="bor8 dis-flex p-l-15">
+					<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<form action="/product" method="get">
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search"
+							placeholder="Search">
+						<button type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- Filter -->
+			<div class="dis-none panel-filter w-full p-t-10">
+				<div class="d-flex ">
+					<div class="p-lr-100">
+						<div class="mtext-102 cl2 p-b-15">
+							Sort By Price
+						</div>
+
+						<ul>
+							<li class="p-b-6">
+								<%if(categ){%>
+									<a href="/product?category=<%= categ%>" class="filter-link stext-106 trans-04">
+										Default
+									</a>
+									<%}else{%>
+										<a href="/product" class="filter-link stext-106 trans-04">
+											Default
+										</a>
+										<%}%>
+							</li>
+
+							<li class="p-b-6">
+								<%if(categ){%>
+									<a class="filter-link stext-106 trans-04 pointer"
+										href="/product?sort=lowToHigh&category=<%= categ%>">
+										Price: Low to High
+									</a>
+									<%}else{%>
+										<a class="filter-link stext-106 trans-04 pointer"
+											href="/product?sort=lowToHigh">
+											Price: Low to High
+										</a>
+										<%}%>
+							</li>
+
+							<li class="p-b-6">
+								<%if(categ){%>
+									<a class="filter-link stext-106 trans-04 pointer"
+										href="/product?sort=HighToLow&category=<%= categ%>">
+										Price: High to Low
+									</a>
+									<%}else{%>
+										<a class="filter-link stext-106 trans-04 pointer"
+											href="/product?sort=HighToLow">
+											Price: High to Low
+										</a>
+										<%}%>
+							</li>
+						</ul>
+					</div>
+					<div class="p-lr-100">
+						<div class="mtext-102 cl2 p-b-15">
+							Sort By category
+						</div>
+
+						<ul>
+							<li class="p-b-6">
+								<%if(sort){%>
+									<a href="/product?sort=<%= sort%>" class="filter-link stext-106 trans-04">
+										All
+									</a>
+									<%}else{%>
+										<a href="/product" class="filter-link stext-106 trans-04">
+											All
+										</a>
+										<%}%>
+							</li>
+
+							<% category.forEach((data)=>{ %>
+								<li class="p-b-6">
+									<%if(sort){%>
+										<a href="/product?category=<%= data._id%>&sort=<%= sort%>"
+											class="filter-link stext-106 trans-04">
+											<%= data.category_name%>
+										</a>
+										<%}else{%>
+											<a href="/product?category=<%= data._id%>"
+												class="filter-link stext-106 trans-04">
+												<%= data.category_name%>
+											</a>
+											<%}%>
+								</li>
+								<% }) %>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bg0 m-t-23 p-b-140">
+			<div class="container">
+				<div class="row isotope-grid">
+					<% products.forEach((data)=>{ %>
+						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item <%= data.category%>">
+							<div class="block2">
+								<div class="block2-pic hov-img0">
+									<img src="/<%= data.images[0].path %>" alt="Product Image">
+									<a href="/productDetail?id=<%=data._id%>"
+										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+										Quick View
+									</a>
+								</div>
+								<div class="block2-txt flex-w flex-t p-t-14">
+									<div class="block2-txt-child1 flex-col-l ">
+										<a href="product-detail.ejs"
+											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+											<%= data.name %>
+										</a>
+										<span class="stext-105 cl3">
+											<%= data.price %>
+										</span>
+									</div>
+									<div class="block2-txt-child2 flex-r p-t-3">
+										<%if(user){%>
+											<a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+												onclick="return addToWish('<%= data._id%>')">
+												<img class="icon-heart1 dis-block trans-04"
+													src="images/icons/icon-heart-01.png" alt="ICON">
+												<img class="icon-heart2 dis-block trans-04 ab-t-l"
+													src="images/icons/icon-heart-02.png" alt="ICON">
+											</a>
+											<%}%>
+									</div>
+								</div>
+							</div>
+						</div>
+						<% }) %>
+				</div>
+				<nav>
+					<ul class="pagination" style="display: flex; justify-content: flex-end;">
+						<% if(search){%>
+							<% if (page> 1) { %>
+								<li class="page-item text-center">
+									<a class="page-link"
+										href="/product?page=<%= page - 1 %>&search=<%= search%>">&laquo;</a>
+								</li>
+								<% } %>
+
+									<% for(let i=1; i <=totalPages; i++) { %>
+										<li class="page-item <%= page === i ? 'active' : '' %>">
+											<a class="page-link" href="/product?page=<%= i %>&search=<%= search%>">
+												<%= i %>
+											</a>
+										</li>
+										<% } %>
+
+											<% if(page < totalPages){%>
+												<li class="page-item text-center">
+													<a class="page-link "
+														href="/product?page=<%= page + 1 %>&search=<%=search%>">&raquo;</a>
+												</li>
+												<% } %>
+
+													<%}else if(sort && categ){%>
+														<% if (page> 1) { %>
+															<li class="page-item">
+																<a class="page-link text-center"
+																	href='/product?page=<%= page - 1 %>&sort=<%=sort%>&category=<%= categ%>'>&laquo;</a>
+															</li>
+															<% } %>
+																<% for(let i=1; i <=totalPages; i++) { %>
+																	<li
+																		class="text-center page-item <%= page === i ? 'active' : '' %>">
+																		<a class="page-link"
+																			href="/product?page=<%= i %>&sort=<%=sort%>&category=<%= categ%>">
+																			<%= i %>
+																		</a>
+																	</li>
+																	<% } %>
+
+																		<% if (page < totalPages) { %>
+																			<li class="page-item text-center">
+																				<a class="page-link"
+																					href="/product?page=<%= page + 1 %>&sort=<%=sort%>&category=<%= categ%>">&raquo;</a>
+																			</li>
+																			<% } %>
+																				<%}else if(sort){%>
+																					<% if (page> 1) { %>
+																						<li
+																							class="page-item text-center">
+																							<a class="page-link"
+																								href='/product?page=<%= page - 1 %>&sort=<%=sort%>'>&laquo;</a>
+																						</li>
+																						<% } %>
+																							<% for(let i=1; i
+																								<=totalPages; i++) { %>
+																								<li
+																									class="page-item <%= page === i ? 'active' : '' %>">
+																									<a class="page-link text-center"
+																										href="/product?page=<%= i %>&sort=<%=sort%>">
+																										<%= i %>
+																									</a>
+																								</li>
+																								<% } %>
+
+																									<% if (page <
+																										totalPages) { %>
+																										<li
+																											class="page-item text-center">
+																											<a class="page-link"
+																												href="/product?page=<%= page + 1 %>&sort=<%=sort%>">&raquo;</a>
+																										</li>
+																										<% } %>
+																											<%}else
+																												if(categ){%>
+																												<% if
+																													(page>
+																													1) {
+																													%>
+																													<li
+																														class="page-item text-center">
+																														<a class="page-link text-center"
+																															href='/product?page=<%= page - 1 %>&category=<%=categ%>'>&laquo;</a>
+																													</li>
+																													<% }
+																														%>
+																														<% for(let
+																															i=1;
+																															i
+																															<=totalPages;
+																															i++)
+																															{
+																															%>
+																															<li
+																																class="text-center page-item <%= page === i ? 'active' : '' %>">
+																																<a class="page-link "
+																																	href="/product?page=<%= i %>&category=<%=categ%>">
+																																	<%= i
+																																		%>
+																																</a>
+																															</li>
+																															<% }
+																																%>
+
+																																<% if
+																																	(page
+																																	<
+																																	totalPages)
+																																	{
+																																	%>
+																																	<li
+																																		class="text-center page-item">
+																																		<a class="page-link"
+																																			href="/product?page=<%= page + 1 %>&category=<%=categ%>">&raquo;</a>
+																																	</li>
+																																	<% }
+																																		%>
+																																		<%} else
+																																			{%>
+																																			<%
+																																				if(page>
+																																				1){
+																																				%>
+																																				<li
+																																					class="text-center page-item">
+																																					<a class="page-link center"
+																																						href="/product?page=<%= page - 1 %>">&laquo;</a>
+																																				</li>
+																																				<%
+																																					}%>
+																																					<% for(let
+																																						i=1;
+																																						i
+																																						<=totalPages;
+																																						i++)
+																																						{
+																																						%>
+																																						<li
+																																							class="text-center page-item <%= page === i ? 'active' : '' %>">
+																																							<a class="page-link center"
+																																								href="/product?page=<%= i %>">
+																																								<%= i
+																																									%>
+																																							</a>
+																																						</li>
+																																						<%
+																																							}%>
+
+																																							<% if(
+																																								page<
+																																								totalPages){
+																																								%>
+																																								<li
+																																									class="text-center page-item">
+																																									<a class="page-link"
+																																										href="/product?page=<%= page + 1 %>">&raquo;</a>
+																																								</li>
+																																								<% }
+																																									%>
+																																									<%}%>
+
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<%- include('./partials/footer') -%>
+			<div class="btn-back-to-top" id="myBtn">
+				<span class="symbol-btn-back-to-top">
+					<i class="fa fa-chevron-up"></i>
+				</span>
+			</div>
+			<script>
+				function searchProduct(params) {
+					const data = document.getElementById('productSearch').value
+
+					fetch('/productSearch', {
+						method: "POST",
+						body: JSON.stringify({
+							data
+						}),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
+						.then((response) => response.json())
+						.then((items) => {
+							if (items.success) {
+								const itemsContainer = document.querySelector('.isotope-grid');
+								itemsContainer.innerHTML = '';
+								items.search.forEach(item => {
+									const html = `
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${item.category}">
+              <div class="block2">
+                <div class="block2-pic hov-img0">
+                  <img src="/${item.images[1].path}" alt="Product Image">
+                  <a href="/productDetail?id=${item._id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    Quick View
+                  </a>
+                </div>
+                <div class="block2-txt flex-w flex-t p-t-14">
+                  <div class="block2-txt-child1 flex-col-l">
+                    <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+                    <span class="stext-105 cl3">${item.price}</span>
+                  </div>
+                  <div class="block2-txt-child2 flex-r p-t-3">
+                    <a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="return addToWish(${item._id})">
+                      <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+                      <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+									itemsContainer.insertAdjacentHTML('beforeend', html);
+								})
+
+							} else {
+								console.log('failed');
+							}
+						})
+
+
+				}
+
+				const sortSelectLow = document.getElementById('lowToHigh');
+				sortSelectLow.addEventListener('click', () => {
+					fetch(`/sortLowToHigh`, {
+						method: 'POST',
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
+						.then(response => response.json())
+						.then(items => {
+							if (items.success) {
+								const itemsContainer = document.querySelector('.isotope-grid');
+								itemsContainer.innerHTML = '';
+								items.item.forEach(item => {
+									const html = `
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${item.category}">
+              <div class="block2">
+                <div class="block2-pic hov-img0">
+                  <img src="/${item.images[1].path}" alt="Product Image">
+                  <a href="/productDetail?id=${item._id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                    Quick View
+                  </a>
+                </div>
+                <div class="block2-txt flex-w flex-t p-t-14">
+                  <div class="block2-txt-child1 flex-col-l">
+                    <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+                    <span class="stext-105 cl3">${item.price}</span>
+                  </div>
+                  <div class="block2-txt-child2 flex-r p-t-3">
+                    <a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="return addToWish(${item._id})">
+                      <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+                      <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+									itemsContainer.insertAdjacentHTML('beforeend', html);
+								})
+
+							} else {
+								console.log('failed');
+							}
+						});
+				});
+
+				//hight to low
+
+				const sortSelectHigh = document.getElementById('highToLow');
+				sortSelectHigh.addEventListener('click', () => {
+					fetch(`/sortHighToLow`, {
+						method: 'POST',
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
+						.then(response => response.json())
+						.then(items => {
+							if (items.success) {
+								// const itemsContainer = document.querySelector('.isotope-grid');
+								// itemsContainer.innerHTML = '';
+								console.log(items.item);
+								const imgElement = document.querySelector('.block2-pic img');
+								const aElement = document.querySelector('.block2-pic a');
+
+								items.item.forEach(item => {
+									imgElement.setAttribute('src', `/${item.images[1].path}`);
+									aElement.setAttribute('href', `/productDetail?id=${item._id}`);
+
+									// 							const html = `
+									//     <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${item.category}">
+									//       <div class="block2">
+									//         <div class="block2-pic hov-img0">
+									//           <img src="/${item.images[1].path}" alt="Product Image">
+									//           <a href="/productDetail?id=${item._id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+									//             Quick View
+									//           </a>
+									//         </div>
+									//         <div class="block2-txt flex-w flex-t p-t-14">
+									//           <div class="block2-txt-child1 flex-col-l">
+									//             <a href="product-detail.ejs" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">${item.name}</a>
+									//             <span class="stext-105 cl3">${item.price}</span>
+									//           </div>
+									//           <div class="block2-txt-child2 flex-r p-t-3">
+									//             <a role="button" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="return addToWish(${item._id})">
+									//               <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+									//               <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+									//             </a>
+									//           </div>
+									//         </div>
+									//       </div>
+									//     </div>
+									//   `;
+									// itemsContainer.insertAdjacentHTML('beforeend', html);
+								})
+
+							} else {
+								console.log('failed');
+							}
+						});
+				});
+
+				function addToWish(productId) {
+
+					fetch('/addToWish', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ productId })
+					})
+						.then(response => response.json())
+						.then(response => {
+							if (response.success) {
+								swal(response.name, "is added to wishlist !", "successful");
+							} else {
+								swal(response.name, "is failed to add wishlist ! ,Please Login", "warning");
+							}
+						})
+				}
+
+			</script>
+
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+			<!-- yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy -->
+			<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="/vendor/animsition/js/animsition.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="/vendor/bootstrap/js/popper.js"></script>
+			<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="/vendor/select2/select2.min.js"></script>
+
+			<!-- yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy -->
+			<script>
+				$(".js-select2").each(function () {
+					$(this).select2({
+						minimumResultsForSearch: 20,
+						dropdownParent: $(this).next('.dropDownSelect2')
+					});
+				})
+			</script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/daterangepicker/moment.min.js"></script>
+			<script type="application/json" src="/vendor/daterangepicker/daterangepicker.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/slick/slick.min.js"></script>
+			<script type="application/json" src="/js/slick-custom.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/parallax100/parallax100.js"></script>
+			<script>
+				$('.parallax100').parallax100();
+			</script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+			<script>
+				$('.gallery-lb').each(function () { // the containers for all your galleries
+					$(this).magnificPopup({
+						delegate: 'a', // the selector for gallery item
+						type: 'image',
+						gallery: {
+							enabled: true
+						},
+						mainClass: 'mfp-fade'
+					});
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/isotope/isotope.pkgd.min.js"></script>
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/sweetalert/sweetalert.min.js"></script>
+
+			<!--===============================================================================================-->
+			<script type="application/json" src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+			<script>
+				$('.js-pscroll').each(function () {
+					$(this).css('position', 'relative');
+					$(this).css('overflow', 'hidden');
+					var ps = new PerfectScrollbar(this, {
+						wheelSpeed: 1,
+						scrollingThreshold: 1000,
+						wheelPropagation: false,
+					});
+
+					$(window).on('resize', function () {
+						ps.update();
+					})
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script src="/js/main.js"></script>
+
+</body>
+
+</html>

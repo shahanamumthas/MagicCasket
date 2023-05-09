@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/ord.css">
+</head>
+
+<body>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css'>
+
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+            <%if(orders){%>
+                <% orders.forEach((data)=>{%>
+                    <% data.orderDetail.forEach((orderData)=>{%>
+                        <%orderData.productDetail.forEach((productData)=>{%>
+                            <div class="col hp">
+                                <div class="card h-100 shadow-sm">
+                                    <a href="#">
+                                        <img src="/<%= productData.productId.images[1].path%>" class="card-img-top"
+                                            alt="product.title" />
+                                    </a>
+                                    <div class="label-top shadow-sm">
+                                        <a class="text-white" href="">MC</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="clearfix mb-3">
+                                        </div>
+                                        <h5 class="card-title">
+                                            <p>
+                                                <%= productData.productId.name%>
+                                            </p>
+                                            <p>
+                                                Quantity: <%= productData.quantity%>
+                                            </p>
+                                        </h5>
+
+                                        <div class="d-grid gap-2 my-4">
+                                            <span class="float-start badge rounded-pill bg-success">Total: <%=
+                                                    productData.total%>
+                                                    <%if(productData.orderStatus=='Cancel' ){%>
+                                                        Cencelled
+                                                        <%}else{%></span>
+                                            <button type="button" class="btn btn-danger text-light" data-toggle="modal"
+                                                data-target="#exampleModalCenter<%= productData.productId._id%><%=orderData._id%>">
+                                                Cancel
+                                            </button>
+                                            <%}%>
+
+                                                <form class="d-grid gap-2 my-4" action="/addReview" method="post">
+                                                    Add Review:
+
+                                                    <input type="hidden" value="<%= productData.productId._id%>"
+                                                        name="produId">
+                                                    <input name="head" type="text" placeholder="Title" required>
+                                                    <input type="text" name="description" placeholder="Description"
+                                                        required>
+                                                    <input value=" ADD review" class="btn btn-primary text-light"
+                                                        type="submit">
+                                                </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal cancel -->
+                            <div class="modal fade"
+                                id="exampleModalCenter<%= productData.productId._id%><%=orderData._id%>" tabindex="1"
+                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                                Delete Warning
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to cancel <b class="text-black">
+                                                <%= productData.productId.name%>
+                                            </b><span>
+
+                                            </span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <a type="button"
+                                                href="/cancelItem?orderId=<%=orderData._id%>&id=<%= productData.productId._id%>"
+                                                class="btn btn-danger">Cancel</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%})%>
+
+                                <%})%>
+                                    <%})%>
+                                        <%} else{%>
+                                            <div class=" text-center">
+
+                                                <h2>
+                                                    No order</h2><br>
+                                                <p> Before proceed to checkout you must add some products to your
+                                                    shopping cart. You will
+                                                    find a lot of interesting products on our "Shop" page.</p>
+                                            </div>
+                                            <%}%>
+
+        </div>
+    </div>
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

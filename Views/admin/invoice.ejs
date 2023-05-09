@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/css/invoice.css">
+    <title>invoice</title>
+
+
+</head>
+
+<body>
+    <div>
+        <div class="page invoice">
+            <div class="us">
+                <img src="/images/three-gifts-boxes.svg" alt="">
+                <h1>Magic Casket</h3>
+            </div>
+
+            <div class="title">
+                <h4>INVOICE #</h4>
+                <p>19-001</p>
+            </div>
+            <div class="billed-to">
+                <h4>ClientX Pvt Ltd.</h4>
+                <p>Street 404, Mountain View</p>
+            </div>
+            <div class="table">
+                <div class="one">
+                    <p>Sr No</p>
+                    <span>1</span>
+                </div>
+                <div class="two">
+                    <p>Description</p>
+                    <span>
+                        <%=name%>
+                    </span>
+                </div>
+                <div class="three">
+                    <p>Rate</p>
+                    <span>
+                        <%=Order.orderDetail[0].total%>
+                    </span>
+                </div>
+            </div>
+            <div class=" info-container">
+                <div class="info">
+                    <div class="one">
+                        <h4>Bank Info</h4>
+                        <p>
+                            <%=address.fname%>
+                                <%=address.lname%>
+                        </p>
+                        <p>
+                            <%=address.housename%>
+                                <%=address.city%>
+                                    <%=address.state%>
+                        </p>
+                        <p>
+                            <%=address.pin %>
+                        </p>
+                    </div>
+                    <div class="two">
+                        <h4>Date</h4>
+                        <p>
+                            <%=Order.orderDetail[0].time%>
+                        </p>
+                    </div>
+                    <div class="three">
+                        <h4>Total Due</h4>
+                        <h3 id="total">
+                            <%=Order.orderDetail[0].total%> &#8377;
+                        </h3>
+                    </div>
+                </div>
+                <div class="bottom ">
+                    <div class="note">
+                        <h4>For any assistance please contact</h4>
+                        <p>email: magiccaasket@gmail.com</p>
+                        <p>phone: +91 1223454554</p>
+                    </div>
+                    <h4 class="thanks">Thank You! </h4>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="btnBlock">
+        <!-- <a href="/" class="btn">Print</a> -->
+        <button class="btn" onclick="CreatePDFfromHTML()" style="color: aliceblue;">Download </button>
+
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+    <!-- link of pdf,jquery,htmlcanvas -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+    <script>
+        function CreatePDFfromHTML() {
+            var HTML_Width = $(".invoice").width();
+            var HTML_Height = $(".invoice").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + top_left_margin * 2;
+            var PDF_Height = PDF_Width * 1.5 + top_left_margin * 2;
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+            html2canvas($(".invoice")[0]).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF("p", "pt", [PDF_Width, PDF_Height]);
+                pdf.addImage(
+                    imgData,
+                    "JPG",
+                    top_left_margin,
+                    top_left_margin,
+                    canvas_image_width,
+                    canvas_image_height
+                );
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(
+                        imgData,
+                        "JPG",
+                        top_left_margin,
+                        -(PDF_Height * i) + top_left_margin * 4,
+                        canvas_image_width,
+                        canvas_image_height
+                    );
+                }
+                pdf.save("Invoice.pdf");
+            });
+        }
+    </script>
+</body>
+
+</html>
