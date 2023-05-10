@@ -66,13 +66,15 @@ geteditProduct: async (req, res) => {
 },
 puteditProduct: async (req, res) => {
     const id = req.body.id
+    const editProduct = req.body
     await Product.findByIdAndUpdate(id, {
         $set: {
-            name: req.body.name,
-            price: req.body.price,
-            mrp: req.body.mrp,
-            stock: req.body.stock,
-            description: req.body.description
+            name: editProduct.name,
+            price: editProduct.price,
+            mrp: editProduct.mrp,
+            stock: editProduct.stock,
+            category: editProduct.category,
+            description: editProduct.description
         }
     }, { new: true }
     );

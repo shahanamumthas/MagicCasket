@@ -263,7 +263,7 @@ module.exports = {
             res.render('../Views/admin/orderDetail', { data, orderData, productData })
         } catch (error) {
             console.log(error);
-            redirect('/404')
+            redirect('/admin/404')
         }
     },
 

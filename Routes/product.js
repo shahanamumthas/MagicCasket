@@ -3,19 +3,19 @@ const router = express.Router();
 const Category = require('../Models/category');
 const multer = require('../Middlewares/multer');
 const { adminLoginVerify } = require('../Middlewares/session')
-const admindController = require("../Controllers/admindController");
+const productController = require("../Controllers/productController");
 const product = require("../Models/product");
 
-router.get('/products', adminLoginVerify, admindController.getProducts)
+router.get('/products', adminLoginVerify, productController.getProducts)
 
-router.get('/addProduct', adminLoginVerify, admindController.getaddProduct)
+router.get('/addProduct', adminLoginVerify, productController.getaddProduct)
 
-router.post('/addProduct', adminLoginVerify, multer.array('image', 3), admindController.postaddProduct)
+router.post('/addProduct', adminLoginVerify, multer.array('image', 3), productController.postaddProduct)
 
-router.get('/editProduct', adminLoginVerify, admindController.geteditProduct)
+router.get('/editProduct', adminLoginVerify, productController.geteditProduct)
 
-router.put('/editProduct', adminLoginVerify, admindController.puteditProduct)
+router.put('/editProduct', adminLoginVerify, productController.puteditProduct)
 
-router.get('/deleteProduct', adminLoginVerify, admindController.getdeleteProduct)
+router.get('/deleteProduct', adminLoginVerify, productController.getdeleteProduct)
 
 module.exports = router;

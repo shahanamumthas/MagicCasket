@@ -51,7 +51,7 @@
                           <hr>
                 </div>
                 <div class="card-foter">
-                  <a href="/admin/invoice?id=<%=orderData._id%>&name=<%= productData.productId.name%>" class="btn">Invoice</a>
+                  <a href="/admin/invoice?id=<%=orderData._id%>&name=<%= productData.productId.name%>&billId=<%=orderData._id%>" class="btn">Invoice</a>
                 </div>
               </div>
             </div>
@@ -68,9 +68,9 @@
                     <%= orderData.time%>
                 </p>
                 <!-- change order status -->
-                <%=orderData._id%>
-                  <%= productData.productId._id%>
-                    <%= data.userId._id%>
+               <span>Bill Id : </span> <%=orderData._id%>
+                 
+                    
                       <form action="/admin/changeOrderStatus" method="post">
                         <select name="orderStatus">
                           <option value="selected">
@@ -102,7 +102,7 @@
                       <br>
                       <%= productData.productId.stock%>
                         <br>
-                        <img src="/<%=productData.productId.images[1].path%>" height="100px" width="100px" alt="">
+                        <img src="/<%=productData.productId.images[0].path%>" height="100px" width="100px" alt="">
 
                 </p>
               </div>

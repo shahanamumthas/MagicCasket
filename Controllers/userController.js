@@ -311,8 +311,9 @@ module.exports = {
     const user = await User.findOne({ email: mail })
     const id = req.query.id
     const product = await Product.findById(id).populate('category')
+    console.log('#####################',product);
     const review = await Review.findOne({ productId: id })
-    const c_id = product.category._id
+    const c_id = product.category._id;
     const category = await Product.find({ category: c_id })
     res.render('../Views/user/product-detail', { product, category, user, review })
   },

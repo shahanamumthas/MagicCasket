@@ -73,24 +73,26 @@
                                             id="stock" placeholder="Stock" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" name="description" class="form-control form-control-user"
                                             id="description" placeholder="Description" required>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <select name="category" class="form-control-user " >
-                                            <option selected>select category</option>
-                                            <% category.forEach((category)=>{ %>
-                                                <option value="<%= category._id %>">
-                                                    <%= category.category_name %>
-                                                </option>
-
-                                                <% }) %>
-                                        </select>
-                                    </div>
+                                    <div class="form-control-user ">
                                 </div>
-                                <input id="image" type="file" multiple name="image" accept="image/*">
+                                        
+                                        <select id="category" class="">
+                                            <option selected value>select category</option>
+                                            <% category.forEach((category)=>{ %>
+                                            <option value="<%= category._id %>">
+                                                <%= category.category_name %>
+                                            </option>
+                                            <% }) %>
+
+                                          </select>
+                                    </div>
+                                <label for="image">Select up to 3 Photos</label> <br>
+                                <input id="image" type="file" multiple name="image" accept="image/*" >
                                 <hr>
                                 <div id="message">
 

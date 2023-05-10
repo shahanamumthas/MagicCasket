@@ -68,9 +68,8 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <label for="name">Product Name : </label>
-                                        <input type="text" name="name" class="form-control form-control-user"
-                                            id="name" placeholder="Product Name"
-                                            value="<%= product.name %>">
+                                        <input type="text" name="name" class="form-control form-control-user" id="name"
+                                            placeholder="Product Name" value="<%= product.name %>">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="mrp">MRP</label>
@@ -102,7 +101,8 @@
                                     <div class="col-sm-6">
                                         <select name="category" class="form-control-user">
                                             <label for="category">Category</label>
-                                            <option id="category" selected value="<%= product.category %>">select category</option>
+                                            <option id="category" selected value="<%= product.category %>">select
+                                                category</option>
                                             <% category.forEach((category)=>{ %>
                                                 <option value="<%= category._id %>">
                                                     <%= category.category_name %>
@@ -164,7 +164,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
-    
+
 
 </body>
 
