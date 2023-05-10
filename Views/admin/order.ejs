@@ -81,6 +81,7 @@
                                                     <% data.orderDetail.forEach((orderData)=>{%>
                                                         <%orderData.productDetail.forEach((productData)=>{%>
                                                             <tr>
+                                                                <%if(productData)%>
                                                                 <td>
                                                                 </td>
                                                                 <td class="d-flex flex-raw">
@@ -115,6 +116,7 @@
                                                                 <td>
                                                                    <a href="/admin/viewOrder?orderId=<%=orderData._id%>&productId=<%= productData.productId._id%>&userId=<%=data.userId._id%>" role="button" class="btn btn-primary">View</a>
                                                                 </td>
+                                                                <%}%>
                                                             </tr>
                                                             <!-- Modal -->
                                                             <div class="modal fade"

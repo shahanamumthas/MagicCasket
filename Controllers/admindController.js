@@ -229,13 +229,20 @@ module.exports = {
     },
 
     getOrder: async (req, res) => {
+        console.log('orders');
         const orders = await order.find().populate('userId')
             .populate({
                 path: 'orderDetail.productDetail.productId',
                 model: 'product',
                 populate: 'category'
             }).sort({ 'orderDetail.time': -1 })
-
+            orders.forEach(data => {
+                data.orderDetail.forEach(datas => {
+                    datas.productDetail.forEach(product => {
+                        console.log(product);
+                    })
+                })
+            })
         res.render('../Views/admin/order', { orders })
     },
 
@@ -256,6 +263,7 @@ module.exports = {
             res.render('../Views/admin/orderDetail', { data, orderData, productData })
         } catch (error) {
             console.log(error);
+            redirect('/404')
         }
     },
 
